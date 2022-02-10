@@ -1,0 +1,32 @@
+{
+   "projectName": "Project360Client",
+   "proxy": {
+      "/m3api-rest": {
+         "target": "http://srv-m3app1.intra.groupehelios.fr:32007",
+         "secure": false,
+         "changeOrigin": true,
+         "logLevel": "debug"
+      },
+      "/mne": {
+         "target": "http://srv-m3app1.intra.groupehelios.fr:32007",
+         "secure": false,
+         "changeOrigin": true,
+         "logLevel": "debug"
+      },
+      "/ca": {
+         "target": "http://srv-m3app1.intra.groupehelios.fr:32007",
+         "secure": false,
+         "changeOrigin": true,
+         "logLevel": "debug"
+      },
+      "/ODIN_DEV_TENANT": {
+         "target": "ODIN_ION_PROXY_TARGET",
+         "secure": false,
+         "changeOrigin": true,
+         "pathRewrite": {
+            "^/ODIN_DEV_TENANT": "/ODIN_ION_PROXY_TENANT"
+         },
+         "logLevel": "debug"
+      }
+   }
+}
