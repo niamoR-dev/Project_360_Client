@@ -17,6 +17,7 @@ import { ContratComponent } from './page-contrat/contrat.component';
 import { FraisComponent } from './page-frais/frais.component';
 import { CommandesComponent } from './page-commandes/commandes.component';
 import { AssortimentComponent } from './page-assortiment/assortiment.component';
+import { HeaderComponent } from './shared/components/header/header.component';
 
 @NgModule({
    declarations: [
@@ -36,7 +37,8 @@ import { AssortimentComponent } from './page-assortiment/assortiment.component';
       FraisComponent,
       CircuitComComponent,
       CommandesComponent,
-      AssortimentComponent
+      AssortimentComponent,
+      HeaderComponent
    ],
    imports: [
       BrowserModule,
