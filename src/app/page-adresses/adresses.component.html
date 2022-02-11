@@ -1,0 +1,31 @@
+<soho-icons-new></soho-icons-new>
+<soho-icons-empty-new></soho-icons-empty-new>
+
+
+
+<h1>Adresses</h1>
+
+<div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
+   [blockUI]="true" [displayDelay]="0" (selected)="onSelectedLine($event.rows)">
+</div>
+
+
+<form *ngIf='show' #f="ngForm" class="form-responsive row">
+
+   <label for="row-1-1">Nom client</label>
+   <input type="text" id="row-1-1" name="CUNM" readonly [ngModel]="cunm" />
+
+   <label for="row-1-2">Adresse</label>
+   <input type="text" id="row-1-2" name="CUA1" [ngModel]="cua1" />
+
+   <!-- <label for="row-1-3">Ville</label>
+   <input type="text" id="row-1-3" name="PHNO" [ngModel]="phno" /> -->
+
+   <label for="row-1-4">Adresse</label>
+   <input type="text" id="row-1-4" name="ADRT" [ngModel]="adrt" />
+
+   <label for="row-1-5">Code Postal</label>
+   <input type="text" id="row-1-5" name="ADID" [ngModel]="adid" />
+
+
+</form>
