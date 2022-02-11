@@ -5,21 +5,37 @@ import { Log } from '@infor-up/m3-odin';
 import { M3OdinModule } from '@infor-up/m3-odin-angular';
 import { SohoComponentsModule } from 'ids-enterprise-ng'; // TODO Consider only importing individual SoHo modules in production
 import { AppComponent } from './app.component';
+<<<<<<< Updated upstream
 import { GeneralComponent } from './page general/general.component';
 import { batchOrdersComponent } from './page-batch-orders/batch.component';
 import { CommandeComponent } from './page-commande/commande.component';
 import { LigneComponent } from './page-ligne/ligne.component';
 import { OffresComponent } from './page-offres/offres.component';
+=======
+import { CircuitComComponent } from './page-circuit-com/circuitCom.component';
+import { CommandesComponent } from './page-commandes/commandes.component';
+import { ContratComponent } from './page-contrat/contrat.component';
+import { FraisComponent } from './page-frais/frais.component';
+import { GeneralComponent } from './page-general/general.component';
+>>>>>>> Stashed changes
 
 @NgModule({
    declarations: [
       AppComponent,
+<<<<<<< Updated upstream
       GeneralComponent
       AppComponent,
       OffresComponent,
       LigneComponent,
       batchOrdersComponent,
       CommandeComponent
+=======
+      GeneralComponent,
+      ContratComponent,
+      FraisComponent,
+      CircuitComComponent,
+      CommandesComponent
+>>>>>>> Stashed changes
    ],
    imports: [
       BrowserModule,
@@ -30,7 +46,7 @@ import { OffresComponent } from './page-offres/offres.component';
    providers: [
       {
          provide: LOCALE_ID,
-         useValue: 'en-US',
+         useValue: 'fr-FR',
       },
       {
          provide: APP_INITIALIZER,
