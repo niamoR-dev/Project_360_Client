@@ -3,17 +3,23 @@ import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 
 @Component({
-   selector: 'app-CommandeComponent',
-   templateUrl: './commande.component.html',
-   styleUrls: ['./commande.component.css']
+   selector: 'app-assortiment',
+   templateUrl: './assortiment.component.html',
+   styleUrls: ['./assortiment.component.css']
 })
-export class CommandeComponent extends CoreBase implements OnInit {
+export class AssortimentComponent extends CoreBase implements OnInit {
+
 
    constructor(private miService: MIService, private userService: UserService) {
-      super('CommandeComponent');
+      super('AssortimentComponent');
    }
 
    ngOnInit() {
 
    }
+
+
+
+
+
 }
