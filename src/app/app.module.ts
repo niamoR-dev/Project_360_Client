@@ -5,10 +5,18 @@ import { Log } from '@infor-up/m3-odin';
 import { M3OdinModule } from '@infor-up/m3-odin-angular';
 import { SohoComponentsModule } from 'ids-enterprise-ng'; // TODO Consider only importing individual SoHo modules in production
 import { AppComponent } from './app.component';
+import { batchOrdersComponent } from './page-batch-orders/batch.component';
+import { CommandeComponent } from './page-commande/commande.component';
+import { LigneComponent } from './page-ligne/ligne.component';
+import { OffresComponent } from './page-offres/offres.component';
 
 @NgModule({
    declarations: [
-      AppComponent
+      AppComponent,
+      OffresComponent,
+      LigneComponent,
+      batchOrdersComponent,
+      CommandeComponent
    ],
    imports: [
       BrowserModule,
