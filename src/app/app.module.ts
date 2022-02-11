@@ -18,6 +18,11 @@ import { ContratComponent } from './page-contrat/contrat.component';
 import { FraisComponent } from './page-frais/frais.component';
 import { GeneralComponent } from './page-general/general.component';
 >>>>>>> Stashed changes
+import { CircuitComComponent } from './page-circuit-com/circuitCom.component';
+import { CommandesComponent } from './page-commandes/commandes.component';
+import { ContratComponent } from './page-contrat/contrat.component';
+import { FraisComponent } from './page-frais/frais.component';
+import { GeneralComponent } from './page-general/general.component';
 
 @NgModule({
    declarations: [
@@ -36,6 +41,11 @@ import { GeneralComponent } from './page-general/general.component';
       CircuitComComponent,
       CommandesComponent
 >>>>>>> Stashed changes
+      GeneralComponent,
+      ContratComponent,
+      FraisComponent,
+      CircuitComComponent,
+      CommandesComponent
    ],
    imports: [
       BrowserModule,
