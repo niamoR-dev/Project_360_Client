@@ -5,6 +5,10 @@ import { Log } from '@infor-up/m3-odin';
 import { M3OdinModule } from '@infor-up/m3-odin-angular';
 import { SohoComponentsModule } from 'ids-enterprise-ng'; // TODO Consider only importing individual SoHo modules in production
 import { AppComponent } from './app.component';
+import { GeneralComponent } from './page-general/general.component';
+import { AdresseComponent } from './page-adresse/adresse.component';
+import { ClientComponent } from './page-client/client.component';
+import { ArticleComponent } from './page-article/article.component';
 <<<<<<< Updated upstream
 import { GeneralComponent } from './page general/general.component';
 import { batchOrdersComponent } from './page-batch-orders/batch.component';
@@ -27,6 +31,10 @@ import { GeneralComponent } from './page-general/general.component';
 @NgModule({
    declarations: [
       AppComponent,
+      GeneralComponent,
+      AdresseComponent,
+      ClientComponent,
+      ArticleComponent
 <<<<<<< Updated upstream
       GeneralComponent
       AppComponent,
