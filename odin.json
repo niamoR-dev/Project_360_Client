@@ -2,19 +2,19 @@
    "projectName": "Project360Client",
    "proxy": {
       "/m3api-rest": {
-         "target": "http://srv-m3app1.intra.groupehelios.fr:32008",
+         "target": "http://srv-m3app1.intra.groupehelios.fr:32007",
          "secure": false,
          "changeOrigin": true,
          "logLevel": "debug"
       },
       "/mne": {
-         "target": "http://srv-m3app1.intra.groupehelios.fr:32008",
+         "target": "http://srv-m3app1.intra.groupehelios.fr:32007",
          "secure": false,
          "changeOrigin": true,
          "logLevel": "debug"
       },
       "/ca": {
-         "target": "http://srv-m3app1.intra.groupehelios.fr:32008",
+         "target": "http://srv-m3app1.intra.groupehelios.fr:32007",
          "secure": false,
          "changeOrigin": true,
          "logLevel": "debug"
