@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OutletContext } from '@angular/router';
 import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 import { AdressesService } from '../shared/webservices/adresses.service';
@@ -10,6 +11,8 @@ import { AdressesService } from '../shared/webservices/adresses.service';
 })
 export class AdressesComponent extends CoreBase implements OnInit {
 
+   //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
+
    datagridOptions: SohoDataGridOptions = {}; // je sais pas
 
    // ici on déclare les champs qui sont utilisées dans le template
@@ -20,24 +23,43 @@ export class AdressesComponent extends CoreBase implements OnInit {
    cunm: any;
    cua1: any;
    phno: any;
+   tfno: any;
+   meal: any;
+   yref: any;
+   ealo: any;
+   modl: any;
+   tedl: any;
 
    show: boolean; // permets l'affichage de détails au clique
 
 
-   listeImportee: any[]; // tableau pour enregistrer le retour d'API
+   listAddressesClient: any[]; // tableau pour enregistrer le retour d'API des adresses d'un client
 
+   detailsAddressesGetBasicData: any[]; // tableau pour enregistrer le retour d'API des détails des adresses d'un client
+
+   detailsAddressesGetOrderInfo: any[];
+
+
+   //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
 
    constructor(private miService: MIService, private userService: UserService, private adressesService: AdressesService) {    // ici on fait le lien vers les autres components
       super('AdressesComponent');
    }
 
+   //////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
+
    ngOnInit() {                                                   // à l'ouverture de l'onglet, ce que l'on codde ici se lance
       this.adressesService.listeAdresses().subscribe(data => {
-         this.listeImportee = data;
+
+         this.listAddressesClient = data;
          this.initGridAdresses();
       });
 
    }
+
+
+   //////////////////////////////////////////////////////////////////// Méthodes ///////////////////////////////////////////////////////////////////////////////////
+
 
 
    private initGridAdresses() {                             // méthode qui permet d'afficher les données dans la GRID
@@ -73,7 +95,7 @@ export class AdressesComponent extends CoreBase implements OnInit {
                resizable: true, filterType: 'text', sortable: true
             },
          ],
-         dataset: this.listeImportee,
+         dataset: this.listAddressesClient,
          emptyMessage: {
             title: 'Aucune adresse à afficher',
             icon: 'icon-empty-no-data'
@@ -83,15 +105,28 @@ export class AdressesComponent extends CoreBase implements OnInit {
    }
 
 
-   onSelectedLine(args: any[]) {
+   onSelectedLine(args: any[]) {                                        // méthode pour gérer quand on cique sur une ligne
+
       const newCount = args.length;
       const selected = args && newCount === 1 ? args[0].data : null;
+
+      this.show = true;
+
+      this.InitDetailAdressGetBasicData();
+      this.InitDetailAdressGetOrderInfo();
 
       this.cuno = selected.CUNO;
       this.cunm = selected.CUNM;
       this.cua1 = selected.CUA1;
       this.adid = selected.ADID;
-      this.show = true;
+      // this.phno;
+      this.tfno = this.detailsAddressesGetBasicData[0].TFNO;
+      this.meal = this.detailsAddressesGetBasicData[0].MEAL;
+      // this.yref = "";
+      // this.ealo = "";
+      // this.modl = "";
+
+
       // if (this.show = false) {
       //    this.show = true;
       // } else {
@@ -101,7 +136,38 @@ export class AdressesComponent extends CoreBase implements OnInit {
    }
 
 
-   privateInitDetailAdress() {
+   private InitDetailAdressGetBasicData() { // API 610 GetBasicData
+
+      this.adressesService.detailsAddressesGetBasicData().subscribe(data => {
+         this.detailsAddressesGetBasicData = data;
+
+         this.phno = this.detailsAddressesGetBasicData[0].PHNO;
+         this.tfno = this.detailsAddressesGetBasicData[0].TFNO;
+         this.yref = this.detailsAddressesGetBasicData[0].YREF;
+         this.ealo = this.detailsAddressesGetBasicData[0].EALO;
+         this.meal = this.detailsAddressesGetBasicData[0].MEAL;
+         this.tedl = this.detailsAddressesGetBasicData[0].TEDL;
+
+
+
+         console.log(" GetBasicData  ", this.detailsAddressesGetBasicData)  // la virgule d ans le console log permets de lire à 'intérieur de l'objet
+
+      });
+   }
+
+
+   private InitDetailAdressGetOrderInfo() {  // API 610 GetOrderInfo
+
+      this.adressesService.detailsAddressesGetOrderInfo().subscribe(data => {
+
+         this.detailsAddressesGetOrderInfo = data;
+
+         console.log("GetOrderInfo ", this.detailsAddressesGetOrderInfo)
+
+         this.modl = this.detailsAddressesGetOrderInfo[0].MODL;
+      });
+
 
    }
+
 }

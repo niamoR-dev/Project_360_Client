@@ -16,9 +16,11 @@ export class AdressesService implements OnInit {
    }
 
 
-   listeAdresses() {
+   //////////////////////////////////////////////////////////////////// Méthodes qui envoient les données dans le TS ///////////////////////////////////////////////////////////////////////////////////
 
-      return this.listAllAdresses().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
+
+   listeAdresses() {
+      return this.listAllAddresses().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
          if (answer.errorCode) {
             throw Error(JSON.stringify(answer));
          }
@@ -34,7 +36,42 @@ export class AdressesService implements OnInit {
    }
 
 
-   private handleError(message: string, error?: any) {                               // Gestion de l'erreur de retour de données de API
+   detailsAddressesGetBasicData() {
+      return this.listDetailsAddressGetBasicData().pipe(map((answer) => {
+         if (answer.errorCode) {
+            throw Error(JSON.stringify(answer));
+         }
+         return answer.items;
+      }),
+         catchError((error) => {
+            console.error('Erreur API GetBasicData :', error);
+
+            this.handleError('Échec de l\'exécution de l\'API GetBasicData', error);
+            return of(null);
+         })
+      );
+   }
+
+
+   detailsAddressesGetOrderInfo() {
+      return this.listDetailsAddressGetOrderInfo().pipe(map((answer) => {
+         if (answer.errorCode) {
+            throw Error(JSON.stringify(answer));
+         }
+         return answer.items;
+      }),
+         catchError((error) => {
+            console.error('Erreur API GetOrderInfo :', error);
+
+            this.handleError('Échec de l\'exécution de l\'API GetOrderInfo', error);
+            return of(null);
+         })
+      );
+   }
+
+   //////////////////////////////////////////////////////////////////// Méthodes qui gère les erreurs ///////////////////////////////////////////////////////////////////////////////////
+
+   private handleError(message: string, error?: any) {
       const buttons = [{ text: 'Ok', click: (e, modal) => { modal.close(); } }];
       this.messageService.error()
          .title('An error occured')
@@ -44,7 +81,10 @@ export class AdressesService implements OnInit {
    }
 
 
-   private listAllAdresses(): Observable<IMIResponse> {                        // Ici on fait l'appel API
+   //////////////////////////////////////////////////////////////////// Méthodes qui appellent les API   ///////////////////////////////////////////////////////////////////////////////////
+
+
+   private listAllAddresses(): Observable<IMIResponse> {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
          CONO: '100',
@@ -60,22 +100,41 @@ export class AdressesService implements OnInit {
       return this.miService.execute(request);
    }
 
-   private listDetailsAdress(): Observable<IMIResponse> {                        // Ici on fait l'appel API
 
-      let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
+
+   private listDetailsAddressGetBasicData(): Observable<IMIResponse> {
+
+      let inputFields: any = {
          CONO: '100',
          CUNO: '1004000699'
       }
 
-      const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
+      const request: IMIRequest = {
          program: 'CRS610MI',
          transaction: 'GetBasicData',
          record: inputFields,
-         outputFields: ['ADRT', 'ADID', 'CUNM', 'CUA1'],
+         outputFields: ['PHNO', 'YREF', 'EALO', 'TFNO', 'MEAL'],
       };
+
       return this.miService.execute(request);
    }
 
 
+
+   private listDetailsAddressGetOrderInfo(): Observable<IMIResponse> {
+      let inputFields: any = {
+         CONO: '100',
+         CUNO: '1004000699'
+      }
+
+      const request: IMIRequest = {
+         program: 'CRS610MI',
+         transaction: 'GetOrderInfo',
+         record: inputFields,
+         outputFields: ['MODL', 'TEDL'],
+      };
+
+      return this.miService.execute(request);
+   }
 
 }
