@@ -47,7 +47,7 @@ export class AdressesComponent extends CoreBase implements OnInit {
          clickToSelect: true,
          alternateRowShading: true,
          cellNavigation: false,
-         idProperty: 'listeAdresses',
+         idProperty: 'ListAddresses',
          paging: true,
          pagesize: 10,
          indeterminate: false,
@@ -84,7 +84,6 @@ export class AdressesComponent extends CoreBase implements OnInit {
 
 
    onSelectedLine(args: any[]) {
-      console.log("ta soeur" + args);
       const newCount = args.length;
       const selected = args && newCount === 1 ? args[0].data : null;
 
