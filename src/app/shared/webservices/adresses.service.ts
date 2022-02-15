@@ -69,6 +69,22 @@ export class AdressesService implements OnInit {
       );
    }
 
+   detailsAddressesGetFinancial() {
+      return this.listDetailsAddressGetFinancial().pipe(map((answer) => {
+         if (answer.errorCode) {
+            throw Error(JSON.stringify(answer));
+         }
+         return answer.items;
+      }),
+         catchError((error) => {
+            console.error('Erreur API GetFinancial :', error);
+
+            this.handleError('Échec de l\'exécution de l\'API GetFinancial', error);
+            return of(null);
+         })
+      );
+   }
+
    //////////////////////////////////////////////////////////////////// Méthodes qui gère les erreurs ///////////////////////////////////////////////////////////////////////////////////
 
    private handleError(message: string, error?: any) {
@@ -88,7 +104,7 @@ export class AdressesService implements OnInit {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
          CONO: '100',
-         CUNO: '1004000699'
+         CUNO: '&CLI000001'
       }
 
       const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
@@ -106,7 +122,7 @@ export class AdressesService implements OnInit {
 
       let inputFields: any = {
          CONO: '100',
-         CUNO: '1004000699'
+         CUNO: '&CLI000001'
       }
 
       const request: IMIRequest = {
@@ -124,7 +140,7 @@ export class AdressesService implements OnInit {
    private listDetailsAddressGetOrderInfo(): Observable<IMIResponse> {
       let inputFields: any = {
          CONO: '100',
-         CUNO: '1004000699'
+         CUNO: '&CLI000001'
       }
 
       const request: IMIRequest = {
@@ -132,6 +148,23 @@ export class AdressesService implements OnInit {
          transaction: 'GetOrderInfo',
          record: inputFields,
          outputFields: ['MODL', 'TEDL'],
+      };
+
+      return this.miService.execute(request);
+   }
+
+   private listDetailsAddressGetFinancial(): Observable<IMIResponse> {
+
+      let inputFields: any = {
+         CONO: '100',
+         CUNO: '&CLI000001'
+      }
+
+      const request: IMIRequest = {
+         program: 'CRS610MI',
+         transaction: 'GetFinancial',
+         record: inputFields,
+         outputFields: ['VRNO'],
       };
 
       return this.miService.execute(request);
