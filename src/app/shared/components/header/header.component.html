@@ -4,11 +4,10 @@
 <h1>Customer 360 Overview</h1>
 <div>
    <label for="clients">Clients : </label>
-   <select soho-dropdown noSearch name="clients">
-      <option *ngFor="let client of listClients">{{client.CUNO}} : {{client.CUNM}} - {{client.WHLO}}</option>
+   <select soho-dropdown noSearch name="clients" placeholder = "Sélectioner un client" (change)="onSelectedClient($event)" >
+      <option *ngFor="let client of listClients" [value] = "client.CUNO">{{client.CUNO}} : {{client.CUNM}} - {{client.WHLO}}</option>
    </select>
 </div>
-
 
 <div soho-tabs #onglet [disableAutoUpdatedCall]="true" registerForEvents="activated">
    <div soho-tab-list-container>
@@ -45,7 +44,7 @@
    </div>
 
    <div soho-tab-panel tabId="tab-page-adresses" style="padding-top: 5px;">
-      <app-adresses></app-adresses>
+      <app-adresses [cunoHeader] = "cunoHeader"></app-adresses>
    </div>
 
    <div soho-tab-panel tabId="tab-page-article-client" style="padding-top: 5px;">

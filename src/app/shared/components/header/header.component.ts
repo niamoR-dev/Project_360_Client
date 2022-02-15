@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
+import { AdressesService } from '../../webservices/adresses.service';
 import { HeaderService } from '../../webservices/header.service';
 
 @Component({
@@ -12,8 +13,10 @@ import { HeaderService } from '../../webservices/header.service';
 export class HeaderComponent extends CoreBase implements OnInit {
 
    listClients: any[];
+   cunoHeader: any;
+   
 
-   constructor(private miService: MIService, private userService: UserService, private headerService: HeaderService) {
+   constructor(private miService: MIService, private userService: UserService, private headerService: HeaderService , private adressesService: AdressesService) {
       super('HeaderComponent');
    }
 
@@ -23,7 +26,15 @@ export class HeaderComponent extends CoreBase implements OnInit {
       this.headerService.listeClients().subscribe(data => {
 
          this.listClients = data;
-         console.log("listClients :", this.listClients);
       });
+   }
+
+   onSelectedClient(numberClient: any){
+      this.cunoHeader = numberClient.data;
+      this.sendToService();
+   }
+
+   sendToService(){
+      this.adressesService.cuno = this.cunoHeader;
    }
 }

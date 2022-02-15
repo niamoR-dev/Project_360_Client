@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { OutletContext } from '@angular/router';
 import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
@@ -30,6 +30,8 @@ export class AdressesComponent extends CoreBase implements OnInit {
    modl: any;
    tedl: any;
    vrno: any;
+   
+   @Input() cunoHeader: string;
 
    show: boolean; // permets l'affichage de détails au clique
 
@@ -56,6 +58,7 @@ export class AdressesComponent extends CoreBase implements OnInit {
 
          this.listAddressesClient = data;
          this.initGridAdresses();
+        
       });
 
    }
@@ -138,7 +141,7 @@ export class AdressesComponent extends CoreBase implements OnInit {
          this.ealo = this.detailsAddressesGetBasicData[0].EALO;
          this.meal = this.detailsAddressesGetBasicData[0].MEAL;
 
-         console.log(" GetBasicData  ", this.detailsAddressesGetBasicData)  // la virgule d ans le console log permets de lire à 'intérieur de l'objet
+       //  console.log(" GetBasicData  ", this.detailsAddressesGetBasicData)  // la virgule d ans le console log permets de lire à 'intérieur de l'objet
 
       });
    }
@@ -150,7 +153,7 @@ export class AdressesComponent extends CoreBase implements OnInit {
 
          this.detailsAddressesGetOrderInfo = data;
 
-         console.log("GetOrderInfo ", this.detailsAddressesGetOrderInfo)
+         
 
          this.modl = this.detailsAddressesGetOrderInfo[0].MODL;
          this.tedl = this.detailsAddressesGetOrderInfo[0].TEDL;
@@ -165,7 +168,7 @@ export class AdressesComponent extends CoreBase implements OnInit {
 
          this.detailsAddressesGetFinancial = data;
 
-         console.log("GetFinancial ", this.detailsAddressesGetFinancial)
+         // console.log("GetFinancial ", this.detailsAddressesGetFinancial)
 
          this.vrno = this.detailsAddressesGetFinancial[0].VRNO;
       });
