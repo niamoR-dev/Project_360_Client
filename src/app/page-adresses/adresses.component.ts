@@ -119,19 +119,6 @@ export class AdressesComponent extends CoreBase implements OnInit {
       this.cunm = selected.CUNM;
       this.cua1 = selected.CUA1;
       this.adid = selected.ADID;
-      // this.phno;
-      this.tfno = this.detailsAddressesGetBasicData[0].TFNO;
-      this.meal = this.detailsAddressesGetBasicData[0].MEAL;
-      // this.yref = "";
-      // this.ealo = "";
-      // this.modl = "";
-
-
-      // if (this.show = false) {
-      //    this.show = true;
-      // } else {
-      //    this.show = false;
-      // }
 
    }
 
@@ -146,9 +133,6 @@ export class AdressesComponent extends CoreBase implements OnInit {
          this.yref = this.detailsAddressesGetBasicData[0].YREF;
          this.ealo = this.detailsAddressesGetBasicData[0].EALO;
          this.meal = this.detailsAddressesGetBasicData[0].MEAL;
-         this.tedl = this.detailsAddressesGetBasicData[0].TEDL;
-
-
 
          console.log(" GetBasicData  ", this.detailsAddressesGetBasicData)  // la virgule d ans le console log permets de lire à 'intérieur de l'objet
 
@@ -165,9 +149,13 @@ export class AdressesComponent extends CoreBase implements OnInit {
          console.log("GetOrderInfo ", this.detailsAddressesGetOrderInfo)
 
          this.modl = this.detailsAddressesGetOrderInfo[0].MODL;
+         this.tedl = this.detailsAddressesGetOrderInfo[0].TEDL;
       });
 
 
    }
+
+
+
 
 }
