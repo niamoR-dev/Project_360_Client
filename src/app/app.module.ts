@@ -5,10 +5,38 @@ import { Log } from '@infor-up/m3-odin';
 import { M3OdinModule } from '@infor-up/m3-odin-angular';
 import { SohoComponentsModule } from 'ids-enterprise-ng'; // TODO Consider only importing individual SoHo modules in production
 import { AppComponent } from './app.component';
+import { GeneralComponent } from './page-general/general.component';
+import { AdressesComponent } from './page-adresses/adresses.component';
+import { ArticleClientComponent } from './page-article-client/article-client.component';
+import { batchOrdersComponent } from './page-batch-orders/batch.component';
+import { LigneComponent } from './page-ligne/ligne.component';
+import { OffresComponent } from './page-offres/offres.component';
+import { CircuitComComponent } from './page-circuit-com/circuitCom.component';
+import { ContratsComponent } from './page-contrats/contrats.component';
+import { FraisComponent } from './page-frais/frais.component';
+import { CommandesComponent } from './page-commandes/commandes.component';
+import { AssortimentComponent } from './page-assortiment/assortiment.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { AdressesService } from './shared/webservices/adresses.service';
 
 @NgModule({
    declarations: [
-      AppComponent
+      AppComponent,
+      GeneralComponent,
+      AdressesComponent,
+      ArticleClientComponent,
+      OffresComponent,
+      LigneComponent,
+      batchOrdersComponent,
+      ContratsComponent,
+      FraisComponent,
+      CircuitComComponent,
+      CommandesComponent,
+      FraisComponent,
+      CircuitComComponent,
+      CommandesComponent,
+      AssortimentComponent,
+      HeaderComponent
    ],
    imports: [
       BrowserModule,
@@ -17,9 +45,10 @@ import { AppComponent } from './app.component';
       M3OdinModule
    ],
    providers: [
+      AdressesService,
       {
          provide: LOCALE_ID,
-         useValue: 'en-US',
+         useValue: 'fr-FR',
       },
       {
          provide: APP_INITIALIZER,

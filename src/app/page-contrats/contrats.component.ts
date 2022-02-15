@@ -3,15 +3,15 @@ import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 
 @Component({
-   selector: 'app-root',
-   templateUrl: './app.component.html',
-   styleUrls: ['./app.component.css']
+   selector: 'app-contrats',
+   templateUrl: './contrats.component.html',
+   styleUrls: ['./contrats.component.css']
 })
-export class AppComponent extends CoreBase implements OnInit {
+export class ContratsComponent extends CoreBase implements OnInit {
 
 
    constructor(private miService: MIService, private userService: UserService) {
-      super('AppComponent');
+      super('ContratsComponent');
    }
 
    ngOnInit() {
