@@ -29,6 +29,7 @@ export class AdressesComponent extends CoreBase implements OnInit {
    ealo: any;
    modl: any;
    tedl: any;
+   vrno: any;
 
    show: boolean; // permets l'affichage de détails au clique
 
@@ -38,6 +39,8 @@ export class AdressesComponent extends CoreBase implements OnInit {
    detailsAddressesGetBasicData: any[]; // tableau pour enregistrer le retour d'API des détails des adresses d'un client
 
    detailsAddressesGetOrderInfo: any[];
+
+   detailsAddressesGetFinancial: any[];
 
 
    //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
@@ -114,6 +117,7 @@ export class AdressesComponent extends CoreBase implements OnInit {
 
       this.InitDetailAdressGetBasicData();
       this.InitDetailAdressGetOrderInfo();
+      this.InitDetailAdressGetFinancial();
 
       this.cuno = selected.CUNO;
       this.cunm = selected.CUNM;
@@ -155,7 +159,18 @@ export class AdressesComponent extends CoreBase implements OnInit {
 
    }
 
+   private InitDetailAdressGetFinancial() {  // API 610 GetOrderInfo
+
+      this.adressesService.detailsAddressesGetFinancial().subscribe(data => {
+
+         this.detailsAddressesGetFinancial = data;
+
+         console.log("GetFinancial ", this.detailsAddressesGetFinancial)
+
+         this.vrno = this.detailsAddressesGetFinancial[0].VRNO;
+      });
 
 
+   }
 
 }
