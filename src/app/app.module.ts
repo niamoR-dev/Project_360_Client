@@ -18,6 +18,7 @@ import { CommandesComponent } from './page-commandes/commandes.component';
 import { AssortimentComponent } from './page-assortiment/assortiment.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { AdressesService } from './shared/webservices/adresses.service';
+import { HeaderService } from './shared/webservices/header.service';
 
 @NgModule({
    declarations: [
@@ -46,6 +47,7 @@ import { AdressesService } from './shared/webservices/adresses.service';
    ],
    providers: [
       AdressesService,
+      HeaderService,
       {
          provide: LOCALE_ID,
          useValue: 'fr-FR',

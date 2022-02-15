@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
+import { HeaderService } from '../../webservices/header.service';
 
 @Component({
    selector: 'app-header',
@@ -9,11 +11,19 @@ import { MIService, UserService } from '@infor-up/m3-odin-angular';
 })
 export class HeaderComponent extends CoreBase implements OnInit {
 
-   constructor(private miService: MIService, private userService: UserService) {
+   listClients: any[];
+
+   constructor(private miService: MIService, private userService: UserService, private headerService: HeaderService) {
       super('HeaderComponent');
    }
 
-   ngOnInit() {
 
+
+   ngOnInit() {
+      this.headerService.listeClients().subscribe(data => {
+
+         this.listClients = data;
+         console.log("listClients :", this.listClients);
+      });
    }
 }

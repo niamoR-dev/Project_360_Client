@@ -5,8 +5,7 @@
 <div>
    <label for="clients">Clients : </label>
    <select soho-dropdown noSearch name="clients">
-      <option value="clients">clients</option>
-
+      <option *ngFor="let client of listClients">{{client.CUNO}} : {{client.CUNM}} - {{client.WHLO}}</option>
    </select>
 </div>
 
