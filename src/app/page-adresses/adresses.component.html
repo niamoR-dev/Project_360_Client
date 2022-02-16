@@ -3,6 +3,9 @@
 
 <h1>Adresses</h1>
 
+<div><button class="btn-primary" (click)="create()"> clique bitch</button></div>
+
+
 <div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
    [blockUI]="true" [displayDelay]="0" (selected)="onSelectedLine($event.rows)">
 </div>

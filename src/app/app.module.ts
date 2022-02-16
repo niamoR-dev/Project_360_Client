@@ -19,6 +19,8 @@ import { AssortimentComponent } from './page-assortiment/assortiment.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { AdressesService } from './shared/webservices/adresses.service';
 import { HeaderService } from './shared/webservices/header.service';
+import { AppRoutingModule } from './app-routing.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
    declarations: [
@@ -43,11 +45,13 @@ import { HeaderService } from './shared/webservices/header.service';
       BrowserModule,
       FormsModule,
       SohoComponentsModule,
-      M3OdinModule
+      M3OdinModule,
+      RouterModule
    ],
    providers: [
       AdressesService,
       HeaderService,
+      AppRoutingModule,
       {
          provide: LOCALE_ID,
          useValue: 'fr-FR',
