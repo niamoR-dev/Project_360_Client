@@ -24,6 +24,13 @@ const routes: Routes = [
       loadChildren: () => import('./tab-assortment/tab-assortment.module').then(m => m.TabAssortmentModule)
    },
 
+   {
+      path: 'contracts',
+      component: HeaderComponent,
+      loadChildren: () => import('./tab-contracts/tab-contracts.module').then(m => m.TabContractsModule)
+   },
+
+
 
    {
       path: '',
