@@ -24,6 +24,11 @@ const routes: Routes = [
       loadChildren: () => import('./tab-assortment/tab-assortment.module').then(m => m.TabAssortmentModule)
    },
 
+   {
+      path: 'batch-orders',
+      component: HeaderComponent,
+      loadChildren: () => import('./tab-batch-orders/tab-batch-orders.module').then(m => m.TabBatchOrdersModule)
+   },
 
    {
       path: '',

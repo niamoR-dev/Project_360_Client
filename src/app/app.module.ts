@@ -7,6 +7,7 @@ import { AdressesModule } from './page-adresses/page-adresses.module';
 import { GeneralModule } from './page-general/page-general.module';
 import { SharedModule } from './shared/shared.module';
 import { TabAssortmentModule } from './tab-assortment/tab-assortment.module';
+import { TabBatchOrdersModule } from './tab-batch-orders/tab-batch-orders.module';
 
 @NgModule({
    declarations: [
@@ -18,7 +19,8 @@ import { TabAssortmentModule } from './tab-assortment/tab-assortment.module';
       AppRoutingModule,
       AdressesModule,
       GeneralModule,
-      TabAssortmentModule
+      TabAssortmentModule,
+      TabBatchOrdersModule
 
    ],
    providers: [
