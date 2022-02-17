@@ -3,17 +3,17 @@ import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 
 @Component({
-   selector: 'app-batchOrders',
-   templateUrl: './batch.component.html',
-   styleUrls: ['./batch.component.css']
+   selector: 'app-tab-batchOrders',
+   templateUrl: './tab-batch-orders.component.html',
+   styleUrls: ['./tab-batch-orders.component.css']
 })
-export class batchOrdersComponent extends CoreBase implements OnInit {
+export class TabBatchOrdersComponent extends CoreBase implements OnInit {
 
    constructor(private miService: MIService, private userService: UserService) {
-      super('batchOrdersComponent');
+      super('TabBatchOrdersComponent');
    }
 
    ngOnInit() {
-
+      prompt("yo");
    }
 }
