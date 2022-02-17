@@ -18,15 +18,13 @@ import { TabBatchOrdersModule } from './tab-batch-orders/tab-batch-orders.module
       BrowserModule,
       SharedModule,
       AppRoutingModule,
-      AdressesModule,
-      GeneralModule,
       TabAssortmentModule,
-      TabContractsModule
+      TabContractsModule,
       TabAddressesModule,
       TabGeneralModule,
-      TabAssortmentModule
       TabAssortmentModule,
-      TabBatchOrdersModule
+      TabAssortmentModule,
+      TabBatchOrdersModule,
 
    ],
    providers: [
