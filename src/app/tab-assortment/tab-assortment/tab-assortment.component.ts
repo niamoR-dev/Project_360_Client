@@ -3,7 +3,7 @@ import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 
 @Component({
-   selector: 'app-assortment',
+   selector: 'app-tab-assortment',
    templateUrl: './tab-assortment.component.html',
    styleUrls: ['./tab-assortment.component.css']
 })

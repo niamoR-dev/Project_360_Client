@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Log } from '@infor-up/m3-odin';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AdressesModule } from './page-adresses/page-adresses.module';
-import { GeneralModule } from './page-general/page-general.module';
+import { TabGeneralModule } from './page-general/tab-general.module';
 import { SharedModule } from './shared/shared.module';
 import { TabAssortmentModule } from './tab-assortment/tab-assortment.module';
+import { TabAddressesModule } from './page-adresses/tab-addresses.module';
 
 @NgModule({
    declarations: [
@@ -16,8 +16,8 @@ import { TabAssortmentModule } from './tab-assortment/tab-assortment.module';
       BrowserModule,
       SharedModule,
       AppRoutingModule,
-      AdressesModule,
-      GeneralModule,
+      TabAddressesModule,
+      TabGeneralModule,
       TabAssortmentModule
 
    ],
