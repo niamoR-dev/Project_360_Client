@@ -15,6 +15,7 @@ export class AssortimentComponent extends CoreBase implements OnInit {
    }
 
    ngOnInit() {
+      prompt("coucou");
 
    }
 
