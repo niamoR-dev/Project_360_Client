@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AdressesModule } from './page-adresses/page-adresses.module';
 import { GeneralModule } from './page-general/page-general.module';
 import { SharedModule } from './shared/shared.module';
+import { TabAssortmentModule } from './tab-assortment/tab-assortment.module';
 
 @NgModule({
    declarations: [
@@ -16,7 +17,8 @@ import { SharedModule } from './shared/shared.module';
       SharedModule,
       AppRoutingModule,
       AdressesModule,
-      GeneralModule
+      GeneralModule,
+      TabAssortmentModule
 
    ],
    providers: [

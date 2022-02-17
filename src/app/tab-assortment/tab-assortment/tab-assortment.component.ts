@@ -3,15 +3,15 @@ import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 
 @Component({
-   selector: 'app-assortiment',
-   templateUrl: './assortiment.component.html',
-   styleUrls: ['./assortiment.component.css']
+   selector: 'app-assortment',
+   templateUrl: './tab-assortment.component.html',
+   styleUrls: ['./tab-assortment.component.css']
 })
-export class AssortimentComponent extends CoreBase implements OnInit {
+export class TabAssortmentComponent extends CoreBase implements OnInit {
 
 
    constructor(private miService: MIService, private userService: UserService) {
-      super('AssortimentComponent');
+      super('TabAssortmentComponent');
    }
 
    ngOnInit() {
