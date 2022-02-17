@@ -1,17 +1,36 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdressesComponent } from './page-adresses/adresses.component';
-import { GeneralComponent } from './page-general/general.component';
+import { HeaderComponent } from './shared/components/header/header/header.component';
 
 const routes: Routes = [
-   //{ path: '', redirectTo: '/pays', pathMatch: 'full' },
-   // { path: '', component: GeneralComponent },
-   // { path: 'general', component: GeneralComponent },
-   // { path: 'adresses', component: AdressesComponent },
+
+   {
+      path: '',
+      component: HeaderComponent,
+      loadChildren: () => import('./page-general/page-general.module').then(m => m.GeneralModule)
+   },
+
+   {
+      path: 'addresses',
+      component: HeaderComponent,
+      loadChildren: () => import('./page-adresses/page-adresses.module').then(m => m.AdressesModule)
+   },
+
+   {
+      path: '',
+      redirectTo: '',
+      pathMatch: 'full'
+   },
+
+   // {
+   //    path:'**',
+   //    //component :NotFoundComponent
+   // }
+
 ];
 
 @NgModule({
-   imports: [RouterModule.forRoot(routes, { useHash: true })],
+   imports: [RouterModule.forRoot(routes)],
    exports: [RouterModule]
 })
 export class AppRoutingModule { }

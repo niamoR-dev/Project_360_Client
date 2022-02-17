@@ -4,9 +4,8 @@ import { MIService, UserService } from "@infor-up/m3-odin-angular";
 import { SohoMessageService } from "ids-enterprise-ng";
 import { Observable, of } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
-import { HeaderComponent } from "../components/header/header.component";
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AdressesService implements OnInit {
 
    cuno: any;
@@ -19,8 +18,8 @@ export class AdressesService implements OnInit {
 
 
    listeAdresses() {
-      
-      
+
+
 
       return this.listAllAddresses().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
          if (answer.errorCode) {
@@ -121,7 +120,7 @@ export class AdressesService implements OnInit {
 
 
    private listDetailsAddressGetBasicData(): Observable<IMIResponse> {
-      console.log( "  CUNO BITCH =" ,this.cuno);
+      console.log("  CUNO BITCH =", this.cuno);
 
       let inputFields: any = {
          CONO: '100',

@@ -1,6 +1,3 @@
-<soho-icons-new></soho-icons-new>
-<soho-icons-empty-new></soho-icons-empty-new>
-
 <h1>Customer 360 Overview</h1>
 <div>
    <label for="clients">Clients : </label>
@@ -14,13 +11,12 @@
 <div soho-tabs #onglet [disableAutoUpdatedCall]="true" registerForEvents="activated">
    <div soho-tab-list-container>
       <ul soho-tab-list>
-         <li soho-tab selected="true"><a soho-tab-title tabId="tab-page-general">
+         <li soho-tab routerLink="" routerLinkActive="true" selected="true"><a soho-tab-title>
                Général</a>
          </li>
-         <!-- [routerLink]="['/general']" -->
-         <li soho-tab><a soho-tab-title tabId="tab-page-adresses"> Adresses</a> </li>
+         <li soho-tab><a routerLink="./addresses" soho-tab-title> Adresses</a> </li>
 
-         <li soho-tab><a soho-tab-title tabId="tab-page-article-client"> Article / Client</a> </li>
+         <!-- <li soho-tab><a soho-tab-title tabId="tab-page-article-client"> Article / Client</a> </li>
 
          <li soho-tab><a soho-tab-title tabId="tab-page-contrats"> Contrats</a> </li>
 
@@ -36,14 +32,16 @@
 
          <li soho-tab><a soho-tab-title tabId="tab-page-offres"> Offres</a> </li>
 
-         <li soho-tab><a soho-tab-title tabId="tab-page-batch-orders"> Batch Orders</a> </li>
+         <li soho-tab><a soho-tab-title tabId="tab-page-batch-orders"> Batch Orders</a> </li> -->
       </ul>
    </div>
 </div>
 
-<!-- <router-outlet></router-outlet> -->
+<router-outlet></router-outlet>
 
 
+
+<!--
 <div soho-tab-panel tabId="tab-page-general" style="padding-top: 5px;">
    <app-general></app-general>
 </div>
@@ -86,4 +84,4 @@
 
 <div soho-tab-panel tabId="tab-page-batch-orders" style="padding-top: 5px;">
    <app-batchOrders></app-batchOrders>
-</div>
+</div> -->

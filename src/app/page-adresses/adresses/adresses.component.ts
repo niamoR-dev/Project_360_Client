@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { OutletContext } from '@angular/router';
 import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
-import { AdressesService } from '../shared/webservices/adresses.service';
+import { AdressesService } from '../../core/web-services/adresses.service';
 
 @Component({
    selector: 'app-adresses',

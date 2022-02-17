@@ -5,7 +5,7 @@ import { SohoMessageService } from "ids-enterprise-ng";
 import { Observable, of } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class HeaderService implements OnInit {
 
 
