@@ -5,11 +5,11 @@ import { MIService, UserService } from '@infor-up/m3-odin-angular';
 import { AdressesService } from '../../core/web-services/adresses.service';
 
 @Component({
-   selector: 'app-adresses',
-   templateUrl: './adresses.component.html',
-   styleUrls: ['./adresses.component.css']
+   selector: 'app-tab-addresses',
+   templateUrl: './tab-addresses.component.html',
+   styleUrls: ['./tab-addresses.component.css']
 })
-export class AdressesComponent extends CoreBase implements OnInit {
+export class TabAddressesComponent extends CoreBase implements OnInit {
 
    //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
 
@@ -48,7 +48,7 @@ export class AdressesComponent extends CoreBase implements OnInit {
    //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
 
    constructor(private miService: MIService, private userService: UserService, private adressesService: AdressesService) {    // ici on fait le lien vers les autres components
-      super('AdressesComponent');
+      super('TabAddressesComponent');
    }
 
    //////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
