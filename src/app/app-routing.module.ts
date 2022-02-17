@@ -7,14 +7,14 @@ const routes: Routes = [
    {
       path: '',
       component: HeaderComponent,
-      loadChildren: () => import('./page-general/page-general.module').then(m => m.GeneralModule)
+      loadChildren: () => import('./page-general/tab-general.module').then(m => m.TabGeneralModule)
    },
 
 
    {
       path: 'addresses',
       component: HeaderComponent,
-      loadChildren: () => import('./page-adresses/page-adresses.module').then(m => m.AdressesModule)
+      loadChildren: () => import('./page-adresses/tab-addresses.module').then(m => m.TabAddressesModule)
    },
 
 
@@ -25,10 +25,17 @@ const routes: Routes = [
    },
 
    {
+      path: 'contracts',
+      component: HeaderComponent,
+      loadChildren: () => import('./tab-contracts/tab-contracts.module').then(m => m.TabContractsModule)
+   },
+   {
       path: 'batch-orders',
       component: HeaderComponent,
       loadChildren: () => import('./tab-batch-orders/tab-batch-orders.module').then(m => m.TabBatchOrdersModule)
    },
+
+
 
    {
       path: '',
