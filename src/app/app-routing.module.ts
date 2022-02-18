@@ -54,6 +54,12 @@ const routes: Routes = [
       loadChildren: () => import('./tab-orders/tab-orders.module').then(m => m.TabOrdersModule)
    },
 
+   {
+      path: 'items-customers',
+      component: HeaderComponent,
+      loadChildren: () => import('./tab-items-customers/tab-items-customers.module').then(m => m.TabItemsCustomersModule)
+   },
+
 
 
    {
