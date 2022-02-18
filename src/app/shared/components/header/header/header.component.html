@@ -1,22 +1,29 @@
 <h1>Customer 360 Overview</h1>
-<div>
-   <label for="clients">Clients : </label>
-   <select soho-dropdown noSearch name="clients" placeholder="Sélectioner un client"
-      (change)="onSelectedClient($event)">
-      <option *ngFor="let client of listClients" [value]="client.CUNO">{{client.CUNO}} : {{client.CUNM}} -
-         {{client.WHLO}}</option>
-   </select>
-</div>
+
+<label for="clients">Clients : </label>
+<select soho-dropdown noSearch name="clients" placeholder="Sélectioner un client" (change)="onSelectedClient($event)">
+   <option *ngFor="let client of listClients" [value]="client.CUNO">{{client.CUNO}} : {{client.CUNM}} -
+      {{client.WHLO}}</option>
+</select>
+
 
 <div soho-tabs #onglet [disableAutoUpdatedCall]="true" registerForEvents="activated">
    <div soho-tab-list-container>
       <ul soho-tab-list>
-         <li soho-tab routerLink="" routerLinkActive="true" selected="true"><a soho-tab-title>
-               Général</a>
-         </li>
-         <li soho-tab><a routerLink="./addresses" soho-tab-title> Adresses</a> </li>
 
-         <li soho-tab><a routerLink="./items-customers" soho-tab-title> Article / Client</a> </li>
+
+
+         <li soho-tab *ngFor="let item of listAddresses">
+            <a soho-tab-title routerLink="{{item.rooting}}">{{item.nameTab}}</a>
+         </li>
+         <!--
+               <li soho-tab selected="true"><a routerLink="" soho-tab-title> Général</a>
+         </li>
+         <li soho-tab selected="true"><a routerLink="" soho-tab-title> Général</a>
+         </li>
+         <li soho-tab><a routerLink="./addresses" soho-tab-title> Adresses</a> </li> -->
+
+         <!--  <li soho-tab><a routerLink="./items-customers" soho-tab-title> Article / Client</a> </li>
 
          <li soho-tab><a routerLink="./contracts" soho-tab-title> Contrats</a> </li>
 
@@ -32,7 +39,7 @@
 
          <li soho-tab><a routerLink="./offers" soho-tab-title> Offres</a> </li>
 
-         <li soho-tab><a routerLink="./batch-orders" soho-tab-title> Batch Orders</a> </li>
+         <li soho-tab><a routerLink="./batch-orders" soho-tab-title> Batch Orders</a> </li> -->
 
 
 
