@@ -54,18 +54,15 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
    //////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
 
    ngOnInit() {                                                   // à l'ouverture de l'onglet, ce que l'on codde ici se lance
-
-
-   }
-
-   create() {
       this.adressesService.listeAdresses().subscribe(data => {
 
          this.listAddressesClient = data;
          this.initGridAdresses();
 
       });
+
    }
+
 
 
    //////////////////////////////////////////////////////////////////// Méthodes ///////////////////////////////////////////////////////////////////////////////////

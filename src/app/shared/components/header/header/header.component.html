@@ -3,7 +3,7 @@
 <label for="clients">Clients : </label>
 <select soho-dropdown noSearch name="clients" placeholder="Sélectioner un client" (change)="onSelectedClient($event)">
    <option *ngFor="let client of listClients" [value]="client.CUNO">{{client.CUNO}} : {{client.CUNM}} -
-      {{client.WHLO}}</option>
+      {{client.WHLO}} </option>
 </select>
 
 
@@ -11,11 +11,10 @@
    <div soho-tab-list-container>
       <ul soho-tab-list>
 
-
-
          <li soho-tab *ngFor="let item of listAddresses">
-            <a soho-tab-title routerLink="{{item.rooting}}">{{item.nameTab}}</a>
+            <a soho-tab-title routerLink="{{item.rooting}}" routerLinkActive="active-link">{{item.nameTab}}</a>
          </li>
+
          <!--
                <li soho-tab selected="true"><a routerLink="" soho-tab-title> Général</a>
          </li>

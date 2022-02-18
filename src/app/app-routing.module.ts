@@ -71,10 +71,6 @@ const routes: Routes = [
       component: HeaderComponent,
       loadChildren: () => import('./tab-commercial-channel/tab-commercial-channel.module').then(m => m.TabCommercialChannelModule)
    },
-
-
-
-
    {
       path: '',
       redirectTo: '',
