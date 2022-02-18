@@ -14,7 +14,7 @@ const routes: Routes = [
    {
       path: 'addresses',
       component: HeaderComponent,
-      loadChildren: () => import('./page-adresses/tab-addresses.module').then(m => m.TabAddressesModule)
+      loadChildren: () => import('./tab-addresses/tab-addresses.module').then(m => m.TabAddressesModule)
    },
 
 
