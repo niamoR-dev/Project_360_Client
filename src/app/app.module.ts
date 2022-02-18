@@ -9,6 +9,7 @@ import { TabAssortmentModule } from './tab-assortment/tab-assortment.module';
 import { TabContractsModule } from './tab-contracts/tab-contracts.module';
 import { TabAddressesModule } from './page-adresses/tab-addresses.module';
 import { TabBatchOrdersModule } from './tab-batch-orders/tab-batch-orders.module';
+import { TabOffersModule } from './tab-offers/tab-offers.module';
 
 @NgModule({
    declarations: [
@@ -25,6 +26,7 @@ import { TabBatchOrdersModule } from './tab-batch-orders/tab-batch-orders.module
       TabAssortmentModule,
       TabAssortmentModule,
       TabBatchOrdersModule,
+      TabOffersModule,
 
    ],
    providers: [

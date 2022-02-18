@@ -29,10 +29,17 @@ const routes: Routes = [
       component: HeaderComponent,
       loadChildren: () => import('./tab-contracts/tab-contracts.module').then(m => m.TabContractsModule)
    },
+
    {
       path: 'batch-orders',
       component: HeaderComponent,
       loadChildren: () => import('./tab-batch-orders/tab-batch-orders.module').then(m => m.TabBatchOrdersModule)
+   },
+
+   {
+      path: 'offers',
+      component: HeaderComponent,
+      loadChildren: () => import('./tab-offers/tab-offers.module').then(m => m.TabOffersModule)
    },
 
 
