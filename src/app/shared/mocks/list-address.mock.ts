@@ -8,40 +8,40 @@ export const LIST_ADDRESSES = [
       rooting: './../addresses'
    },
    {
-      nameTab: 'Assortiment',
-      rooting: './../assortment'
+      nameTab: 'Articles Client',
+      rooting: './../items-customers'
    },
    {
       nameTab: 'Contrats',
       rooting: './../contracts'
    },
    {
-      nameTab: 'Batch Orders',
-      rooting: './../batch-orders'
-   },
-   {
       nameTab: 'Frais',
       rooting: './../fee'
+   },
+   {
+      nameTab: 'Circuits com.',
+      rooting: './../commercial-channel'
+   },
+   {
+      nameTab: 'Assortiment',
+      rooting: './../assortment'
+   },
+   {
+      nameTab: 'Commandes',
+      rooting: './../orders'
+   },
+   {
+      nameTab: 'Lignes',
+      rooting: './../line'
    },
    {
       nameTab: 'Offres',
       rooting: './../offers'
    },
    {
-      nameTab: 'Ligne',
-      rooting: './../line'
-   },
-   {
-      nameTab: 'Commandes',
-      rooting: './../orders'
+      nameTab: 'Batch Orders',
+      rooting: './../batch-orders'
    },
 
-   {
-      nameTab: 'Articles Client',
-      rooting: './../items-customers'
-   },
-   {
-      nameTab: 'Circuits com.',
-      rooting: './../commercial-channel'
-   },
 ]
