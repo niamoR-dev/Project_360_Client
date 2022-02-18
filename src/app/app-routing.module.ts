@@ -30,6 +30,12 @@ const routes: Routes = [
       loadChildren: () => import('./tab-contracts/tab-contracts.module').then(m => m.TabContractsModule)
    },
 
+   {
+      path: 'fee',
+      component: HeaderComponent,
+      loadChildren: () => import('./tab-fee/tab-fee.module').then(m => m.TabFeeModule)
+   },
+
 
 
    {

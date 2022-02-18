@@ -3,15 +3,15 @@ import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 
 @Component({
-   selector: 'app-circuitCom',
-   templateUrl: './circuitCom.component.html',
-   styleUrls: ['./circuitCom.component.css']
+   selector: 'app-tab-fee',
+   templateUrl: './tab-fee.component.html',
+   styleUrls: ['./tab-fee.component.css']
 })
-export class CircuitComComponent extends CoreBase implements OnInit {
+export class TabFeeComponent extends CoreBase implements OnInit {
 
 
    constructor(private miService: MIService, private userService: UserService) {
-      super('CircuitComComponent');
+      super('TabFeeComponent');
    }
 
    ngOnInit() {

@@ -8,6 +8,8 @@ import { SharedModule } from './shared/shared.module';
 import { TabAssortmentModule } from './tab-assortment/tab-assortment.module';
 import { TabContractsModule } from './tab-contracts/tab-contracts.module';
 import { TabAddressesModule } from './page-adresses/tab-addresses.module';
+import { TabFeeModule } from './tab-fee/tab-fee.module';
+import { TabCommercialChannelModule } from './tab-commercial-channel/tab-commercial-channel.module';
 
 @NgModule({
    declarations: [
@@ -17,12 +19,12 @@ import { TabAddressesModule } from './page-adresses/tab-addresses.module';
       BrowserModule,
       SharedModule,
       AppRoutingModule,
-      AdressesModule,
-      GeneralModule,
       TabAssortmentModule,
-      TabContractsModule
+      TabContractsModule,
       TabAddressesModule,
       TabGeneralModule,
+      TabFeeModule,
+      TabCommercialChannelModule,
       TabAssortmentModule
 
    ],
