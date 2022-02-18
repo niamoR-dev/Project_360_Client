@@ -14,6 +14,5 @@ export class TabBatchOrdersComponent extends CoreBase implements OnInit {
    }
 
    ngOnInit() {
-      prompt("yo");
    }
 }

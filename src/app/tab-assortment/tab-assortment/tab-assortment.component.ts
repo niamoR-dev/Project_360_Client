@@ -15,7 +15,6 @@ export class TabAssortmentComponent extends CoreBase implements OnInit {
    }
 
    ngOnInit() {
-      prompt("coucou");
 
    }
 
