@@ -3,14 +3,14 @@ import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 
 @Component({
-   selector: 'app-ligne',
-   templateUrl: './ligne.component.html',
-   styleUrls: ['./ligne.component.css']
+   selector: 'app-tab-line',
+   templateUrl: './tab-line.component.html',
+   styleUrls: ['./tab-line.component.css']
 })
-export class LigneComponent extends CoreBase implements OnInit {
+export class TabLineComponent extends CoreBase implements OnInit {
 
    constructor(private miService: MIService, private userService: UserService) {
-      super('LigneComponent');
+      super('TabLineComponent');
    }
 
    ngOnInit() {
