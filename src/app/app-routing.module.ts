@@ -7,7 +7,7 @@ const routes: Routes = [
    {
       path: '',
       component: HeaderComponent,
-      loadChildren: () => import('./page-general/tab-general.module').then(m => m.TabGeneralModule)
+      loadChildren: () => import('./tab-general/tab-general.module').then(m => m.TabGeneralModule)
    },
 
 
