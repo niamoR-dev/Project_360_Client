@@ -28,16 +28,14 @@ import { TabCommercialChannelModule } from './tab-commercial-channel/tab-commerc
       TabContractsModule,
       TabAddressesModule,
       TabGeneralModule,
-      TabAssortmentModule,
-      TabAssortmentModule,
       TabBatchOrdersModule,
       TabOffersModule,
       TabLineModule,
       TabOrdersModule,
       TabItemsCustomersModule,
       TabFeeModule,
-      TabCommercialChannelModule,
-      TabAssortmentModule
+      TabCommercialChannelModule
+
 
    ],
    providers: [

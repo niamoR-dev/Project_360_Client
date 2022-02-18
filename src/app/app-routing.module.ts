@@ -66,6 +66,13 @@ const routes: Routes = [
       loadChildren: () => import('./tab-items-customers/tab-items-customers.module').then(m => m.TabItemsCustomersModule)
    },
 
+   {
+      path: 'commercial-channel',
+      component: HeaderComponent,
+      loadChildren: () => import('./tab-commercial-channel/tab-commercial-channel.module').then(m => m.TabCommercialChannelModule)
+   },
+
+
 
 
    {
