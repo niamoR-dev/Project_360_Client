@@ -34,6 +34,23 @@ export class ItemsCustomersService implements OnInit {
       );
    }
 
+   listDetailItemCustomer() {
+
+      return this.listALLDetailItemCustomer().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
+         if (answer.errorCode) {
+            throw Error(JSON.stringify(answer));
+         }
+         return answer.items;
+      }),
+         catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
+            console.error('Erreur API list :', error);
+
+            this.handleError('Échec de l\'exécution de l\'API list', error);
+            return of(null);
+         })
+      );
+   }
+
    //////////////////////////////////////////////////////////////////// Méthodes qui gère les erreurs ///////////////////////////////////////////////////////////////////////////////////
 
    private handleError(message: string, error?: any) {
@@ -64,4 +81,23 @@ export class ItemsCustomersService implements OnInit {
       };
       return this.miService.execute(request);
    }
+
+
+   private listALLDetailItemCustomer(): Observable<IMIResponse> {
+
+      let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
+
+         CUNO: 'SE_TR4100'
+      }
+
+      const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
+         program: 'OIS005MI',
+         transaction: 'List',
+         record: inputFields,
+         outputFields: ['¨POPN', 'ALUMN', 'D2QT', 'D3QT', 'RESP', 'ADCU'],
+      };
+      return this.miService.execute(request);
+   }
+
+
 }

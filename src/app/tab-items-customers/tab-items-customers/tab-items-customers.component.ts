@@ -23,6 +23,8 @@ export class TabItemsCustomersComponent extends CoreBase implements OnInit {
    resp: any;
    adcu: any;
 
+   listDetailItemCustomer: any[];
+
 
 
 
@@ -85,10 +87,27 @@ export class TabItemsCustomersComponent extends CoreBase implements OnInit {
 
       const newCount = args.length;
       const selected = args && newCount === 1 ? args[0].data : null;
-
+      this.InitDetailItemCustomerList();
       //this.show = true;
 
       this.itds = selected.ITDS;
+   }
+
+   private InitDetailItemCustomerList() { // API OIS005MI
+
+      this.itemsCustomersService.listDetailItemCustomer().subscribe(data => {
+         this.listDetailItemCustomer = data;
+
+         this.popn = this.listDetailItemCustomer[0].POPN;
+         this.alum = this.listDetailItemCustomer[0].ALUM;
+         this.d2qt = this.listDetailItemCustomer[0].D2QT;
+         this.d3qt = this.listDetailItemCustomer[0].D3QT;
+         this.resp = this.listDetailItemCustomer[0].RESP;
+         this.adcu = this.listDetailItemCustomer[0].ADCU;
+
+         console.log(" GetBasicData  ", this.listDetailItemCustomer)  // la virgule dans le console log permets de lire à 'intérieur de l'objet
+
+      });
    }
 
 
