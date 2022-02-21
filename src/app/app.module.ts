@@ -18,7 +18,7 @@ import { TabAddressesModule } from './tab-addresses/tab-addresses.module';
 
 @NgModule({
    declarations: [
-      AppComponent
+      AppComponent,
    ],
    imports: [
       BrowserModule,
