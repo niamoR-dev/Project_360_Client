@@ -17,7 +17,6 @@ export class HeaderComponent extends CoreBase implements OnInit {
 
    listClients: any[];
    cunoHeader: any;
-   cuno: string;
 
    constructor(private miService: MIService, private userService: UserService, private headerService: HeaderService, private adressesService: AdressesService) {
       super('HeaderComponent');

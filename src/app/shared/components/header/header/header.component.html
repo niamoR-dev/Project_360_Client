@@ -1,5 +1,3 @@
-<h1>Customer 360 Overview</h1>
-
 <label for="clients">Clients : </label>
 <select soho-dropdown noSearch name="clients" placeholder="Sélectioner un client" (change)="onSelectedClient($event)">
    <option *ngFor="let client of listClients" [value]="client.CUNO">{{client.CUNO}} : {{client.CUNM}} -
@@ -11,8 +9,8 @@
    <div soho-tab-list-container>
       <ul soho-tab-list>
 
-         <li soho-tab *ngFor="let item of listAddresses">
-            <a soho-tab-title routerLink="{{item.rooting}}" routerLinkActive="active-link">{{item.nameTab}}</a>
+         <li soho-tab *ngFor="let item of listAddresses" routerLinkActive="active-link">
+            <a soho-tab-title routerLink="{{item.rooting}}">{{item.nameTab}}</a>
          </li>
 
          <!--
@@ -44,8 +42,6 @@
       </ul>
    </div>
 </div>
-
-<router-outlet></router-outlet>
 
 
 
