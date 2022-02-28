@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { OutletContext } from '@angular/router';
 import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
-import { AdressesService } from '../../core/web-services/adresses.service';
+import { CunoHeaderService } from 'src/app/core/services/cuno-header.service';
+import { AdressesWebService } from '../../core/web-services/adresses.webservice';
 
 @Component({
    selector: 'app-tab-addresses',
@@ -45,16 +45,17 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
    detailsAddressesGetFinancial: any[];
 
 
+
    //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
 
-   constructor(private miService: MIService, private userService: UserService, private adressesService: AdressesService) {    // ici on fait le lien vers les autres components
+   constructor(private miService: MIService, private userService: UserService, private adressesWebService: AdressesWebService, private cunoHeaderService: CunoHeaderService) {    // ici on fait le lien vers les autres components
       super('TabAddressesComponent');
    }
 
    //////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
 
    ngOnInit() {                                                   // à l'ouverture de l'onglet, ce que l'on codde ici se lance
-      this.adressesService.listeAdresses().subscribe(data => {
+      this.adressesWebService.listeAdresses().subscribe(data => {
 
          this.listAddressesClient = data;
          this.initGridAdresses();
@@ -123,6 +124,8 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
       this.InitDetailAdressGetOrderInfo();
       this.InitDetailAdressGetFinancial();
 
+      this.cunoSubject();
+
       this.cuno = selected.CUNO;
       this.cunm = selected.CUNM;
       this.cua1 = selected.CUA1;
@@ -133,7 +136,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
    private InitDetailAdressGetBasicData() { // API 610 GetBasicData
 
-      this.adressesService.detailsAddressesGetBasicData().subscribe(data => {
+      this.adressesWebService.detailsAddressesGetBasicData().subscribe(data => {
          this.detailsAddressesGetBasicData = data;
 
          this.phno = this.detailsAddressesGetBasicData[0].PHNO;
@@ -150,7 +153,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
    private InitDetailAdressGetOrderInfo() {  // API 610 GetOrderInfo
 
-      this.adressesService.detailsAddressesGetOrderInfo().subscribe(data => {
+      this.adressesWebService.detailsAddressesGetOrderInfo().subscribe(data => {
 
          this.detailsAddressesGetOrderInfo = data;
 
@@ -165,7 +168,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
    private InitDetailAdressGetFinancial() {  // API 610 GetOrderInfo
 
-      this.adressesService.detailsAddressesGetFinancial().subscribe(data => {
+      this.adressesWebService.detailsAddressesGetFinancial().subscribe(data => {
 
          this.detailsAddressesGetFinancial = data;
 
@@ -177,4 +180,15 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
    }
 
+
+
+   cunoSubject() {
+      console.log(" SUBJECT début")
+      this.cunoHeaderService.methode().subscribe({
+         next: (data) =>
+            console.log(`observer A : ${data}`)
+
+      });
+      console.log(" SUBJECT fin")
+   }
 }
