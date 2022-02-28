@@ -2,18 +2,27 @@ import { Injectable, OnInit } from "@angular/core";
 import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
 import { MIService, UserService } from "@infor-up/m3-odin-angular";
 import { SohoMessageService } from "ids-enterprise-ng";
-import { Observable, of } from "rxjs";
+import { Observable, of, Subject, Subscription } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
+import { CunoHeaderService } from "../services/cuno-header.service";
 
 @Injectable({ providedIn: 'root' })
-export class AdressesService implements OnInit {
+export class AdressesWebService implements OnInit {
 
    cuno: any;
 
-   constructor(protected miService: MIService, private userSevice: UserService, private messageService: SohoMessageService) {
+   cunoSubscription: Subscription;
+
+   constructor(protected miService: MIService, private userSevice: UserService, private messageService: SohoMessageService, private cunoHeaderService: CunoHeaderService) {
    }
 
    ngOnInit() {
+      this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
+         (data: any[]) => {
+            this.cuno = data;
+         }
+      );
+      this.cunoHeaderService.methode();
    }
 
 
@@ -120,7 +129,8 @@ export class AdressesService implements OnInit {
 
 
    private listDetailsAddressGetBasicData(): Observable<IMIResponse> {
-      console.log("  CUNO BITCH =", this.cuno);
+      console.log("  CUNO =", this.cuno);
+
 
       let inputFields: any = {
          CONO: '100',
@@ -171,5 +181,10 @@ export class AdressesService implements OnInit {
 
       return this.miService.execute(request);
    }
+
+
+
+
+
 
 }

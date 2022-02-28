@@ -6,7 +6,7 @@ import { Observable, of } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
 
 @Injectable({ providedIn: 'root' })
-export class ItemsCustomersService implements OnInit {
+export class HeaderWebService implements OnInit {
 
    cuno: any;
 
@@ -14,38 +14,24 @@ export class ItemsCustomersService implements OnInit {
    }
 
    ngOnInit() {
+
    }
 
 
-   listeItemsCustomers() {
+   //////////////////////////////////////////////////////////////////// Méthodes qui envoient les données dans le TS ///////////////////////////////////////////////////////////////////////////////////
 
-      return this.listAllItemsCustomers().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
+
+   listeClients() {
+      return this.listAllClients().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
          if (answer.errorCode) {
             throw Error(JSON.stringify(answer));
          }
          return answer.items;
       }),
          catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
-            console.error('Erreur API list :', error);
+            console.error('Erreur API lstByName :', error);
 
-            this.handleError('Échec de l\'exécution de l\'API list', error);
-            return of(null);
-         })
-      );
-   }
-
-   listDetailItemCustomer() {
-
-      return this.listALLDetailItemCustomer().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
-         if (answer.errorCode) {
-            throw Error(JSON.stringify(answer));
-         }
-         return answer.items;
-      }),
-         catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
-            console.error('Erreur API list :', error);
-
-            this.handleError('Échec de l\'exécution de l\'API list', error);
+            this.handleError('Échec de l\'exécution de l\'API lstByName', error);
             return of(null);
          })
       );
@@ -66,38 +52,19 @@ export class ItemsCustomersService implements OnInit {
    //////////////////////////////////////////////////////////////////// Méthodes qui appellent les API   ///////////////////////////////////////////////////////////////////////////////////
 
 
-   private listAllItemsCustomers(): Observable<IMIResponse> {
+   private listAllClients(): Observable<IMIResponse> {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
-
-         CUNO: 'NDUCLI02'
+         CONO: '100'
       }
 
       const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
-         program: 'OIS005MI',
-         transaction: 'List',
+         program: 'CRS610MI',
+         transaction: 'LstByName',
          record: inputFields,
-         outputFields: ['CUNO', 'ITNO', 'ITDS'],
+         outputFields: ['CUNM', 'CUNO', 'WHLO'],
       };
       return this.miService.execute(request);
    }
-
-
-   private listALLDetailItemCustomer(): Observable<IMIResponse> {
-
-      let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
-
-         CUNO: 'SE_TR4100'
-      }
-
-      const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
-         program: 'OIS005MI',
-         transaction: 'List',
-         record: inputFields,
-         outputFields: ['¨POPN', 'ALUMN', 'D2QT', 'D3QT', 'RESP', 'ADCU'],
-      };
-      return this.miService.execute(request);
-   }
-
 
 }

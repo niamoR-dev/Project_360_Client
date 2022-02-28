@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
-import { ItemsCustomersService } from 'src/app/core/web-services/items-customers.service';
+import { ItemsCustomersWebService } from 'src/app/core/web-services/items-customers.webservice';
 
 @Component({
    selector: 'app-tab-items-customers',
@@ -28,12 +28,12 @@ export class TabItemsCustomersComponent extends CoreBase implements OnInit {
 
 
 
-   constructor(private miService: MIService, private userService: UserService, private itemsCustomersService: ItemsCustomersService) {
+   constructor(private miService: MIService, private userService: UserService, private itemsCustomersWebService: ItemsCustomersWebService) {
       super('TabItemsCustomersComponent');
    }
 
    ngOnInit() {
-      this.itemsCustomersService.listeItemsCustomers().subscribe(data => {
+      this.itemsCustomersWebService.listeItemsCustomers().subscribe(data => {
 
          this.listItemCustomer = data;
          this.initGridItemCustomer();
@@ -95,7 +95,7 @@ export class TabItemsCustomersComponent extends CoreBase implements OnInit {
 
    private InitDetailItemCustomerList() { // API OIS005MI
 
-      this.itemsCustomersService.listDetailItemCustomer().subscribe(data => {
+      this.itemsCustomersWebService.listDetailItemCustomer().subscribe(data => {
          this.listDetailItemCustomer = data;
 
          this.popn = this.listDetailItemCustomer[0].POPN;
