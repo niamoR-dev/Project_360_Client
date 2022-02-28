@@ -17,12 +17,12 @@ export class AdressesWebService implements OnInit {
    }
 
    ngOnInit() {
-      this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
-         (data: any[]) => {
-            this.cuno = data;
-         }
-      );
-      this.cunoHeaderService.methode();
+      // this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
+      //    (data: any[]) => {
+      //       this.cuno = data;
+      //    }
+      // );
+      // this.cunoHeaderService.methode();
    }
 
 
