@@ -22,6 +22,7 @@ export class OrdersService implements OnInit {
 
 
       return this.listAllOrders().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
+         console.log("prout", answer)
          if (answer.errorCode) {
             throw Error(JSON.stringify(answer));
          }
