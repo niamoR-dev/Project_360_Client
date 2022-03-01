@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
-import { AdressesService } from 'src/app/core/web-services/adresses.service';
+import { CunoHeaderService } from 'src/app/core/services/cuno-header.service';
 import { LIST_ADDRESSES } from 'src/app/shared/mocks/list-address.mock';
-import { HeaderService } from '../web-services/header.service';
+import { HeaderWebService } from '../web-services/header.webservice';
 
 @Component({
    selector: 'app-header',
@@ -17,13 +17,13 @@ export class HeaderComponent extends CoreBase implements OnInit {
    listClients: any[];
    cunoHeader: any;
 
-   constructor(private miService: MIService, private userService: UserService, private headerService: HeaderService, private adressesService: AdressesService) {
+   constructor(private miService: MIService, private userService: UserService, private headerWebService: HeaderWebService, private cunoHeaderService: CunoHeaderService) {
       super('HeaderComponent');
    }
 
 
    ngOnInit() {
-      this.headerService.listeClients().subscribe(data => {
+      this.headerWebService.listeClients().subscribe(data => {
 
          this.listClients = data;
       });
@@ -35,8 +35,13 @@ export class HeaderComponent extends CoreBase implements OnInit {
    }
 
    sendToService() {
-      this.adressesService.cuno = this.cunoHeader;
+      this.cunoHeaderService.cunoToSend(this.cunoHeader).subscribe(data => {
+         console.log(data);
+
+      });
    }
+
+
 
    //aller se renseigner sur les Subject + sauvegarde value : adresseService : cono$ = Subject<String>;
 }

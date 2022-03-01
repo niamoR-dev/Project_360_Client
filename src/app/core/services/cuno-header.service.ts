@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 import { Subject } from 'rxjs';
