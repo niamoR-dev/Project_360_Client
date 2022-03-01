@@ -2,32 +2,38 @@ import { Injectable, OnInit } from "@angular/core";
 import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
 import { MIService, UserService } from "@infor-up/m3-odin-angular";
 import { SohoMessageService } from "ids-enterprise-ng";
-import { Observable, of, Subject, Subscription } from "rxjs";
+import { Observable, of, Subscription } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
 import { CunoHeaderService } from "../services/cuno-header.service";
 
 @Injectable({ providedIn: 'root' })
 export class AdressesWebService implements OnInit {
 
-   cuno: any;
-
+   cunoHeader: any;
    cunoSubscription: Subscription;
 
    constructor(protected miService: MIService, private userSevice: UserService, private messageService: SohoMessageService, private cunoHeaderService: CunoHeaderService) {
    }
 
+
    ngOnInit() {
-      // this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
-      //    (data: any[]) => {
-      //       this.cuno = data;
-      //    }
-      // );
-      // this.cunoHeaderService.methode();
+
+   }
+
+
+   cunoHeaderMethod() {
+      this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
+         (data: any[]) => {
+            this.cunoHeader = data;
+         }
+      );
+      this.cunoHeaderService.methode();
    }
 
 
    listeAdresses() {
 
+      this.cunoHeaderMethod();
 
 
       return this.listAllAddresses().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
@@ -114,7 +120,7 @@ export class AdressesWebService implements OnInit {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
          CONO: '100',
-         CUNO: this.cuno
+         CUNO: this.cunoHeader
       }
 
       const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
@@ -129,12 +135,12 @@ export class AdressesWebService implements OnInit {
 
 
    private listDetailsAddressGetBasicData(): Observable<IMIResponse> {
-      console.log("  CUNO =", this.cuno);
+      console.log("  CUNO =", this.cunoHeader);
 
 
       let inputFields: any = {
          CONO: '100',
-         CUNO: this.cuno
+         CUNO: this.cunoHeader
       }
 
       const request: IMIRequest = {
@@ -152,7 +158,7 @@ export class AdressesWebService implements OnInit {
    private listDetailsAddressGetOrderInfo(): Observable<IMIResponse> {
       let inputFields: any = {
          CONO: '100',
-         CUNO: this.cuno
+         CUNO: this.cunoHeader
       }
 
       const request: IMIRequest = {
@@ -169,7 +175,7 @@ export class AdressesWebService implements OnInit {
 
       let inputFields: any = {
          CONO: '100',
-         CUNO: this.cuno
+         CUNO: this.cunoHeader
       }
 
       const request: IMIRequest = {

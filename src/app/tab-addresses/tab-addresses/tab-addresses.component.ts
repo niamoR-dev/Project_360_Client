@@ -124,7 +124,6 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
       this.InitDetailAdressGetOrderInfo();
       this.InitDetailAdressGetFinancial();
 
-      this.cunoSubject();
 
       this.cuno = selected.CUNO;
       this.cunm = selected.CUNM;
@@ -182,13 +181,5 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
 
 
-   cunoSubject() {
-      console.log(" SUBJECT début")
-      this.cunoHeaderService.methode().subscribe({
-         next: (data) =>
-            console.log(`observer A : ${data}`)
 
-      });
-      console.log(" SUBJECT fin")
-   }
 }
