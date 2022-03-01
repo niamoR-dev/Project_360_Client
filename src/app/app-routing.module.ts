@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { HeaderComponent } from './shared/components/header/header/header.component';
 
 const routes: Routes = [
 
    {
       path: '',
-      component: HeaderComponent,
       loadChildren: () => import('./tab-general/tab-general.module').then(m => m.TabGeneralModule)
    },
 

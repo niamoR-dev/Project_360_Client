@@ -1,12 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { M3OdinModule } from '@infor-up/m3-odin-angular';
-import { SohoComponentsModule } from 'ids-enterprise-ng';
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { HeaderComponent } from '../shared/components/header/header/header.component';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { HeaderComponent } from './header/header.component';
 import { SharedModule } from '../shared/shared.module';
-import { LayoutComponent } from './layout/layout.component';
 import { TabCommercialChannelModule } from '../tab-commercial-channel/tab-commercial-channel.module';
 import { TabAssortmentModule } from '../tab-assortment/tab-assortment.module';
 import { TabAddressesModule } from '../tab-addresses/tab-addresses.module';
@@ -21,16 +15,13 @@ import { TabOrdersModule } from '../tab-orders/tab-orders.module';
 
 @NgModule({
    declarations: [
-      LayoutComponent
+      HeaderComponent,
 
    ],
 
    imports: [
-      CommonModule,
-      SohoComponentsModule,
-      M3OdinModule,
-      FormsModule,
-      RouterModule,
+
+
       SharedModule,
       TabAssortmentModule,
       TabContractsModule,
@@ -47,23 +38,25 @@ import { TabOrdersModule } from '../tab-orders/tab-orders.module';
 
    exports: [
       HeaderComponent,
-      CommonModule,
-      SohoComponentsModule,
-      M3OdinModule,
-      FormsModule,
-      RouterModule,
-      SharedModule,
-      TabAssortmentModule,
-      TabContractsModule,
-      TabAddressesModule,
-      TabGeneralModule,
-      TabBatchOrdersModule,
-      TabOffersModule,
-      TabLineModule,
-      TabOrdersModule,
-      TabItemsCustomersModule,
-      TabFeeModule,
-      TabCommercialChannelModule
    ]
 })
-export class CoreModule { }
+export class CoreModule {
+
+
+   /*
+      Permet de placer le CoreModule en parent de tous les autres modules, si un autre module est
+
+      importé dans le appModule l'application rentrera en conflit (mesure de sécurité)
+   */
+
+   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+
+      if (parentModule) {
+
+         throw new Error('CoreModule is already loaded.');
+
+      }
+
+   }
+
+}

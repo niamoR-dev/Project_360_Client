@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
 import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
 import { AdressesService } from 'src/app/core/web-services/adresses.service';
 import { LIST_ADDRESSES } from 'src/app/shared/mocks/list-address.mock';
-import { HeaderService } from '../../../../core/web-services/header.service';
+import { HeaderService } from '../web-services/header.service';
 
 @Component({
    selector: 'app-header',

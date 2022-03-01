@@ -22,6 +22,9 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
    adid: any;
    cunm: any;
    cua1: any;
+   cua2: any;
+   cua3: any;
+   cua4: any;
    phno: any;
    tfno: any;
    meal: any;
@@ -126,6 +129,9 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
       this.cuno = selected.CUNO;
       this.cunm = selected.CUNM;
       this.cua1 = selected.CUA1;
+      this.cua2 = selected.CUA2;
+      this.cua3 = selected.CUA3;
+      this.cua4 = selected.CUA4;
       this.adid = selected.ADID;
 
    }
