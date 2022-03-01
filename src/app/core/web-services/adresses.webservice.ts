@@ -27,7 +27,7 @@ export class AdressesWebService implements OnInit {
             this.cunoHeader = data;
          }
       );
-      this.cunoHeaderService.methode();
+      this.cunoHeaderService.subjectMethod();
    }
 
 

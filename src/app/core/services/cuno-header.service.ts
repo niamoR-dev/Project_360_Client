@@ -19,13 +19,13 @@ export class CunoHeaderService {
 
    }
 
-   cunoToSend(cuno: any) {
+   cunoToSend(cuno: any) { // méthode qui réceptionne la Cuno venant du header
 
       return this.cuno = cuno;
    }
 
 
-   methode() {
+   subjectMethod() {
       this.cunoSubject.next(this.cuno);
    }
 
