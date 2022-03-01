@@ -4,7 +4,7 @@ import { Log } from '@infor-up/m3-odin';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
-import { LayoutModule } from './core/layout/layout.module';
+
 
 @NgModule({
    declarations: [
@@ -12,11 +12,8 @@ import { LayoutModule } from './core/layout/layout.module';
    ],
    imports: [
       BrowserModule,
-      CoreModule,
       AppRoutingModule,
-      LayoutModule
-
-
+      CoreModule,
    ],
    providers: [
       {

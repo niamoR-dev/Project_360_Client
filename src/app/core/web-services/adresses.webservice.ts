@@ -127,7 +127,7 @@ export class AdressesWebService implements OnInit {
          program: 'CRS610MI',
          transaction: 'LstAddresses',
          record: inputFields,
-         outputFields: ['ADRT', 'ADID', 'CUNM', 'CUA1'],
+         outputFields: ['ADRT', 'ADID', 'CUNM', 'CUA1', 'CUA2', 'CUA3', 'CUA4'],
       };
       return this.miService.execute(request);
    }
