@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CoreBase, IUserContext } from '@infor-up/m3-odin';
-import { MIService, UserService } from '@infor-up/m3-odin-angular';
+import { Component, OnInit } from '@angular/core';
+import { CoreBase } from '@infor-up/m3-odin';
+import { Subscription } from 'rxjs';
 import { CunoHeaderService } from 'src/app/core/services/cuno-header-service/cuno-header.service';
 import { AdressesWebService } from '../../core/web-services/adresses.webservice';
 
@@ -34,8 +34,6 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
    tedl: any;
    vrno: any;
 
-   @Input() cunoHeader: string;
-
    show: boolean; // permets l'affichage de détails au clique
 
 
@@ -43,34 +41,67 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
    detailsAddressesGetBasicData: any[]; // tableau pour enregistrer le retour d'API des détails des adresses d'un client
 
-   detailsAddressesGetOrderInfo: any[];
+   detailsAddressesGetOrderInfo: any[];   // tableau pour enregistrer le retour d'API des détails des adresses d'un client
 
-   detailsAddressesGetFinancial: any[];
+   detailsAddressesGetFinancial: any[];   // tableau pour enregistrer le retour d'API des détails des adresses d'un client
 
-
+   cunoHeader: any;
+   cunoSubscription: Subscription;
 
    //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
 
-   constructor(private miService: MIService, private userService: UserService, private adressesWebService: AdressesWebService, private cunoHeaderService: CunoHeaderService) {    // ici on fait le lien vers les autres components
+   constructor(private adressesWebService: AdressesWebService, private cunoHeaderService: CunoHeaderService) {    // ici on fait le lien vers les autres components
       super('TabAddressesComponent');
    }
 
    //////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
 
    ngOnInit() {                                                   // à l'ouverture de l'onglet, ce que l'on codde ici se lance
-      this.adressesWebService.listeAdresses().subscribe(data => {
 
-         this.listAddressesClient = data;
-         this.initGridAdresses();
+      this.cunoHeaderMethod(); // lancement de la méthode de récupération du CUNO
 
-      });
+      this.sendCunoToAddressesWebService(); // lancement de la méthode de récupération du CUNO
+
+      this.recoveryDataFromAPI(); // lancement de la méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
 
    }
 
 
+   //////////////////////////////////////////////////////////////////// Méthodes ngOnInit  ///////////////////////////////////////////////////////////////////////////////////
 
-   //////////////////////////////////////////////////////////////////// Méthodes ///////////////////////////////////////////////////////////////////////////////////
 
+
+
+   cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
+      this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
+         (data: any) => {
+            this.cunoHeader = data;
+         }
+      );
+      this.cunoHeaderService.subjectMethod();
+   }
+
+
+
+   sendCunoToAddressesWebService() {       // méthode obesevable pour envoyer la CUNO de le webService de Adresse
+      this.adressesWebService.recoveryCunoFromHeader(this.cunoHeader).subscribe();
+   }
+
+
+
+   recoveryDataFromAPI() {             // méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
+
+      this.adressesWebService.listeAdresses().subscribe(data => {
+         this.listAddressesClient = data;
+
+         this.initGridAdresses();      // lance l'initialisation de la Grid
+      });
+
+
+   }
+
+
+   //////////////////////////////////////////////////////////////////// Méthodes qui gère l'affichage Grid ///////////////////////////////////////////////////////////////////////////////////
 
 
    private initGridAdresses() {                             // méthode qui permet d'afficher les données dans la GRID
@@ -115,6 +146,8 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
       this.datagridOptions = options;
    }
 
+
+   //////////////////////////////////////////////////////////////////// Méthodes qui gère le formulaire d'affichage Détail ///////////////////////////////////////////////////////////////////////////////////
 
    onSelectedLine(args: any[]) {                                        // méthode pour gérer quand on cique sur une ligne
 
