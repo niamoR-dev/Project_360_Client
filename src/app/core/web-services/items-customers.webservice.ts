@@ -1,35 +1,28 @@
 import { Injectable, OnInit } from "@angular/core";
 import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
-import { MIService, UserService } from "@infor-up/m3-odin-angular";
+import { MIService } from "@infor-up/m3-odin-angular";
 import { SohoMessageService } from "ids-enterprise-ng";
-import { Observable, of, Subscription } from "rxjs";
+import { Observable, of } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
-import { CunoHeaderService } from "../services/cuno-header-service/cuno-header.service";
 
 @Injectable({ providedIn: 'root' })
 export class ItemsCustomersWebService implements OnInit {
 
    cunoHeader: any;
-   cunoSubscription: Subscription;
 
-   constructor(protected miService: MIService, private userSevice: UserService, private messageService: SohoMessageService, private cunoHeaderService: CunoHeaderService) {
+   constructor(protected miService: MIService, private messageService: SohoMessageService) {
    }
 
    ngOnInit() {
    }
 
-   cunoHeaderMethod() {
-      this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
-         (data: any[]) => {
-            this.cunoHeader = data;
-         }
-      );
-      this.cunoHeaderService.subjectMethod();
+   recoveryCunoFromHeader(cuno: any) { // méthode qui récupère leCUNO du Header venant du component.ts Item Customer
+      return of(this.cunoHeader = cuno);
+
    }
 
    listeItemsCustomers() {
 
-      this.cunoHeaderMethod();
 
       return this.listAllItemsCustomers().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
          if (answer.errorCode) {

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreBase, IUserContext } from '@infor-up/m3-odin';
-import { MIService, UserService } from '@infor-up/m3-odin-angular';
-import { CunoHeaderService } from 'src/app/core/services/cuno-header-service/cuno-header.service';
+import { CoreBase } from '@infor-up/m3-odin';
 import { LIST_ADDRESSES } from 'src/app/shared/mocks/list-address.mock';
+import { CunoHeaderService } from '../services/cuno-header-service/cuno-header.service';
 import { HeaderWebService } from '../web-services/header.webservice';
 
 @Component({
@@ -17,9 +16,11 @@ export class HeaderComponent extends CoreBase implements OnInit {
    listClients: any[];
    cunoHeader: any;
 
-   constructor(private miService: MIService, private userService: UserService, private headerWebService: HeaderWebService, private cunoHeaderService: CunoHeaderService) {
+
+   constructor(private headerWebService: HeaderWebService, private cunoHeaderService: CunoHeaderService) {
       super('HeaderComponent');
    }
+
 
 
    ngOnInit() {
@@ -29,17 +30,20 @@ export class HeaderComponent extends CoreBase implements OnInit {
       });
    }
 
+
+
    onSelectedClient(numberClient: any) {
       this.cunoHeader = numberClient.data;
+
       this.sendToService();
    }
 
-   sendToService() {
-      this.cunoHeaderService.cunoToSend(this.cunoHeader).subscribe(data => {
-         console.log(data);
 
-      });
+
+   sendToService() {
+      this.cunoHeaderService.cunoToSend(this.cunoHeader).subscribe();
    }
+
 
 
 

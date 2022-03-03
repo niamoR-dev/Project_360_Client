@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreBase, IUserContext } from '@infor-up/m3-odin';
-import { MIService, UserService } from '@infor-up/m3-odin-angular';
-import { OrdersService } from 'src/app/core/web-services/orders.webservice';
+import { CoreBase } from '@infor-up/m3-odin';
+import { Subscription } from 'rxjs';
+import { CunoHeaderService } from 'src/app/core/services/cuno-header-service/cuno-header.service';
+import { OrdersWebService } from 'src/app/core/web-services/orders.webservice';
 
 @Component({
    selector: 'app-tab-orders',
@@ -26,14 +27,45 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
 
    listDetailOrders: any[];
 
+   cunoHeader: any;
+   cunoSubscription: Subscription;
 
-   constructor(private miService: MIService, private userService: UserService, private orderService: OrdersService) {
+
+   constructor(private orderWebService: OrdersWebService, private cunoHeaderService: CunoHeaderService) {
       super('TabOrdersComponent');
    }
 
    ngOnInit() {
 
-      this.orderService.listeOrders().subscribe(data => {
+      this.cunoHeaderMethod();
+
+      this.sendCunoToOrderWebService();
+
+      this.recoveryDataFromAPI();
+
+   }
+
+   //////////////////////////////////////////////////////////////////// Méthodes ngOnInit  ///////////////////////////////////////////////////////////////////////////////////
+
+
+   sendCunoToOrderWebService() {       // méthode obesevable pour envoyer la CUNO de le webService de Adresse
+      this.orderWebService.recoveryCunoFromHeader(this.cunoHeader).subscribe();
+   }
+
+
+   cunoHeaderMethod() {    // méthode obesevable pour récupérer la CUNO de la dropdown du header
+      this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
+         (data: any) => {
+            this.cunoHeader = data;
+         }
+      );
+      this.cunoHeaderService.subjectMethod();
+   }
+
+
+   recoveryDataFromAPI() {             // méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
+
+      this.orderWebService.listeOrders().subscribe(data => {
 
          this.listOrders = data;
          this.initGridOrders();
@@ -41,6 +73,10 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
       });
 
    }
+
+   //////////////////////////////////////////////////////////////////// Méthodes qui gère l'affichage Grid ///////////////////////////////////////////////////////////////////////////////////
+
+
 
    private initGridOrders() {                             // méthode qui permet d'afficher les données dans la GRID
       const options: SohoDataGridOptions = {
