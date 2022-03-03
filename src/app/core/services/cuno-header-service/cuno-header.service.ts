@@ -10,8 +10,10 @@ export class CunoHeaderService {
    cuno: any;
    cunoSubject = new Subject<any>();
 
-   constructor(protected miService: MIService, private userSevice: UserService,) {
+   constructor(protected miService: MIService, private userSevice: UserService) {
    }
+
+
 
 
    ngOnInit() {

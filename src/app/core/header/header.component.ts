@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
-import { CunoHeaderService } from 'src/app/core/services/cuno-header.service';
+import { CunoHeaderService } from 'src/app/core/services/cuno-header-service/cuno-header.service';
 import { LIST_ADDRESSES } from 'src/app/shared/mocks/list-address.mock';
 import { HeaderWebService } from '../web-services/header.webservice';
 

@@ -56,7 +56,7 @@ export class HeaderWebService implements OnInit {
    private listAllClients(): Observable<IMIResponse> {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
-         CONO: '100'
+         CONO: ''
       }
 
       const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher

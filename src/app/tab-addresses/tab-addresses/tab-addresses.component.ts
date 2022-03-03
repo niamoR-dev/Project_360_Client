@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
-import { CunoHeaderService } from 'src/app/core/services/cuno-header.service';
+import { CunoHeaderService } from 'src/app/core/services/cuno-header-service/cuno-header.service';
 import { AdressesWebService } from '../../core/web-services/adresses.webservice';
 
 @Component({

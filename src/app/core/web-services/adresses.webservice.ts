@@ -1,10 +1,10 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable, OnDestroy, OnInit } from "@angular/core";
 import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
 import { MIService, UserService } from "@infor-up/m3-odin-angular";
 import { SohoMessageService } from "ids-enterprise-ng";
 import { Observable, of, Subscription } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
-import { CunoHeaderService } from "../services/cuno-header.service";
+import { CunoHeaderService } from "../services/cuno-header-service/cuno-header.service";
 
 @Injectable({ providedIn: 'root' })
 export class AdressesWebService implements OnInit {
@@ -14,6 +14,7 @@ export class AdressesWebService implements OnInit {
 
    constructor(protected miService: MIService, private userSevice: UserService, private messageService: SohoMessageService, private cunoHeaderService: CunoHeaderService) {
    }
+
 
 
    ngOnInit() {
@@ -187,7 +188,6 @@ export class AdressesWebService implements OnInit {
 
       return this.miService.execute(request);
    }
-
 
 
 

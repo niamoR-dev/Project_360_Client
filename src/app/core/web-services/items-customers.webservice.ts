@@ -2,22 +2,34 @@ import { Injectable, OnInit } from "@angular/core";
 import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
 import { MIService, UserService } from "@infor-up/m3-odin-angular";
 import { SohoMessageService } from "ids-enterprise-ng";
-import { Observable, of } from "rxjs";
+import { Observable, of, Subscription } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
+import { CunoHeaderService } from "../services/cuno-header-service/cuno-header.service";
 
 @Injectable({ providedIn: 'root' })
 export class ItemsCustomersWebService implements OnInit {
 
-   cuno: any;
+   cunoHeader: any;
+   cunoSubscription: Subscription;
 
-   constructor(protected miService: MIService, private userSevice: UserService, private messageService: SohoMessageService) {
+   constructor(protected miService: MIService, private userSevice: UserService, private messageService: SohoMessageService, private cunoHeaderService: CunoHeaderService) {
    }
 
    ngOnInit() {
    }
 
+   cunoHeaderMethod() {
+      this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
+         (data: any[]) => {
+            this.cunoHeader = data;
+         }
+      );
+      this.cunoHeaderService.subjectMethod();
+   }
 
    listeItemsCustomers() {
+
+      this.cunoHeaderMethod();
 
       return this.listAllItemsCustomers().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
          if (answer.errorCode) {
@@ -70,7 +82,7 @@ export class ItemsCustomersWebService implements OnInit {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
 
-         CUNO: 'NDUCLI02'
+         CUNO: this.cunoHeader
       }
 
       const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
@@ -87,7 +99,7 @@ export class ItemsCustomersWebService implements OnInit {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
 
-         CUNO: 'SE_TR4100'
+         CUNO: this.cunoHeader
       }
 
       const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
