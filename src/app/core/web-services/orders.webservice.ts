@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
 import { MIService } from "@infor-up/m3-odin-angular";
 import { SohoMessageService } from "ids-enterprise-ng";
@@ -6,16 +6,21 @@ import { Observable, of, Subscription } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
 
 @Injectable({ providedIn: 'root' })
-export class OrdersWebService implements OnInit {
+export class OrdersWebService {
+
+   //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
 
    cunoHeader: any;
    cunoSubscription: Subscription;
 
+
+   //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components/services ///////////////////////////////////////////////////////////////////////////////////
+
    constructor(protected miService: MIService, private messageService: SohoMessageService) {
    }
 
-   ngOnInit() {
-   }
+
+   //////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
 
 
    recoveryCunoFromHeader(cuno: any) { // méthode qui récupère leCUNO du Header venant du component.ts Orders
@@ -23,6 +28,8 @@ export class OrdersWebService implements OnInit {
 
    }
 
+
+   //////////////////////////////////////////////////////////////////// Méthodes qui gère les erreurs ///////////////////////////////////////////////////////////////////////////////////
 
 
    listeOrders() {

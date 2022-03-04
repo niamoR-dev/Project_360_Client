@@ -5,7 +5,7 @@ const routes: Routes = [
 
    {
       path: '',
-      loadChildren: () => import('./tab-general/tab-general.module').then(m => m.TabGeneralModule)
+      loadChildren: () => import('./tab-general/tab-general-info.module').then(m => m.TabGeneralInfoModule)
    },
 
 
@@ -41,8 +41,8 @@ const routes: Routes = [
 
 
    {
-      path: 'line',
-      loadChildren: () => import('./tab-line/tab-line.module').then(m => m.TabLineModule)
+      path: 'lines',
+      loadChildren: () => import('./tab-line/tab-lines.module').then(m => m.TabLinesModule)
    },
 
    {

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TabGeneralComponent } from './tab-general/tab-general.component';
+import { TabGeneralInfoComponent } from './tab-general/tab-general-info.component';
 
 const routes: Routes = [
 
    {
       path: '',
-      component: TabGeneralComponent
+      component: TabGeneralInfoComponent
    }
 
 ];
@@ -15,4 +15,4 @@ const routes: Routes = [
    imports: [RouterModule.forChild(routes)],
    exports: [RouterModule]
 })
-export class TabGeneralRoutingModule { }
+export class TabGeneralInfoRoutingModule { }

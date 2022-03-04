@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
 import { MIService, UserService } from "@infor-up/m3-odin-angular";
 import { SohoMessageService } from "ids-enterprise-ng";
@@ -6,17 +6,14 @@ import { Observable, of } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
 
 @Injectable({ providedIn: 'root' })
-export class HeaderWebService implements OnInit {
+export class HeaderWebService {
 
    cuno: any;
 
    constructor(protected miService: MIService, private userSevice: UserService, private messageService: SohoMessageService) {
    }
 
-   ngOnInit() {
 
-
-   }
 
 
    //////////////////////////////////////////////////////////////////// Méthodes qui envoient les données dans le TS ///////////////////////////////////////////////////////////////////////////////////

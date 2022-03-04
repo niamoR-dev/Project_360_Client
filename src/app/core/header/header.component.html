@@ -1,6 +1,7 @@
 <label for="clients">Clients : </label>
-<select soho-dropdown noSearch name="clients" placeholder="Sélectioner un client" (change)="onSelectedClient($event)">
-   <option *ngFor="let client of listClients" [value]="client.CUNO">{{client.CUNO}} : {{client.CUNM}} -
+<select soho-dropdown noSearch name="clients" (change)="onSelectedClient($event)">
+   <option *ngFor="let client of listClients" [value]="client.CUNO">{{client.CUNO}} :
+      {{client.CUNM}} -
       {{client.WHLO}} </option>
 </select>
 
