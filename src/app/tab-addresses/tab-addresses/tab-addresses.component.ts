@@ -45,7 +45,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
    detailsAddressesGetFinancial: any[];   // tableau pour enregistrer le retour d'API des détails des adresses d'un client
 
-   cunoHeader: any;
+   cunoHeader$: any;
    cunoSubscription: Subscription;
 
    //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
    cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
       this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
          (data: any) => {
-            this.cunoHeader = data;
+            this.cunoHeader$ = data;
          }
       );
       this.cunoHeaderService.subjectMethod();
@@ -84,7 +84,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
 
    sendCunoToAddressesWebService() {       // méthode obesevable pour envoyer la CUNO de le webService de Adresse
-      this.adressesWebService.recoveryCunoFromHeader(this.cunoHeader).subscribe();
+      this.adressesWebService.recoveryCunoFromHeader(this.cunoHeader$).subscribe();
    }
 
 

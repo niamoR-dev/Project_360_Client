@@ -27,7 +27,10 @@ export class HeaderComponent extends CoreBase implements OnInit {
       this.headerWebService.listeClients().subscribe(data => {
 
          this.listClients = data;
+
       });
+
+
    }
 
 
@@ -42,6 +45,7 @@ export class HeaderComponent extends CoreBase implements OnInit {
 
    sendToService() {
       this.cunoHeaderService.cunoToSend(this.cunoHeader).subscribe();
+
    }
 
 

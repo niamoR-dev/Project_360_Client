@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TabLineComponent } from './tab-line/tab-line.component';
+import { TabLinesComponent } from './tab-line/tab-lines.component';
 
 
 
@@ -9,7 +9,7 @@ const routes: Routes = [
 
    {
       path: '',
-      component: TabLineComponent
+      component: TabLinesComponent
    }
 
 
@@ -19,4 +19,4 @@ const routes: Routes = [
    imports: [RouterModule.forChild(routes)],
    exports: [RouterModule]
 })
-export class TabLineRoutingModule { }
+export class TabLinesRoutingModule { }

@@ -33,7 +33,7 @@ export const LIST_ADDRESSES = [
    },
    {
       nameTab: 'Lignes',
-      rooting: './../line'
+      rooting: './../lines'
    },
    {
       nameTab: 'Offres',

@@ -7,9 +7,9 @@ import { TabAddressesModule } from '../tab-addresses/tab-addresses.module';
 import { TabBatchOrdersModule } from '../tab-batch-orders/tab-batch-orders.module';
 import { TabContractsModule } from '../tab-contracts/tab-contracts.module';
 import { TabFeeModule } from '../tab-fee/tab-fee.module';
-import { TabGeneralModule } from '../tab-general/tab-general.module';
+import { TabGeneralInfoModule } from '../tab-general/tab-general-info.module';
 import { TabItemsCustomersModule } from '../tab-items-customers/tab-items-customers.module';
-import { TabLineModule } from '../tab-line/tab-line.module';
+import { TabLinesModule } from '../tab-line/tab-lines.module';
 import { TabOffersModule } from '../tab-offers/tab-offers.module';
 import { TabOrdersModule } from '../tab-orders/tab-orders.module';
 
@@ -20,16 +20,14 @@ import { TabOrdersModule } from '../tab-orders/tab-orders.module';
    ],
 
    imports: [
-
-
       SharedModule,
       TabAssortmentModule,
       TabContractsModule,
       TabAddressesModule,
-      TabGeneralModule,
+      TabGeneralInfoModule,
       TabBatchOrdersModule,
       TabOffersModule,
-      TabLineModule,
+      TabLinesModule,
       TabOrdersModule,
       TabItemsCustomersModule,
       TabFeeModule,
