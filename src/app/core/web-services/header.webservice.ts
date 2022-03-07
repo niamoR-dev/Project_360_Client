@@ -53,13 +53,14 @@ export class HeaderWebService {
    private listAllClients(): Observable<IMIResponse> {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
-         CONO: ''
+
       }
 
       const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
          program: 'CRS610MI',
          transaction: 'LstByName',
          record: inputFields,
+         maxReturnedRecords: 0,
          outputFields: ['CUNM', 'CUNO', 'WHLO'],
       };
       return this.miService.execute(request);

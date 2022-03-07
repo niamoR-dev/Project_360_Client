@@ -21,8 +21,12 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
    orsl: any;
    orst: any;
    cucd: any;
+   tepy: any;
    modl: any;
-   agnt: any;
+   tedl: any;
+   oblc: any;
+   ortp: any;
+   smcd: any;
    cuor: any;
 
    listDetailOrders: any[];
@@ -66,7 +70,7 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
    recoveryDataFromAPI() {             // méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
 
       this.orderWebService.listeOrders().subscribe(data => {
-
+         console.log("bfdbgfgdfgff", data)
          this.listOrders = data;
          this.initGridOrders();
 
@@ -95,27 +99,27 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
                resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
             },
             {
-               width: 'auto', id: 'col-rldt', field: 'RLDT', name: 'Dt Liv.',
+               width: 'auto', id: 'col-rldt', field: 'OARLDT', name: 'Dt Liv.',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-orno', field: 'ORNO', name: 'No Cde',
+               width: 'auto', id: 'col-orno', field: 'OAORNO', name: 'No Cde',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-ordt', field: 'ORDT', name: 'Dt Cde',
+               width: 'auto', id: 'col-ordt', field: 'OAORDT', name: 'Dt Cde',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-itds', field: '', name: 'Ligne', // à revoir
+               width: 'auto', id: 'col-itds', field: '', name: 'Ligne', // à revoir lien vers un autre onglets ?
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-orsl', field: 'ORSL', name: 'Stt B',
+               width: 'auto', id: 'col-orsl', field: 'OAORSL', name: 'Stt B',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-orst', field: 'ORST', name: 'Stt H',
+               width: 'auto', id: 'col-orst', field: 'OAORST', name: 'Stt H',
                resizable: true, filterType: 'text', sortable: true
             },
             {
@@ -123,35 +127,35 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-cucd', field: 'CUCD', name: 'Devise',
+               width: 'auto', id: 'col-cucd', field: 'OACUCD', name: 'Devise',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-itds', field: '', name: 'Cd.Paiement', // a voir
+               width: 'auto', id: 'col-tepy', field: 'OATEPY', name: 'Cd.Paiement',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-modl', field: 'MODL', name: 'Méth. Liv.',
+               width: 'auto', id: 'col-modl', field: 'OAMODL', name: 'Méth. Liv.',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-itds', field: '', name: 'Cdt Liv.', // à voir
+               width: 'auto', id: 'col-tedl', field: 'OATEDL', name: 'Cdt Liv.',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-itds', field: '', name: 'Bloc.', // à voir
+               width: 'auto', id: 'col-oaoblc', field: 'OAOBLC', name: 'Bloc.',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-ortp', field: '', name: 'Type CDV', // à voir
+               width: 'auto', id: 'col-ortp', field: 'ORTP', name: 'Type CDV',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-agnt', field: 'AGNT', name: 'Représent',
+               width: 'auto', id: 'col-smcd', field: 'OASMCD', name: 'Représent',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-cuor', field: 'CUOR', name: 'No Cde Client ',
+               width: 'auto', id: 'col-cuor', field: 'OACUOR', name: 'No Cde Client ',
                resizable: true, filterType: 'text', sortable: true
             },
 

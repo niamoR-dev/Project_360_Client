@@ -72,17 +72,16 @@ export class OrdersWebService {
    private listAllOrders(): Observable<IMIResponse> {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
-         CONO: '100',
-         CUNO: this.cunoHeader,
-         ORDT: '',
-         ORST: ''
+
+         OACUNO: this.cunoHeader,
+         OAORNO: ''
       }
 
       const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
-         program: 'OIS100MI',
-         transaction: 'LstHead',
+         program: 'CMS100MI',
+         transaction: 'LstCdvByCUNO',
          record: inputFields,
-         outputFields: ['RLDT', 'ORNO', 'ORDT', 'ORSL', 'ORST', 'CUCD', 'MODL', 'AGNT', 'CUOR'],
+         outputFields: ['OARLDT', 'OAORNO', 'OAORDT', 'OAORSL', 'OAORST', 'OACUCD', 'OATEPY', 'OAMODL', 'OATEDL', 'OAOBLC', 'OASMCD', 'OACUOR'],
       };
       return this.miService.execute(request);
    }

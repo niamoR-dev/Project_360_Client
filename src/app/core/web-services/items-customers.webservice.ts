@@ -84,14 +84,15 @@ export class ItemsCustomersWebService {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
 
-         CUNO: this.cunoHeader
+         ORCUNO: 'CRZ-004',
+         ORITNO: ''
       }
 
       const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
-         program: 'OIS005MI',
-         transaction: 'List',
+         program: 'CMS100MI',
+         transaction: 'LstItemsByCUNO',
          record: inputFields,
-         outputFields: ['CUNO', 'ITNO', 'ITDS'],
+         outputFields: ['ORCUNO', 'ORITNO', 'ORITDS'],
       };
       return this.miService.execute(request);
    }
@@ -108,7 +109,7 @@ export class ItemsCustomersWebService {
          program: 'OIS005MI',
          transaction: 'List',
          record: inputFields,
-         outputFields: ['¨POPN', 'ALUMN', 'D2QT', 'D3QT', 'RESP', 'ADCU'],
+         outputFields: ['POPN', 'ALUMN', 'D2QT', 'D3QT', 'RESP', 'ADCU'],
       };
       return this.miService.execute(request);
    }
