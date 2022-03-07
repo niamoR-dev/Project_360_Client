@@ -59,15 +59,15 @@ export class TabItemsCustomersComponent extends CoreBase implements OnInit {
                resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
             },
             {
-               width: 'auto', id: 'col-cuno', field: 'CUNO', name: 'Client',
+               width: 'auto', id: 'col-cuno', field: 'ORCUNO', name: 'Client',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-itno', field: 'ITNO', name: 'Code article',
+               width: 'auto', id: 'col-itno', field: 'ORITNO', name: 'Code article',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-itds', field: 'ITDS', name: 'Nom',
+               width: 'auto', id: 'col-itds', field: 'ORITDS', name: 'Nom',
                resizable: true, filterType: 'text', sortable: true
             },
 
@@ -90,7 +90,7 @@ export class TabItemsCustomersComponent extends CoreBase implements OnInit {
       this.InitDetailItemCustomerList();
       //this.show = true;
 
-      this.itds = selected.ITDS;
+      this.itds = selected.ORITDS;
    }
 
    private InitDetailItemCustomerList() { // API OIS005MI
