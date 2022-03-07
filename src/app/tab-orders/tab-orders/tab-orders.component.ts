@@ -22,8 +22,9 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
    orst: any;
    cucd: any;
    modl: any;
-   agnt: any;
+   smcd: any;
    cuor: any;
+   oblc: any;
 
    listDetailOrders: any[];
 
@@ -107,7 +108,7 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-itds', field: '', name: 'Ligne', // à revoir
+               width: 'auto', id: 'col-itds', field: '', name: 'Ligne', // à revoir lien vers un autre onglets ?
                resizable: true, filterType: 'text', sortable: true
             },
             {
@@ -127,7 +128,7 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-itds', field: '', name: 'Cd.Paiement', // a voir
+               width: 'auto', id: 'col-tepy', field: 'TEPY', name: 'Cd.Paiement',
                resizable: true, filterType: 'text', sortable: true
             },
             {
@@ -135,19 +136,19 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-itds', field: '', name: 'Cdt Liv.', // à voir
+               width: 'auto', id: 'col-tedl', field: 'TEDL', name: 'Cdt Liv.',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-itds', field: '', name: 'Bloc.', // à voir
+               width: 'auto', id: 'col-oaoblc', field: 'OAOBLC', name: 'Bloc.',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-ortp', field: '', name: 'Type CDV', // à voir
+               width: 'auto', id: 'col-ortp', field: 'ORTP', name: 'Type CDV',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-agnt', field: 'AGNT', name: 'Représent',
+               width: 'auto', id: 'col-smcd', field: 'SMCD', name: 'Représent',
                resizable: true, filterType: 'text', sortable: true
             },
             {
