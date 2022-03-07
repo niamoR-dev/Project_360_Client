@@ -60,6 +60,7 @@ export class HeaderWebService {
          program: 'CRS610MI',
          transaction: 'LstByName',
          record: inputFields,
+         maxReturnedRecords: 0,
          outputFields: ['CUNM', 'CUNO', 'WHLO'],
       };
       return this.miService.execute(request);
