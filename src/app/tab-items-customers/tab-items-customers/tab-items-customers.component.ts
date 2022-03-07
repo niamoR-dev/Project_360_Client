@@ -59,7 +59,7 @@ export class TabItemsCustomersComponent extends CoreBase implements OnInit {
                resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
             },
             {
-               width: 'auto', id: 'col-cuno', field: 'ORCUNO', name: 'Client',
+               width: 'auto', id: 'col-cuno', field: 'ORCUNO', name: 'Code Client',
                resizable: true, filterType: 'text', sortable: true
             },
             {

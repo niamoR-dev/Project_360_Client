@@ -84,7 +84,7 @@ export class ItemsCustomersWebService {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
 
-         ORCUNO: this.cunoHeader,
+         ORCUNO: 'CRZ-004',
          ORITNO: ''
       }
 
