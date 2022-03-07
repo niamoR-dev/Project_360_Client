@@ -73,15 +73,15 @@ export class OrdersWebService {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
 
-         CUNO: 'CHP_ADG',
-         ORNO: ''
+         OACUNO: this.cunoHeader,
+         OAORNO: ''
       }
 
       const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
          program: 'CMS100MI',
          transaction: 'LstCdvByCUNO',
          record: inputFields,
-         outputFields: ['RLDT', 'ORNO', 'ORDT', 'ORSL', 'ORST', 'CUCD', 'TEPY', 'MODL', 'TEDL', 'OBLC', 'SMCD', 'CUOR'],
+         outputFields: ['OARLDT', 'OAORNO', 'OAORDT', 'OAORSL', 'OAORST', 'OACUCD', 'OATEPY', 'OAMODL', 'OATEDL', 'OAOBLC', 'OASMCD', 'OACUOR'],
       };
       return this.miService.execute(request);
    }
