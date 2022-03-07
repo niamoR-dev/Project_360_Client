@@ -21,10 +21,13 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
    orsl: any;
    orst: any;
    cucd: any;
+   tepy: any;
    modl: any;
+   tedl: any;
+   oblc: any;
+   ortp: any;
    smcd: any;
    cuor: any;
-   oblc: any;
 
    listDetailOrders: any[];
 
@@ -140,7 +143,7 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-oaoblc', field: 'OAOBLC', name: 'Bloc.',
+               width: 'auto', id: 'col-oaoblc', field: 'OBLC', name: 'Bloc.',
                resizable: true, filterType: 'text', sortable: true
             },
             {
