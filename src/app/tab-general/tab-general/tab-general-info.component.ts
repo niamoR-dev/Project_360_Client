@@ -45,12 +45,11 @@ export class TabGeneralInfoComponent extends CoreBase implements OnInit {
 
 
    cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
-      this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
+      this.cunoHeaderService.cunoSubject.subscribe(
          (data: any) => {
             this.cunoHeader$ = data;
          }
       );
-      this.cunoHeaderService.subjectMethod();
    }
 
 

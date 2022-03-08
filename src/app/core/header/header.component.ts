@@ -49,7 +49,9 @@ export class HeaderComponent extends CoreBase implements OnInit {
    }
 
 
+   ngOnDestroy() {
 
+   }
 
    //aller se renseigner sur les Subject + sauvegarde value : adresseService : cono$ = Subject<String>;
 }
