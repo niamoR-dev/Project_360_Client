@@ -39,11 +39,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
    listAddressesClient: any[]; // tableau pour enregistrer le retour d'API des adresses d'un client
 
-   detailsAddressesGetBasicData: any[]; // tableau pour enregistrer le retour d'API des détails des adresses d'un client
-
-   detailsAddressesGetOrderInfo: any[];   // tableau pour enregistrer le retour d'API des détails des adresses d'un client
-
-   detailsAddressesGetFinancial: any[];   // tableau pour enregistrer le retour d'API des détails des adresses d'un client
+   detailsAddressesLstAddrByCust: any[]; // tableau pour enregistrer le retour d'API des détails des adresses d'un client
 
    cunoHeader$: any;
    cunoSubscription: Subscription;
@@ -156,11 +152,6 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
       this.show = true;
 
-      this.InitDetailAdressGetBasicData();
-      this.InitDetailAdressGetOrderInfo();
-      this.InitDetailAdressGetFinancial();
-
-
       this.cuno = selected.CUNO;
       this.cunm = selected.CUNM;
       this.cua1 = selected.CUA1;
@@ -168,20 +159,29 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
       this.cua3 = selected.CUA3;
       this.cua4 = selected.CUA4;
       this.adid = selected.ADID;
+      this.adrt = selected.ADRT;
 
+      this.sendKeyForDetailToService(this.cunoHeader$, this.adrt, this.adid);
+      this.InitDetailAdressLstAddrByCust();
+   }
+
+   sendKeyForDetailToService(cuno: any, adrt: any, adid: any) { // méthode qui permets d'envoyer les champs d'entrées pour le detail dfans le addressesService
+      this.adressesWebService.recoveryClientForDetail(cuno, adrt, adid).subscribe();
    }
 
 
-   private InitDetailAdressGetBasicData() { // API 610 GetBasicData
+   private InitDetailAdressLstAddrByCust() { // API CMS100 GetBasicData
 
-      this.adressesWebService.detailsAddressesGetBasicData().subscribe(data => {
-         this.detailsAddressesGetBasicData = data;
-
-         this.phno = this.detailsAddressesGetBasicData[0].PHNO;
-         this.tfno = this.detailsAddressesGetBasicData[0].TFNO;
-         this.yref = this.detailsAddressesGetBasicData[0].YREF;
-         this.ealo = this.detailsAddressesGetBasicData[0].EALO;
-         this.meal = this.detailsAddressesGetBasicData[0].MEAL;
+      this.adressesWebService.detailsAddressesLstAddrByCust().subscribe(data => {
+         this.detailsAddressesLstAddrByCust = data;
+         this.phno = this.detailsAddressesLstAddrByCust[0].OPPHNO;
+         this.tfno = this.detailsAddressesLstAddrByCust[0].OPTFNO;
+         this.yref = this.detailsAddressesLstAddrByCust[0].OPYREF;
+         this.ealo = this.detailsAddressesLstAddrByCust[0].OPEALO;
+         this.meal = this.detailsAddressesLstAddrByCust[0].OPMEAL;
+         this.modl = this.detailsAddressesLstAddrByCust[0].OPMODL;
+         this.tedl = this.detailsAddressesLstAddrByCust[0].OPTEDL;
+         this.vrno = this.detailsAddressesLstAddrByCust[0].OPVRNO;
 
          //  console.log(" GetBasicData  ", this.detailsAddressesGetBasicData)  // la virgule d ans le console log permets de lire à 'intérieur de l'objet
 
@@ -189,34 +189,6 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
    }
 
 
-   private InitDetailAdressGetOrderInfo() {  // API 610 GetOrderInfo
-
-      this.adressesWebService.detailsAddressesGetOrderInfo().subscribe(data => {
-
-         this.detailsAddressesGetOrderInfo = data;
-
-
-
-         this.modl = this.detailsAddressesGetOrderInfo[0].MODL;
-         this.tedl = this.detailsAddressesGetOrderInfo[0].TEDL;
-      });
-
-
-   }
-
-   private InitDetailAdressGetFinancial() {  // API 610 GetOrderInfo
-
-      this.adressesWebService.detailsAddressesGetFinancial().subscribe(data => {
-
-         this.detailsAddressesGetFinancial = data;
-
-         // console.log("GetFinancial ", this.detailsAddressesGetFinancial)
-
-         this.vrno = this.detailsAddressesGetFinancial[0].VRNO;
-      });
-
-
-   }
 
 
 

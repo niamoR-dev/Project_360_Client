@@ -11,6 +11,9 @@ export class AdressesWebService {
    //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
 
    cunoHeader: any;
+   cunoTemplate: any;
+   adrtTemplate: any;
+   adidTemplate: any;
 
 
    //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components/services ///////////////////////////////////////////////////////////////////////////////////
@@ -29,9 +32,17 @@ export class AdressesWebService {
 
    }
 
+   recoveryClientForDetail(cuno: any, adrt: any, adid: any) { // méthode qui récupère leCUNO du Header venant du component.ts Adresse
+      this.cunoTemplate = cuno;
+      this.adrtTemplate = adrt;
+      this.adidTemplate = adid;
+      return of(this.cunoTemplate, this.adrtTemplate, this.adidTemplate);
+
+   }
+
 
    listeAdresses() {
-
+      this.listDetailsAddressLstAddrByCust();
       return this.listAllAddresses().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
          if (answer.errorCode) {
             throw Error(JSON.stringify(answer));
@@ -51,54 +62,22 @@ export class AdressesWebService {
 
 
 
-   detailsAddressesGetBasicData() {
-      return this.listDetailsAddressGetBasicData().pipe(map((answer) => {
+   detailsAddressesLstAddrByCust() {
+      return this.listDetailsAddressLstAddrByCust().pipe(map((answer) => {
          if (answer.errorCode) {
             throw Error(JSON.stringify(answer));
          }
          return answer.items;
       }),
          catchError((error) => {
-            console.error('Erreur API GetBasicData :', error);
+            console.error('Erreur API LstAddrByCust :', error);
 
-            this.handleError('Échec de l\'exécution de l\'API GetBasicData', error);
+            this.handleError('Échec de l\'exécution de l\'API LstAddrByCust', error);
             return of(null);
          })
       );
    }
 
-
-   detailsAddressesGetOrderInfo() {
-      return this.listDetailsAddressGetOrderInfo().pipe(map((answer) => {
-         if (answer.errorCode) {
-            throw Error(JSON.stringify(answer));
-         }
-         return answer.items;
-      }),
-         catchError((error) => {
-            console.error('Erreur API GetOrderInfo :', error);
-
-            this.handleError('Échec de l\'exécution de l\'API GetOrderInfo', error);
-            return of(null);
-         })
-      );
-   }
-
-   detailsAddressesGetFinancial() {
-      return this.listDetailsAddressGetFinancial().pipe(map((answer) => {
-         if (answer.errorCode) {
-            throw Error(JSON.stringify(answer));
-         }
-         return answer.items;
-      }),
-         catchError((error) => {
-            console.error('Erreur API GetFinancial :', error);
-
-            this.handleError('Échec de l\'exécution de l\'API GetFinancial', error);
-            return of(null);
-         })
-      );
-   }
 
    //////////////////////////////////////////////////////////////////// Méthodes qui gère les erreurs ///////////////////////////////////////////////////////////////////////////////////
 
@@ -133,55 +112,19 @@ export class AdressesWebService {
 
 
 
-   private listDetailsAddressGetBasicData(): Observable<IMIResponse> {
-      console.log("  CUNO =", this.cunoHeader);
-
-
+   private listDetailsAddressLstAddrByCust(): Observable<IMIResponse> {
       let inputFields: any = {
-         CONO: '100',
-         CUNO: this.cunoHeader
+         OPCUNO: this.cunoHeader,
+         OPADRT: this.adrtTemplate,
+         OPADID: this.adidTemplate
+
       }
 
       const request: IMIRequest = {
-         program: 'CRS610MI',
-         transaction: 'GetBasicData',
+         program: 'CMS100MI',
+         transaction: 'LstAddrByCust',
          record: inputFields,
-         outputFields: ['PHNO', 'YREF', 'EALO', 'TFNO', 'MEAL'],
-      };
-
-      return this.miService.execute(request);
-   }
-
-
-
-   private listDetailsAddressGetOrderInfo(): Observable<IMIResponse> {
-      let inputFields: any = {
-         CONO: '100',
-         CUNO: this.cunoHeader
-      }
-
-      const request: IMIRequest = {
-         program: 'CRS610MI',
-         transaction: 'GetOrderInfo',
-         record: inputFields,
-         outputFields: ['MODL', 'TEDL'],
-      };
-
-      return this.miService.execute(request);
-   }
-
-   private listDetailsAddressGetFinancial(): Observable<IMIResponse> {
-
-      let inputFields: any = {
-         CONO: '100',
-         CUNO: this.cunoHeader
-      }
-
-      const request: IMIRequest = {
-         program: 'CRS610MI',
-         transaction: 'GetFinancial',
-         record: inputFields,
-         outputFields: ['VRNO'],
+         outputFields: ['OPPHNO', 'OPYREF', 'OPEALO', 'OPTFNO', 'OPMEAL', 'OPMODL', 'OPTEDL', 'OPVRNO'],
       };
 
       return this.miService.execute(request);

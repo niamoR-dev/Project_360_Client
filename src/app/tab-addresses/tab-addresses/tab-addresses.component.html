@@ -2,10 +2,11 @@
 
 
 
-
 <div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
    [blockUI]="true" [displayDelay]="0" (selected)="onSelectedLine($event.rows)">
 </div>
+
+
 
 
 <form *ngIf='show' #f="ngForm" class="form-responsive row">
