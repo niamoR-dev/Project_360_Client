@@ -10,7 +10,6 @@ export class CunoHeaderService {
    cuno: any;
    firstValueCuno: any;
    cunoSubject = new Subject<any>();
-   @Output() changeCunoClickedEvent = new EventEmitter<any>();
 
    constructor(protected miService: MIService) {
    }
@@ -28,7 +27,6 @@ export class CunoHeaderService {
 
    subjectMethod() {
       this.cunoSubject.next(this.cuno);
-      this.changeCunoClickedEvent.emit(this.cuno);
    }
 
 
