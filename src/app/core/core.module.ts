@@ -12,6 +12,8 @@ import { TabItemsCustomersModule } from '../tab-items-customers/tab-items-custom
 import { TabLinesModule } from '../tab-line/tab-lines.module';
 import { TabOffersModule } from '../tab-offers/tab-offers.module';
 import { TabOrdersModule } from '../tab-orders/tab-orders.module';
+import { TabInvoicesModule } from '../tab-invoices/tab-invoices.module';
+
 
 @NgModule({
    declarations: [
@@ -31,7 +33,8 @@ import { TabOrdersModule } from '../tab-orders/tab-orders.module';
       TabOrdersModule,
       TabItemsCustomersModule,
       TabFeeModule,
-      TabCommercialChannelModule
+      TabCommercialChannelModule,
+      TabInvoicesModule
    ],
 
    exports: [

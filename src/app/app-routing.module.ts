@@ -59,11 +59,18 @@ const routes: Routes = [
       path: 'commercial-channel',
       loadChildren: () => import('./tab-commercial-channel/tab-commercial-channel.module').then(m => m.TabCommercialChannelModule)
    },
+
+   {
+      path: 'invoices',
+      loadChildren: () => import('./tab-invoices/tab-invoices.module').then(m => m.TabInvoicesModule)
+   },
    {
       path: '',
       redirectTo: '',
       pathMatch: 'full'
    },
+
+
 
    // {
    //    path:'**',
