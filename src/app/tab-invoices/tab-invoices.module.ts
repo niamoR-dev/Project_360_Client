@@ -11,4 +11,4 @@ import { SharedModule } from '../shared/shared.module';
    ],
    declarations: [TabInvoicesComponent]
 })
-export class TabOrdersModule { }
+export class TabInvoicesModule { }
