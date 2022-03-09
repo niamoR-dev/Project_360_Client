@@ -6,7 +6,7 @@ import { Observable, of, Subscription } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
 
 @Injectable({ providedIn: 'root' })
-export class OrdersWebService {
+export class InvoicesWebService {
 
    //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
 
@@ -22,7 +22,7 @@ export class OrdersWebService {
    //////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
 
 
-   recoveryCunoFromHeader(cuno: any) { // méthode qui récupère leCUNO du Header venant du component.ts Orders
+   recoveryCunoFromHeader(cuno: any) { // méthode qui récupère leCUNO du Header venant du component.ts Invoices
       return of(this.cunoHeader = cuno);
 
    }
@@ -30,7 +30,7 @@ export class OrdersWebService {
    //////////////////////////////////////////////////////////////////// Méthodes qui gère les erreurs ///////////////////////////////////////////////////////////////////////////////////
 
 
-   listeOrders() {
+   listeInvoices() {
 
 
       return this.listAllInvoices().pipe(map((answer) => {
@@ -41,9 +41,9 @@ export class OrdersWebService {
          return answer.items;
       }),
          catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
-            console.error('Erreur API listOrders :', error);
+            console.error('Erreur API listInvoices :', error);
 
-            this.handleError('Échec de l\'exécution de l\'API listOrders', error);
+            this.handleError('Échec de l\'exécution de l\'API listInvoices', error);
             return of(null);
          })
       );

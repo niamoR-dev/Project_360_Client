@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreBase } from '@infor-up/m3-odin';
 import { Subscription } from 'rxjs';
 import { CunoHeaderService } from 'src/app/core/services/cuno-header-service/cuno-header.service';
-import { OrdersWebService } from 'src/app/core/web-services/invoices.webservice';
+import { InvoicesWebService } from 'src/app/core/web-services/invoices.webservice';
 
 @Component({
    selector: 'app-tab-invoices',
@@ -13,7 +12,7 @@ export class TabInvoicesComponent implements OnInit {
 
    datagridOptions: SohoDataGridOptions = {};
 
-   listOrders: any[]; // tableau pour enregistrer le retour d'API des factures d'une commande
+   listInvoices: any[]; // tableau pour enregistrer le retour d'API des factures d'une commande
 
    idat: any;
    ivno: any;
@@ -24,7 +23,7 @@ export class TabInvoicesComponent implements OnInit {
    inst: any;
 
 
-   listDetailOrders: any[];
+   listDetailInvoices: any[];
 
    cunoHeader: any;
    cunoSubscription: Subscription;
@@ -36,13 +35,13 @@ export class TabInvoicesComponent implements OnInit {
    ngOnInit(): void {
       this.cunoHeaderMethod();
 
-      this.sendCunoToInvoiceWebService();
+      this.sendCunoToInvoicesWebService();
 
       this.recoveryDataFromAPI();
 
    }
 
-   sendCunoToOrderWebService() {       // méthode obesevable pour envoyer la CUNO de le webService de Facture
+   sendCunoToInvoicesWebService() {       // méthode obesevable pour envoyer la CUNO de le webService de Facture
       this.invoicesWebService.recoveryCunoFromHeader(this.cunoHeader).subscribe();
    }
 
@@ -58,15 +57,15 @@ export class TabInvoicesComponent implements OnInit {
 
    recoveryDataFromAPI() {             // méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
 
-      this.invoicesWebService.listeOrders().subscribe(data => {
+      this.invoicesWebService.listeInvoices().subscribe(data => {
          console.log("bfdbgfgdfgff", data)
-         this.listOrders = data;
-         this.initGridOrders();
+         this.listInvoices = data;
+         this.initGridInvoices();
 
       });
 
    }
-   private initGridOrders() {                             // méthode qui permet d'afficher les données dans la GRID
+   private initGridInvoices() {                             // méthode qui permet d'afficher les données dans la GRID
       const options: SohoDataGridOptions = {
          selectable: 'single' as SohoDataGridSelectable,
          disableRowDeactivation: true,
@@ -113,7 +112,7 @@ export class TabInvoicesComponent implements OnInit {
 
 
          ],
-         dataset: this.listOrders,
+         dataset: this.listInvoices,
          emptyMessage: {
             title: 'Aucune facture à afficher',
             icon: 'icon-empty-no-data'
