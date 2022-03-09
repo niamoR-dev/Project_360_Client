@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CoreBase } from '@infor-up/m3-odin';
 import { Subscription } from 'rxjs';
 import { CunoHeaderService } from 'src/app/core/services/cuno-header-service/cuno-header.service';
 import { InvoicesWebService } from 'src/app/core/web-services/invoices.webservice';
@@ -8,7 +9,7 @@ import { InvoicesWebService } from 'src/app/core/web-services/invoices.webservic
    templateUrl: './tab-invoices.component.html',
    styleUrls: ['./tab-invoices.component.css']
 })
-export class TabInvoicesComponent implements OnInit {
+export class TabInvoicesComponent extends CoreBase implements OnInit {
 
    datagridOptions: SohoDataGridOptions = {};
 
@@ -37,7 +38,7 @@ export class TabInvoicesComponent implements OnInit {
 
       this.sendCunoToInvoicesWebService();
 
-      this.recoveryDataFromAPI();
+      //this.recoveryDataFromAPI();
 
    }
 
