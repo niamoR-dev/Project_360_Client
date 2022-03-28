@@ -82,5 +82,3 @@ export class InvoicesWebService {
       return this.miService.execute(request);
    }
 }
-
-}
