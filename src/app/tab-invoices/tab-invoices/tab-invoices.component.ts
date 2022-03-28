@@ -38,7 +38,7 @@ export class TabInvoicesComponent extends CoreBase implements OnInit {
 
       this.sendCunoToInvoicesWebService();
 
-      //this.recoveryDataFromAPI();
+      this.recoveryDataFromAPI();
 
    }
 
