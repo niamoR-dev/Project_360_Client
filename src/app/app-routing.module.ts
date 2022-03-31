@@ -60,6 +60,10 @@ const routes: Routes = [
       loadChildren: () => import('./tab-commercial-channel/tab-commercial-channel.module').then(m => m.TabCommercialChannelModule)
    },
    {
+      path: 'blocked-orders',
+      loadChildren: () => import('./tab-blocked-orders/tab-blocked-orders.module').then(m => m.TabBlockedOrdersModule)
+   },
+   {
       path: '',
       redirectTo: '',
       pathMatch: 'full'
