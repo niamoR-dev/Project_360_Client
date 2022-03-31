@@ -16,6 +16,8 @@ import { TabInvoicesModule } from '../tab-invoices/tab-invoices-customers.module
 import { TabOrdersDeliveredModule } from '../tab-orders-delivered/tab-orders-delivered.module';
 import { TabBlockedOrdersModule } from '../tab-blocked-orders/tab-blocked-orders.module';
 import { TabCustomerReturnsModule } from '../tab-customer-returns/tab-customer-returns.module';
+import { TabInvoicesModule } from '../tab-invoices/tab-invoices-customers.module';
+import { TabOrdersDeliveredModule } from '../tab-orders-delivered/tab-orders-delivered.module';
 
 
 
@@ -40,8 +42,10 @@ import { TabCustomerReturnsModule } from '../tab-customer-returns/tab-customer-r
       TabCommercialChannelModule,
       TabInvoicesModule,
       TabOrdersDeliveredModule,
-      TabBlockedOrdersModule,
       TabCustomerReturnsModule,
+      TabOrdersDeliveredModule,
+      TabBlockedOrdersModule,
+      TabInvoicesModule
    ],
 
    exports: [

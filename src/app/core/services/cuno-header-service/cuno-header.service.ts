@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { MIService } from '@infor-up/m3-odin-angular';
-import { BehaviorSubject, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 
 @Injectable({
    providedIn: 'root'
@@ -9,7 +9,7 @@ export class CunoHeaderService {
 
    cuno: any;
    firstValueCuno: any;
-   cunoSubject = new Subject<any>();
+   cunoSubject: BehaviorSubject<any> = new BehaviorSubject(null);
 
    constructor(protected miService: MIService) {
    }
@@ -20,8 +20,9 @@ export class CunoHeaderService {
    }
 
 
-   cunoToSend(cuno: any) { // méthode qui réceptionne la Cuno venant du header
-      return of(this.cuno = cuno);
+   cunoToSend(cuno: any): Observable<any> { // méthode qui réceptionne la Cuno venant du header
+      this.cuno = cuno
+      return this.cuno.asObservable();
    }
 
 
