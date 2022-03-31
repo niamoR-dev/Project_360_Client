@@ -65,6 +65,10 @@ const routes: Routes = [
       loadChildren: () => import('./tab-invoices/tab-invoices.module').then(m => m.TabInvoicesModule)
    },
    {
+      path: 'blocked-orders',
+      loadChildren: () => import('./tab-blocked-orders/tab-blocked-orders.module').then(m => m.TabBlockedOrdersModule)
+   },
+   {
       path: '',
       redirectTo: '',
       pathMatch: 'full'

@@ -47,6 +47,10 @@ export const LIST_ADDRESSES = [
       nameTab: 'Factures',
       rooting: './../invoices'
    },
+   {
+      nameTab: 'Blocked Orders',
+      rooting: './../blocked-orders'
+   },
 
 
 ]
