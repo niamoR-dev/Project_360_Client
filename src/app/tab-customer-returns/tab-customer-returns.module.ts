@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TabCustomerReturnsRoutingModule } from './tab-commercial-channel-routing.module';
+import { TabCustomerReturnsRoutingModule } from './tab-customer-returns-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { TabCustomerReturnsComponent } from './tab-customer-returns/tab-customer-returns.component';
 
@@ -10,4 +10,4 @@ import { TabCustomerReturnsComponent } from './tab-customer-returns/tab-customer
    ],
    declarations: [TabCustomerReturnsComponent]
 })
-export class TabCommercialChannelModule { }
+export class TabCustomerReturnsModule { }
