@@ -13,6 +13,7 @@ import { TabLinesModule } from '../tab-line/tab-lines.module';
 import { TabOffersModule } from '../tab-offers/tab-offers.module';
 import { TabOrdersModule } from '../tab-orders/tab-orders.module';
 import { TabBlockedOrdersModule } from '../tab-blocked-orders/tab-blocked-orders.module';
+import { TabCustomerReturnsModule } from '../tab-customer-returns/tab-customer-returns.module';
 
 @NgModule({
    declarations: [
@@ -33,7 +34,8 @@ import { TabBlockedOrdersModule } from '../tab-blocked-orders/tab-blocked-orders
       TabItemsCustomersModule,
       TabFeeModule,
       TabCommercialChannelModule,
-      TabBlockedOrdersModule
+      TabBlockedOrdersModule,
+      TabCustomerReturnsModule,
    ],
 
    exports: [
