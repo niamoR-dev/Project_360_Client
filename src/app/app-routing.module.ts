@@ -61,8 +61,16 @@ const routes: Routes = [
    },
 
    {
-      path: 'invoices',
-      loadChildren: () => import('./tab-invoices/tab-invoices.module').then(m => m.TabInvoicesModule)
+      path: 'invoices-customers',
+      loadChildren: () => import('./tab-invoices/tab-invoices-customers.module').then(m => m.TabInvoicesModule)
+   },
+   {
+      path: 'orders-delivered',
+      loadChildren: () => import('./tab-orders-delivered/tab-orders-delivered.module').then(m => m.TabOrdersDeliveredModule)
+   },
+   {
+      path: 'delivery',
+      loadChildren: () => import('./tab-delivery/tab-delivery.module').then(m => m.TabDeliveryModule)
    },
    {
       path: '',

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { TabInvoicesRoutingModule } from './tab-invoices-routing.module';
-import { TabInvoicesComponent } from './tab-invoices/tab-invoices.component';
+import { TabInvoicesRoutingModule } from './tab-invoices-customers-routing.module';
+import { TabInvoicesComponent } from './tab-invoices-customers/tab-invoices-customers.component';
 import { SharedModule } from '../shared/shared.module';
 
 

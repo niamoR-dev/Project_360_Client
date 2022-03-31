@@ -44,8 +44,16 @@ export const LIST_ADDRESSES = [
       rooting: './../batch-orders'
    },
    {
-      nameTab: 'Factures',
-      rooting: './../invoices'
+      nameTab: 'Livraisons',
+      rooting: './../delivery'
+   },
+   {
+      nameTab: 'Factures Clients',
+      rooting: './../invoices-customers'
+   },
+   {
+      nameTab: 'Commandes Livrées',
+      rooting: './../orders-delivered'
    },
 
 

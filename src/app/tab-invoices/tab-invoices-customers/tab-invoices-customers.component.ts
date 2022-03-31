@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CoreBase } from '@infor-up/m3-odin';
 import { Subscription } from 'rxjs';
 import { CunoHeaderService } from 'src/app/core/services/cuno-header-service/cuno-header.service';
-import { InvoicesWebService } from 'src/app/core/web-services/invoices.webservice';
+import { InvoicesWebService } from 'src/app/core/web-services/invoices-customers.webservice';
 
 @Component({
    selector: 'app-tab-invoices',
-   templateUrl: './tab-invoices.component.html',
-   styleUrls: ['./tab-invoices.component.css']
+   templateUrl: './tab-invoices-customers.component.html',
+   styleUrls: ['./tab-invoices-customers.component.css']
 })
 export class TabInvoicesComponent extends CoreBase implements OnInit {
 

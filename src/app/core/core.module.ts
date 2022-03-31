@@ -12,7 +12,8 @@ import { TabItemsCustomersModule } from '../tab-items-customers/tab-items-custom
 import { TabLinesModule } from '../tab-line/tab-lines.module';
 import { TabOffersModule } from '../tab-offers/tab-offers.module';
 import { TabOrdersModule } from '../tab-orders/tab-orders.module';
-import { TabInvoicesModule } from '../tab-invoices/tab-invoices.module';
+import { TabInvoicesModule } from '../tab-invoices/tab-invoices-customers.module';
+import { TabOrdersDeliveredModule } from '../tab-orders-delivered/tab-orders-delivered.module';
 
 
 
@@ -35,7 +36,8 @@ import { TabInvoicesModule } from '../tab-invoices/tab-invoices.module';
       TabItemsCustomersModule,
       TabFeeModule,
       TabCommercialChannelModule,
-      TabInvoicesModule
+      TabInvoicesModule,
+      TabOrdersDeliveredModule
    ],
 
    exports: [
