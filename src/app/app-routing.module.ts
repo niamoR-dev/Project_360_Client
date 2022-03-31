@@ -73,6 +73,14 @@ const routes: Routes = [
       loadChildren: () => import('./tab-delivery/tab-delivery.module').then(m => m.TabDeliveryModule)
    },
    {
+      path: 'blocked-orders',
+      loadChildren: () => import('./tab-blocked-orders/tab-blocked-orders.module').then(m => m.TabBlockedOrdersModule)
+   },
+   {
+      path: 'customer-returns',
+      loadChildren: () => import('./tab-customer-returns/tab-customer-returns.module').then(m => m.TabCustomerReturnsModule)
+   },
+   {
       path: '',
       redirectTo: '',
       pathMatch: 'full'
