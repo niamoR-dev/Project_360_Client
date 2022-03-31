@@ -38,12 +38,7 @@ import { TabCustomerReturnsModule } from '../tab-customer-returns/tab-customer-r
       TabOrdersModule,
       TabItemsCustomersModule,
       TabFeeModule,
-      TabCommercialChannelModule,
-      TabBlockedOrdersModule
-      TabInvoicesModule,
-      TabOrdersDeliveredModule,
-      TabBlockedOrdersModule,
-      TabCustomerReturnsModule,
+      TabCommercialChannelModule
    ],
 
    exports: [
