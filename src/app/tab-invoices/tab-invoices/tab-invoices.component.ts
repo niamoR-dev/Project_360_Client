@@ -15,13 +15,17 @@ export class TabInvoicesComponent extends CoreBase implements OnInit {
 
    listInvoices: any[]; // tableau pour enregistrer le retour d'API des factures d'une commande
 
-   idat: any;
-   ivno: any;
+   pyno: any;
+   exin: any;
+   vono: any;
+   ivla: any;
    dudt: any;
-   ivam: any;
-   cucd: any;
-   ralc: any;
-   inst: any;
+   //??? = fac cor existe
+   rivn: any;
+   yea4: any;
+   inpx: any;
+   ivno: any;
+   ivtp: any;
 
 
    listDetailInvoices: any[];
@@ -83,33 +87,50 @@ export class TabInvoicesComponent extends CoreBase implements OnInit {
                resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
             },
             {
-               width: 'auto', id: 'col-idat', field: 'UHIDAT', name: 'Date facture.',
+               width: 'auto', id: 'col-pyno', field: 'UHPYNO', name: 'Payeur',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-ivno', field: 'UHIVNO', name: 'Numéro facture',
+               width: 'auto', id: 'col-exin', field: 'UHEXIN', name: 'N° fact étendue',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-dudt', field: 'UHDUDT', name: 'Date échéance',
+               width: 'auto', id: 'col-vono', field: 'UHVONO', name: 'N° justi',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-ivam', field: 'UHIVAM', name: 'Montant Facture',
+               width: 'auto', id: 'col-ivla', field: 'UHIVLA', name: 'Mnt Facture',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-cucd', field: 'UHCUCD', name: 'Devise',
+               width: 'auto', id: 'col-dudt', field: 'UHDUDT', name: 'DtEch',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-ralc', field: 'UHRALC', name: 'Restant à payer',
+               width: 'auto', id: 'col-ralc', field: 'UHRALC', name: 'Incorrect',
                resizable: true, filterType: 'text', sortable: true
             },
             {
-               width: 'auto', id: 'col-inst', field: 'UHINST', name: 'Montant',
+               width: 'auto', id: 'col-rivn', field: 'UHRIVN', name: 'Facture orig',
                resizable: true, filterType: 'text', sortable: true
             },
+            {
+               width: 'auto', id: 'col-yea4', field: 'UHYEA4', name: 'Ann',
+               resizable: true, filterType: 'text', sortable: true
+            },
+            {
+               width: 'auto', id: 'col-inpx', field: 'UHINPX', name: 'Factur',
+               resizable: true, filterType: 'text', sortable: true
+            },
+            {
+               width: 'auto', id: 'col-ivno', field: 'UHIVNO', name: 'N° fact',
+               resizable: true, filterType: 'text', sortable: true
+            },
+            {
+               width: 'auto', id: 'col-ivtp', field: 'UHIVTP', name: 'TypFc',
+               resizable: true, filterType: 'text', sortable: true
+            },
+
 
 
          ],

@@ -77,7 +77,7 @@ export class InvoicesWebService {
          program: 'CMS100MI',
          transaction: 'LstInvoiceByCus',
          record: inputFields,
-         outputFields: ['UHIDAT', 'UHIVNO', 'UHDUDT', 'UHIVAM', 'UHCUCD', 'UHRALC', 'UHINST'],
+         outputFields: ['UHPYNO', 'UHEXIN', 'UHVONO', 'UHIVLA', 'UHDUDT', 'UHRIVN', 'UHYEA4', 'UHINPX', 'UHIVNO', 'UHIVTP'],
       };
       return this.miService.execute(request);
    }
