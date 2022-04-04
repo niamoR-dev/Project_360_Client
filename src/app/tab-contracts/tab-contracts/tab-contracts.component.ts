@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
+import { CunoHeaderService } from 'src/app/core/services/cuno-header-service/cuno-header.service';
 import { ContractsWebService } from 'src/app/core/web-services/contracts.webservice';
 
 @Component({
@@ -9,6 +10,8 @@ import { ContractsWebService } from 'src/app/core/web-services/contracts.webserv
    styleUrls: ['./tab-contracts.component.css']
 })
 export class TabContractsComponent extends CoreBase implements OnInit {
+
+   //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
 
 
    datagridOptions: SohoDataGridOptions = {};
@@ -27,26 +30,34 @@ export class TabContractsComponent extends CoreBase implements OnInit {
 
    listDetailContracts: any;
 
+   //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
 
 
-
-   constructor(private miService: MIService, private userService: UserService, private contractsWebService: ContractsWebService) {
+   constructor(private contractsWebService: ContractsWebService, private cunoHeaderService: CunoHeaderService) {
       super('TabContractsComponent');
    }
+
+   //////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
+
 
    ngOnInit() {
 
       this.recoveryDataFromApi();
 
    }
+
+   //////////////////////////////////////////////////////////////////// Méthodes qui gère l'affichage Grid ///////////////////////////////////////////////////////////////////////////////////
+
    private recoveryDataFromApi() {
-      this.contractsWebService.listeContracts().subscribe(data => {
+      this.contractsWebService.listContracts().subscribe(data => {
          console.log('ngoninit', data)
          this.listContracts = data;
          this.initGridContracts();
       });
 
    }
+
+
 
    private initGridContracts() {                             // méthode qui permet d'afficher les données dans la GRID
       const options: SohoDataGridOptions = {
@@ -137,138 +148,6 @@ export class TabContractsComponent extends CoreBase implements OnInit {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { Component, OnInit } from '@angular/core';
-// import { CoreBase } from '@infor-up/m3-odin';
-// import { Subscription } from 'rxjs';
-// import { CunoHeaderService } from 'src/app/core/services/cuno-header-service/cuno-header.service';
-// import { ContractsWebService } from 'src/app/core/web-services/contracts.webservice';
-
-// @Component({
-//    selector: 'app-tab-contrats',
-//    templateUrl: './tab-contracts.component.html',
-//    styleUrls: ['./tab-contracts.component.css']
-// })
-// export class TabContractsComponent extends CoreBase implements OnInit {
 
 
 //    //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
