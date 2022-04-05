@@ -27,11 +27,12 @@ export class ContractsWebService {
 
    }
 
+
+
    listContracts() {
 
 
-      return this.listAllContracts().pipe(map((answer) => {
-         console.log('prout', answer)                       // méthode qui permets d'envoyer la donnée vers le TS
+      return this.listAllContracts().pipe(map((answer) => {                    // méthode qui permets d'envoyer la donnée vers le TS
          if (answer.errorCode) {
             throw Error(JSON.stringify(answer));
          }
@@ -40,7 +41,7 @@ export class ContractsWebService {
          catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
             console.error('Erreur API list :', error);
 
-            this.handleError('Échec de l\'exécution de l\'API list', error);
+            this.handleError('Échec de l\'exécution de l\'API LstContrat', error);
             return of(null);
          })
       );
@@ -85,9 +86,7 @@ export class ContractsWebService {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
 
-         UYCUNO: 'NDUCLI03',
-         UYAGNO: '',
-         UYSTDT: ''
+         UYCUNO: 'NDUCLI03'
 
       }
 
@@ -97,7 +96,6 @@ export class ContractsWebService {
          record: inputFields,
          outputFields: ['UYCUNO', 'UYAGNO', 'UYSTDT', 'UYAGTP', 'UYTX40', 'UYAGST'],
       };
-      console.log('ca marche pas', request)
       return this.miService.execute(request);
    }
 }
@@ -112,50 +110,8 @@ export class ContractsWebService {
 
 
 
-// import { Injectable } from '@angular/core';
-// import { MIService } from '@infor-up/m3-odin-angular';
-// import { SohoMessageService } from 'ids-enterprise-ng';
-// import { of } from 'rxjs';
-
-// @Injectable({
-//    providedIn: 'root'
-// })
-// export class ContractsWebService {
-//    listDetailContracts() {
-//       throw new Error('Method not implemented.');
-//    }
-
-//    //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
-
-//    cunoHeader: any;
-
-
-//    //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components/services ///////////////////////////////////////////////////////////////////////////////////
-
-
-//    constructor(protected miService: MIService, private messageService: SohoMessageService) { }
-
-
-//    //////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
-
 
 //    recoveryCunoFromHeader(cuno: any) { // méthode qui récupère leCUNO du Header venant du component.ts Adresse
 //       return of(this.cunoHeader = cuno);
 
 //    }
-
-
-//    //////////////////////////////////////////////////////////////////// Méthodes qui gère les erreurs ///////////////////////////////////////////////////////////////////////////////////
-
-//    private handleError(message: string, error?: any) {
-//       const buttons = [{ text: 'Ok', click: (e, modal) => { modal.close(); } }];
-//       this.messageService.error()
-//          .title('An error occured')
-//          .message(message + '. More details might be available in the browser console.')
-//          .buttons(buttons)
-//          .open();
-//    }
-
-
-//    //////////////////////////////////////////////////////////////////// Méthodes qui appellent les API   ///////////////////////////////////////////////////////////////////////////////////
-// }
