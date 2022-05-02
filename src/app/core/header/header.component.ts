@@ -37,7 +37,7 @@ export class HeaderComponent extends CoreBase implements OnInit {
 
    onSelectedClient(numberClient: any) {
       this.cunoHeader = numberClient.data;
-
+      console.log(numberClient.data);
       this.sendToService();
    }
 

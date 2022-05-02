@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { Injectable } from "@angular/core";
 import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
 import { MIService } from "@infor-up/m3-odin-angular";
@@ -6,11 +7,26 @@ import { Observable, of } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
 
 @Injectable({ providedIn: 'root' })
+=======
+import { Injectable } from '@angular/core';
+import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
+import { MIService } from '@infor-up/m3-odin-angular';
+import { SohoMessageService } from 'ids-enterprise-ng';
+import { Observable, of } from "rxjs";
+import { map, catchError } from 'rxjs/internal/operators';
+//import { TabContractsComponent } from '../../tab-contracts/tab-contracts/tab-contracts.component';
+
+
+@Injectable({
+   providedIn: 'root'
+})
+>>>>>>> Stashed changes
 export class ContractsWebService {
 
    //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
 
    cunoHeader: any;
+   agnoWebService: any;
 
 
    //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components/services ///////////////////////////////////////////////////////////////////////////////////
@@ -24,9 +40,41 @@ export class ContractsWebService {
 
    recoveryCunoFromHeader(cuno: any) { // méthode qui récupère leCUNO du Header venant du component.ts Item Customer
       return of(this.cunoHeader = cuno);
-
    }
 
+   listeContracts() {
+
+      return this.listAllContracts().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
+         if (answer.errorCode) {
+            throw Error(JSON.stringify(answer));
+         }
+         return answer.items;
+      }),
+         catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
+            console.error('Erreur API listAddresses :', error);
+
+            this.handleError('Échec de l\'exécution de l\'API listAddresses', error);
+            return of(null);
+         })
+      );
+   }
+
+   listeContracts2() {
+
+      return this.listAllContracts2().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
+         if (answer.errorCode) {
+            throw Error(JSON.stringify(answer));
+         }
+         return answer.items;
+      }),
+         catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
+            console.error('Erreur API listAddresses :', error);
+
+            this.handleError('Échec de l\'exécution de l\'API listAddresses', error);
+            return of(null);
+         })
+      );
+   }
 
 
    listContracts() {
@@ -80,6 +128,7 @@ export class ContractsWebService {
 
 
    //////////////////////////////////////////////////////////////////// Méthodes qui appellent les API   ///////////////////////////////////////////////////////////////////////////////////
+<<<<<<< Updated upstream
 
 
    private listAllContracts(): Observable<IMIResponse> {
@@ -115,3 +164,146 @@ export class ContractsWebService {
 //       return of(this.cunoHeader = cuno);
 
 //    }
+=======
+   private listAllContracts(): Observable<IMIResponse> {
+
+      let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
+         //CONO: '100',
+         CUNO: this.cunoHeader
+      }
+
+      const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
+         program: 'OIS060MI',
+         transaction: 'LstCustBlkAgr',
+         record: inputFields,
+         outputFields: ['CUNO','AGNO', 'STDT','AGDT', 'AGTP', 'TX40'],
+      };
+      return this.miService.execute(request);
+   }
+
+   private listAllContracts2(): Observable<IMIResponse> {
+
+      let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
+         //CONO: '100',
+         CUNO: this.cunoHeader,
+         //AGNO: EnvoiAGNO(agno2: any)
+      }
+
+      const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
+         program: 'OIS060MI',
+         transaction: 'LstAgrLnPrice',
+         record: inputFields,
+         outputFields: ['PREX'],
+      };
+      return this.miService.execute(request);
+   }
+
+
+
+
+   detailsContractsGetBasicData() {
+   return this.listDetailsContratGetBasicData().pipe(map((answer) => {
+      if (answer.errorCode) {
+         throw Error(JSON.stringify(answer));
+      }
+      return answer.items;
+   }),
+      catchError((error) => {
+         console.error('Erreur API GetBasicData :', error);
+
+         this.handleError('Échec de l\'exécution de l\'API GetBasicData', error);
+         return of(null);
+      })
+   );
+}
+
+   detailsContractsGetOrderInfo() {
+      return this.listDetailsContratGetOrderInfo().pipe(map((answer) => {
+         if (answer.errorCode) {
+            throw Error(JSON.stringify(answer));
+         }
+         return answer.items;
+      }),
+         catchError((error) => {
+            console.error('Erreur API GetOrderInfo :', error);
+   
+            this.handleError('Échec de l\'exécution de l\'API GetOrderInfo', error);
+            return of(null);
+         })
+      );
+   }
+   
+   detailsContractGetFinancial() {
+      return this.listDetailsContratGetFinancial().pipe(map((answer) => {
+         if (answer.errorCode) {
+            throw Error(JSON.stringify(answer));
+         }
+         return answer.items;
+      }),
+         catchError((error) => {
+            console.error('Erreur API GetFinancial :', error);
+   
+            this.handleError('Échec de l\'exécution de l\'API GetFinancial', error);
+            return of(null);
+         })
+      );
+   }
+
+   private listDetailsContratGetBasicData(): Observable<IMIResponse> {
+      console.log("  CUNO =", this.cunoHeader);
+
+
+      let inputFields: any = {
+         CUNO: this.cunoHeader
+      }
+
+      const request: IMIRequest = {
+         program: 'OIS060MI',
+         transaction: 'GetBasicData',
+         record: inputFields,
+         outputFields: ['CUNO','PHNO', 'YREF', 'EALO', 'TFNO', 'MEAL'],
+      };
+
+      return this.miService.execute(request);
+   }
+
+
+
+   private listDetailsContratGetOrderInfo(): Observable<IMIResponse> {
+      let inputFields: any = {
+         CUNO: this.cunoHeader
+      }
+
+      const request: IMIRequest = {
+         program: 'OIS060MI',
+         transaction: 'GetOrderInfo',
+         record: inputFields,
+         outputFields: ['MODL', 'TEDL'],
+      };
+
+      return this.miService.execute(request);
+   }
+   
+   private listDetailsContratGetFinancial(): Observable<IMIResponse> {
+   
+         let inputFields: any = {
+            CUNO: this.cunoHeader
+         }
+   
+         const request: IMIRequest = {
+            program: 'OIS060MI',
+            transaction: 'GetFinancial',
+            record: inputFields,
+            outputFields: ['VRNO'],
+         };
+   
+         return this.miService.execute(request);
+   }
+   
+}
+
+
+
+
+
+>>>>>>> Stashed changes
