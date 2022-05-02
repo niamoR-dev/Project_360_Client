@@ -69,8 +69,10 @@ export class InvoicesWebService {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
 
-         UHCUNO: this.cunoHeader,
-         UHIVNO: ''
+         // UHCUNO: this.cunoHeader,
+         // UHIVNO: ''
+         UHCONO: '100',
+         UHPYNO: 'CHP_MEGAS'
       }
 
       const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
