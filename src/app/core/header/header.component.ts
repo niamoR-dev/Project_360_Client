@@ -5,53 +5,53 @@ import { CunoHeaderService } from '../services/cuno-header-service/cuno-header.s
 import { HeaderWebService } from '../web-services/header.webservice';
 
 @Component({
-   selector: 'app-header',
-   templateUrl: './header.component.html',
-   styleUrls: ['./header.component.css']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent extends CoreBase implements OnInit {
 
-   listAddresses = LIST_ADDRESSES;
+  listAddresses = LIST_ADDRESSES;
 
-   listClients: any[];
-   cunoHeader: any;
-
-
-   constructor(private headerWebService: HeaderWebService, private cunoHeaderService: CunoHeaderService) {
-      super('HeaderComponent');
-   }
+  listClients: any[];
+  cunoHeader: any;
 
 
-
-   ngOnInit() {
-      this.headerWebService.listeClients().subscribe(data => {
-
-         this.listClients = data;
-
-      });
-
-
-   }
+  constructor(private headerWebService: HeaderWebService, private cunoHeaderService: CunoHeaderService) {
+    super('HeaderComponent');
+  }
 
 
 
-   onSelectedClient(numberClient: any) {
-      this.cunoHeader = numberClient.data;
+  ngOnInit() {
+    this.headerWebService.listeClients().subscribe(data => {
 
-      this.sendToService();
-   }
+      this.listClients = data;
 
-
-
-   sendToService() {
-      this.cunoHeaderService.cunoToSend(this.cunoHeader).subscribe();
-
-   }
+    });
 
 
-   ngOnDestroy() {
+  }
 
-   }
 
-   //aller se renseigner sur les Subject + sauvegarde value : adresseService : cono$ = Subject<String>;
+
+  onSelectedClient(numberClient: any) {
+    this.cunoHeader = numberClient.data;
+
+    this.sendToService();
+  }
+
+
+
+  sendToService() {
+    this.cunoHeaderService.cunoSubject.next(this.cunoHeader)
+
+    // this.cunoHeaderService.cunoToSend(this.cunoHeader).subscribe();
+
+  }
+
+
+
+
+  //aller se renseigner sur les Subject + sauvegarde value : adresseService : cono$ = Subject<String>;
 }

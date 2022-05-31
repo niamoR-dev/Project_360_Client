@@ -6,16 +6,17 @@ import { TabBlockedOrdersComponent } from './tab-blocked-orders/tab-blocked-orde
 const routes: Routes = [
 
 
-   {
-      path: '',
-      component: TabBlockedOrdersComponent
-   }
+  {
+    path: '',
+    component: TabBlockedOrdersComponent,
+    pathMatch: 'full'
+  }
 
 
 ];
 
 @NgModule({
-   imports: [RouterModule.forChild(routes)],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabBlockedOrdersRoutingModule { }

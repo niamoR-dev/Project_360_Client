@@ -6,12 +6,12 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const Modules = [
-   CommonModule,
-   SohoComponentsModule,
-   M3OdinModule,
-   FormsModule,
-   RouterModule,
-   ReactiveFormsModule
+  CommonModule,
+  SohoComponentsModule,
+  M3OdinModule,
+  FormsModule,
+  RouterModule,
+  ReactiveFormsModule
 ]
 
 const Components = [
@@ -20,18 +20,18 @@ const Components = [
 
 
 @NgModule({
-   declarations: [
-      ...Components
-   ],
+  declarations: [
+    ...Components
+  ],
 
-   imports: [
-      ...Modules,
+  imports: [
+    ...Modules,
 
-   ],
+  ],
 
-   exports: [
-      ...Modules,
-      ...Components
-   ]
+  exports: [
+    ...Modules,
+    ...Components
+  ]
 })
 export class SharedModule { }

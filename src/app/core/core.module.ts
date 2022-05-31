@@ -17,55 +17,42 @@ import { TabLinesModule } from '../tab-line/tab-lines.module';
 import { TabOffersModule } from '../tab-offers/tab-offers.module';
 import { TabOrdersDeliveredModule } from '../tab-orders-delivered/tab-orders-delivered.module';
 import { TabOrdersModule } from '../tab-orders/tab-orders.module';
+import { CoreRoutingModule } from './core-routing.module';
 
 
 @NgModule({
-   declarations: [
-      HeaderComponent,
+  declarations: [
+    HeaderComponent,
 
-   ],
+  ],
 
-   imports: [
-      SharedModule,
-      TabAddressesModule,
-      TabAssortmentModule,
-      TabBatchOrdersModule,
-      TabBlockedOrdersModule,
-      TabCommercialChannelModule,
-      TabContractsModule,
-      TabCustomerReturnsModule,
-      TabDeliveryModule,
-      TabFeeModule,
-      TabGeneralInfoModule,
-      TabInvoicesModule,
-      TabItemsCustomersModule,
-      TabLinesModule,
-      TabOffersModule,
-      TabOrdersModule,
-      TabOrdersDeliveredModule,
-   ],
+  imports: [
+    SharedModule,
+    CoreRoutingModule
 
-   exports: [
-      HeaderComponent,
-   ]
+  ],
+
+  exports: [
+    HeaderComponent,
+  ]
 })
 export class CoreModule {
 
 
-   /*
-      Permet de placer le CoreModule en parent de tous les autres modules, si un autre module est
+  /*
+     Permet de placer le CoreModule en parent de tous les autres modules, si un autre module est
 
-      importé dans le appModule l'application rentrera en conflit (mesure de sécurité)
-   */
+     importé dans le appModule l'application rentrera en conflit (mesure de sécurité)
+  */
 
-   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
 
-      if (parentModule) {
+    if (parentModule) {
 
-         throw new Error('CoreModule is already loaded.');
+      throw new Error('CoreModule is already loaded.');
 
-      }
+    }
 
-   }
+  }
 
 }

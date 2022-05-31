@@ -1,93 +1,21 @@
 <label for="clients">Clients : </label>
 <select soho-dropdown noSearch name="clients" (change)="onSelectedClient($event)">
-   <!-- ngModel -->
-   <option *ngFor="let client of listClients" [value]="client.CUNO">{{client.CUNO}} :
-      {{client.CUNM}} -
-      {{client.WHLO}} </option>
+  <!-- ngModel -->
+  <option *ngFor="let client of listClients" [value]="client.CUNO">
+    {{client.CUNO}} :
+    {{client.CUNM}} -
+    {{client.WHLO}}
+  </option>
 </select>
 
 
 <div soho-tabs #onglet [disableAutoUpdatedCall]="true" registerForEvents="activated">
-   <div soho-tab-list-container>
-      <ul soho-tab-list>
+  <div soho-tab-list-container>
+    <ul soho-tab-list>
 
-         <li soho-tab *ngFor="let item of listAddresses" routerLinkActive="active-link">
-            <a soho-tab-title routerLink="{{item.rooting}}">{{item.nameTab}}</a>
-         </li>
-
-         <!--
-               <li soho-tab selected="true"><a routerLink="" soho-tab-title> Général</a>
-         </li>
-         <li soho-tab selected="true"><a routerLink="" soho-tab-title> Général</a>
-         </li>
-         <li soho-tab><a routerLink="./addresses" soho-tab-title> Adresses</a> </li> -->
-
-         <!--  <li soho-tab><a routerLink="./items-customers" soho-tab-title> Article / Client</a> </li>
-
-         <li soho-tab><a routerLink="./contracts" soho-tab-title> Contrats</a> </li>
-
-         <li soho-tab><a routerLink="./fee" soho-tab-title> Frais</a> </li>
-
-         <li soho-tab><a routerLink="./commercial-channel" soho-tab-title> Circuit Commercial</a> </li>
-
-         <li soho-tab><a routerLink="./assortment" soho-tab-title> Assortiment</a> </li>
-
-         <li soho-tab><a routerLink="./orders" soho-tab-title> Commandes</a> </li>
-
-         <li soho-tab><a routerLink="./line" soho-tab-title> Ligne</a> </li>
-
-         <li soho-tab><a routerLink="./offers" soho-tab-title> Offres</a> </li>
-
-         <li soho-tab><a routerLink="./batch-orders" soho-tab-title> Batch Orders</a> </li> -->s
-
-
-      </ul>
-   </div>
+      <li soho-tab *ngFor="let item of listAddresses" routerLinkActive="active-link">
+        <a soho-tab-title routerLink="{{item.rooting}}">{{item.nameTab}}</a>
+      </li>
+    </ul>
+  </div>
 </div>
-
-
-
-
-<!-- <div soho-tab-panel l" style="padding-top: 5px;">
-   <app-general></app-general>
-</div>
-
-<div soho-tab-panel es" style="padding-top: 5px;">
-   <app-adresses [cunoHeader]="cunoHeader"></app-adresses>
-</div>
-
-<div soho-tab-panel e-client" style="padding-top: 5px;">
-   <app-article-client></app-article-client>
-</div>
-
-<div soho-tab-panel ts" style="padding-top: 5px;">
-   <app-contrats></app-contrats>
-</div>
-
-<div soho-tab-panel  style="padding-top: 5px;">
-   <app-frais></app-frais>
-</div>
-
-<div soho-tab-panel t-commercial" style="padding-top: 5px;">
-   <app-circuitCom></app-circuitCom>
-</div>
-
-<div soho-tab-panel iment" style="padding-top: 5px;">
-   <app-assortiment></app-assortiment>
-</div>
-
-<div soho-tab-panel des" style="padding-top: 5px;">
-   <app-commandes></app-commandes>
-</div>
-
-<div soho-tab-panel  style="padding-top: 5px;">
-   <app-ligne></app-ligne>
-</div>
-
-<div soho-tab-panel " style="padding-top: 5px;">
-   <app-offres></app-offres>
-</div>
-
-<div soho-tab-panel orders" style="padding-top: 5px;">
-   <app-batchOrders></app-batchOrders>
-</div>  -->
