@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreBase } from '@infor-up/m3-odin';
-import { LIST_ADDRESSES } from 'src/app/shared/mocks/list-address.mock';
+import { LIST_ADDRESSES } from '../../shared/mocks/list-address.mock';
 import { CunoHeaderService } from '../services/cuno-header-service/cuno-header.service';
 import { HeaderWebService } from '../web-services/header.webservice';
 
@@ -15,6 +15,7 @@ export class HeaderComponent extends CoreBase implements OnInit {
 
   listClients: any[];
   cunoHeader: any;
+  firstCUNOHeader: any;
 
 
   constructor(private headerWebService: HeaderWebService, private cunoHeaderService: CunoHeaderService) {
@@ -24,34 +25,34 @@ export class HeaderComponent extends CoreBase implements OnInit {
 
 
   ngOnInit() {
-    this.headerWebService.listeClients().subscribe(data => {
+    this.headerWebService.listeClients().subscribe(data => {  // au lancement de l'application, permets l'enregistrement de la liste des clients et le lancement de la valeur par défaut
 
       this.listClients = data;
+      this.firstCUNOHeader = data[0].CUNO;
 
+      this.defaultClient(this.firstCUNOHeader);
     });
 
 
   }
 
+  defaultClient(defaultClient: any) { // envoie la première valeur de la liste des clients, valeur par défaut dans toute l'application
+    this.cunoHeader = defaultClient;
+
+    this.sendToService();
+  }
 
 
-  onSelectedClient(numberClient: any) {
+  onSelectedClient(numberClient: any) { // lorsqu'on change de clients dans la dropdown, la valeur se change automatiquement grâce au subjectBehavior
     this.cunoHeader = numberClient.data;
 
     this.sendToService();
   }
 
 
+  sendToService() { // porte la donnée pour envoyer dans le servidce porteur du subect behavior
 
-  sendToService() {
-    this.cunoHeaderService.cunoSubject.next(this.cunoHeader)
-
-    // this.cunoHeaderService.cunoToSend(this.cunoHeader).subscribe();
+    this.cunoHeaderService.subject(this.cunoHeader);
 
   }
-
-
-
-
-  //aller se renseigner sur les Subject + sauvegarde value : adresseService : cono$ = Subject<String>;
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreBase } from '@infor-up/m3-odin';
 import { Subscription } from 'rxjs';
-import { CunoHeaderService } from 'src/app/core/services/cuno-header-service/cuno-header.service';
+import { CunoHeaderService } from '../../core/services/cuno-header-service/cuno-header.service';
 import { AdressesWebService } from '../../core/web-services/adresses.webservice';
 
 @Component({
@@ -68,7 +68,6 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
     this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
       (data: any) => {
         this.cunoHeader$ = data;
-        console.log("fsdfdfds", data);
 
         this.sendCunoToAddressesWebService(); // lancement de la méthode de récupération du CUNO
 
