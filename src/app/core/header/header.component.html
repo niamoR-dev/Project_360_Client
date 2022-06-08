@@ -1,7 +1,17 @@
 <label for="clients">Clients : </label>
-<select soho-dropdown noSearch name="clients" (change)="onSelectedClient($event)">
-  <!-- ngModel -->
-  <option *ngFor="let client of listClients" [value]="client.CUNO">
+
+<!-- <select soho-dropdown noSearch id="client" (ngModelChange)="onSelectedClient($event)">
+
+  <option *ngFor="let client of listClients" [(ngValue)]="client.CUNO">
+    {{client.CUNO}} :
+    {{client.CUNM}} -
+    {{client.WHLO}}
+  </option>
+</select> -->
+
+<select soho-dropdown noSearch name="clients" [(ngModel)]='ngSelect' (ngChange)="onSelectedClient($event)">
+
+  <option *ngFor="let client of listClients" [selected]="client === ngSelect" [ngValue]="client.CUNO">
     {{client.CUNO}} :
     {{client.CUNM}} -
     {{client.WHLO}}

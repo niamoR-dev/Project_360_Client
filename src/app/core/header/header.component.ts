@@ -14,8 +14,11 @@ export class HeaderComponent extends CoreBase implements OnInit {
   listAddresses = LIST_ADDRESSES;
 
   listClients: any[];
+  ngSelect: any;
   cunoHeader: any;
   firstCUNOHeader: any;
+  client: any;
+
 
 
   constructor(private headerWebService: HeaderWebService, private cunoHeaderService: CunoHeaderService) {
@@ -28,6 +31,8 @@ export class HeaderComponent extends CoreBase implements OnInit {
     this.headerWebService.listeClients().subscribe(data => {  // au lancement de l'application, permets l'enregistrement de la liste des clients et le lancement de la valeur par défaut
 
       this.listClients = data;
+      this.ngSelect = this.listClients[0].CUNO;
+      console.log(this.ngSelect)
       this.firstCUNOHeader = data[0].CUNO;
 
       this.defaultClient(this.firstCUNOHeader);
