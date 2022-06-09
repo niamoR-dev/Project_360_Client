@@ -9,8 +9,9 @@ export class CunoHeaderService {
   cunoSubject: BehaviorSubject<any> = new BehaviorSubject(null);
 
 
-  subject(data: any) {
-    this.cunoSubject.next(data);
+  clientSubjectMethod(client: any) {
+
+    this.cunoSubject.next(client.CUNO);
 
   }
 

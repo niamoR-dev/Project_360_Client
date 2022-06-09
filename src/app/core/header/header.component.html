@@ -1,22 +1,15 @@
 <label for="clients">Clients : </label>
 
-<!-- <select soho-dropdown noSearch id="client" (ngModelChange)="onSelectedClient($event)">
+<select soho-dropdown noSearch name="clients" [(ngModel)]='ngSelect' (change)="onSelectedClient()">
 
-  <option *ngFor="let client of listClients" [(ngValue)]="client.CUNO">
-    {{client.CUNO}} :
-    {{client.CUNM}} -
-    {{client.WHLO}}
-  </option>
-</select> -->
-
-<select soho-dropdown noSearch name="clients" [(ngModel)]='ngSelect' (ngChange)="onSelectedClient($event)">
-
-  <option *ngFor="let client of listClients" [selected]="client === ngSelect" [ngValue]="client.CUNO">
+  <option *ngFor="let client of listClients" [ngValue]="client">
     {{client.CUNO}} :
     {{client.CUNM}} -
     {{client.WHLO}}
   </option>
 </select>
+
+
 
 
 <div soho-tabs #onglet [disableAutoUpdatedCall]="true" registerForEvents="activated">
