@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { CoreBase } from '@infor-up/m3-odin';
 import { Subscription } from 'rxjs';
+import { APIWebService } from 'src/app/core/web-services/api.webservice';
 import { CunoHeaderService } from '../../core/services/cuno-header-service/cuno-header.service';
 import { AdressesWebService } from '../../core/web-services/adresses.webservice';
 
@@ -15,7 +16,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
   datagridOptions: SohoDataGridOptions = {}; // je sais pas
 
-  // ici on déclare les champs qui sont utilisées dans le template
+  /////////////// ici on déclare les champs qui sont utilisées dans la grid template //////////////
   cuno: any;
   cono: any;
   adrt: any;
@@ -34,19 +35,54 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
   tedl: any;
   vrno: any;
 
-  show: boolean; // permets l'affichage de détails au clique
+  show: boolean; // permets l'affichage de détails au clique, doit faire une fonction ou un bouton SI pour enlever l'affichage
 
 
-  listAddressesClient: any[]; // tableau pour enregistrer le retour d'API des adresses d'un client
+  listAddressesClient: any; // tableau pour enregistrer le retour d'API des adresses d'un client
 
-  detailsAddressesLstAddrByCust: any[]; // tableau pour enregistrer le retour d'API des détails des adresses d'un client
+  detailsAddressesLstAddrByCust: any; // tableau pour enregistrer le retour d'API des détails des adresses d'un client
 
   cunoHeader$: any;
   cunoSubscription: Subscription;
 
+
+
+  ///////////////////// variables d'appel API Adresse globale ///////////////////////////////////////////////   faut il en faire un objet ? ou en faire une méthode ?
+
+  programInput: string = 'CRS610MI';            // Nom de programme
+
+  transactionInput: string = 'LstAddresses';    // Verbe d'API
+
+  inputFieldInput: any = {                      // champs d'entrées obligatoires et optionnelles
+    CONO: '100',
+    CUNO: null
+  };
+
+  outputFieldInput: any = ['ADRT', 'ADID', 'CUNM', 'CUA1', 'CUA2', 'CUA3', 'CUA4'];       // champs de sorties, c'est optionel
+
+  maxReturnedRecordsInput: number;   // pour limiter le nombre de données en sortie, c'est optionel
+
+
+  ///////////////////// variables d'appel API Détails par adresse ///////////////////////////////////////////////   faut il en faire un objet ? ou en faire une méthode ?
+
+  programInput2: string = 'CMS100MI';            // Nom de programme
+
+  transactionInput2: string = 'LstAddrByCust';    // Verbe d'API
+
+  inputFieldInput2: any = {                      // champs d'entrées obligatoires et optionnelles
+    OPCUNO: null,
+    OPADRT: null,
+    OPADID: null
+  };
+
+  outputFieldInput2: any = ['OPPHNO', 'OPYREF', 'OPEALO', 'OPTFNO', 'OPMEAL', 'OPMODL', 'OPTEDL', 'OPVRNO'];       // champs de sorties, c'est optionel
+
+  maxReturnedRecordsInput2: number;   // pour limiter le nombre de données en sortie, c'est optionel
+
+
   //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
 
-  constructor(private adressesWebService: AdressesWebService, private cunoHeaderService: CunoHeaderService) {    // ici on fait le lien vers les autres components
+  constructor(private cunoHeaderService: CunoHeaderService, private apiWebService: APIWebService) {    // ici on fait le lien vers les autres components
     super('TabAddressesComponent');
   }
 
@@ -64,37 +100,27 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
 
 
-  cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
+  private cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
     this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
       (data: any) => {
         this.cunoHeader$ = data;
 
-        this.sendCunoToAddressesWebService(); // lancement de la méthode de récupération du CUNO
+        this.inputFieldInput.CUNO = this.cunoHeader$;
 
-        this.recoveryDataFromAPI(); // lancement de la méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
-
+        this.getAllAdresses();
       }
-
     );
   }
 
 
+  private getAllAdresses() {
 
-  sendCunoToAddressesWebService() {       // méthode obesevable pour envoyer la CUNO de le webService de Adresse
-    this.adressesWebService.recoveryCunoFromHeader(this.cunoHeader$).subscribe();
-  }
+    this.apiWebService.callAPI(this.programInput, this.transactionInput, this.inputFieldInput, this.outputFieldInput).subscribe(data => {
 
-
-
-  recoveryDataFromAPI() {             // méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
-
-    this.adressesWebService.listeAdresses().subscribe(data => {
       this.listAddressesClient = data;
 
       this.initGridAdresses();      // lance l'initialisation de la Grid
     });
-
-
   }
 
 
@@ -153,7 +179,6 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
     this.show = true;
 
-    this.cuno = selected.CUNO;
     this.cunm = selected.CUNM;
     this.cua1 = selected.CUA1;
     this.cua2 = selected.CUA2;
@@ -162,19 +187,22 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
     this.adid = selected.ADID;
     this.adrt = selected.ADRT;
 
-    this.sendKeyForDetailToService(this.cunoHeader$, this.adrt, this.adid);
-    this.InitDetailAdressLstAddrByCust();
+
+    this.inputFieldInput2.OPCUNO = this.cunoHeader$;
+    this.inputFieldInput2.OPADRT = this.adrt;
+    this.inputFieldInput2.OPADID = this.adid;
+
+    this.getDetailsAdress();
   }
 
-  sendKeyForDetailToService(cuno: any, adrt: any, adid: any) { // méthode qui permets d'envoyer les champs d'entrées pour le detail dfans le addressesService
-    this.adressesWebService.recoveryClientForDetail(cuno, adrt, adid).subscribe();
-  }
 
 
-  private InitDetailAdressLstAddrByCust() { // API CMS100 GetBasicData
+  private getDetailsAdress() { // API CMS100 GetBasicData
 
-    this.adressesWebService.detailsAddressesLstAddrByCust().subscribe(data => {
+    this.apiWebService.callAPI(this.programInput2, this.transactionInput2, this.inputFieldInput2, this.outputFieldInput2).subscribe(data => {
+
       this.detailsAddressesLstAddrByCust = data;
+
       this.phno = this.detailsAddressesLstAddrByCust[0].OPPHNO;
       this.tfno = this.detailsAddressesLstAddrByCust[0].OPTFNO;
       this.yref = this.detailsAddressesLstAddrByCust[0].OPYREF;
@@ -184,13 +212,14 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
       this.tedl = this.detailsAddressesLstAddrByCust[0].OPTEDL;
       this.vrno = this.detailsAddressesLstAddrByCust[0].OPVRNO;
 
-      //  console.log(" GetBasicData  ", this.detailsAddressesGetBasicData)  // la virgule d ans le console log permets de lire à 'intérieur de l'objet
-
     });
+
   }
 
 
-  ngOnDestroy() {
+
+  private ngOnDestroy() {
+    console.log("UNSUBSCRIBE")
     this.cunoSubscription.unsubscribe();
   }
 

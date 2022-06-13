@@ -14,51 +14,49 @@ export class APIWebService {
   constructor(protected miService: MIService, private messageService: SohoMessageService) {
   }
 
-  inputFieldInput: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
-    CONO: '100',
-    CUNO: 'nknk'
-  };
+  // inputFieldInput: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
+  //   CONO: '100',
+  //   CUNO: 'nknk'
+  // };
 
-  outputFieldInput: any = ['OPPHNO', 'OPYREF', 'OPEALO', 'OPTFNO', 'OPMEAL', 'OPMODL', 'OPTEDL', 'OPVRNO'];
+  // outputFieldInput: any = ['OPPHNO', 'OPYREF', 'OPEALO', 'OPTFNO', 'OPMEAL', 'OPMODL', 'OPTEDL', 'OPVRNO'];
 
-  programInput: string = 'CMS100MI';
+  // programInput: string = 'CMS100MI';
 
-  transactionInput: string = 'LstAddrByCust';
-
-
-  inputFields: any = {
-    // CONO: '100',
-    // CUNO: this.cunoHeader
+  // transactionInput: string = 'LstAddrByCust';
 
 
-    // OPCUNO: this.cunoHeader,
-    // OPADRT: this.adrtTemplate,
-    // OPADID: this.adidTemplate
-
-  }
+  // inputFields: any = {
+  //   // CONO: '100',
+  //   // CUNO: this.cunoHeader
 
 
-  private handleError(message: string, error?: any) {
-    const buttons = [{ text: 'Ok', click: (e, modal) => { modal.close(); } }];
-    this.messageService.error()
-      .title('An error occured')
-      .message(message + '. More details might be available in the browser console.')
-      .buttons(buttons)
-      .open();
-  }
+  //   // OPCUNO: this.cunoHeader,
+  //   // OPADRT: this.adrtTemplate,
+  //   // OPADID: this.adidTemplate
 
+  // }
 
-  private callAPI(programInput: string, transactionInput: string, inputFieldInput?: any[], outputFieldInput?: any[], maxReturnedRecordsInput?: number): Observable<IMIResponse> {
+  callAPI(programInput: string, transactionInput: string, inputFieldInput?: any[], outputFieldInput?: any[], maxReturnedRecordsInput?: number): Observable<IMIResponse> {
 
     const request: IMIRequest = {
+
       program: programInput,
+
       transaction: transactionInput,
+
       record: inputFieldInput,
+
       outputFields: outputFieldInput,
+
       maxReturnedRecords: maxReturnedRecordsInput
     };
 
+    console.log('Requête API envoyé = ', request);
+
+
     return this.miService.execute(request).pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
+      console.log("Retour de requête API = ", answer)
       if (answer.errorCode) {
         throw Error(JSON.stringify(answer));
       }
@@ -71,5 +69,15 @@ export class APIWebService {
         return of(null);
       })
     );;
+  }
+
+
+  private handleError(message: string, error?: any) {
+    const buttons = [{ text: 'Ok', click: (e, modal) => { modal.close(); } }];
+    this.messageService.error()
+      .title('An error occured')
+      .message(message + '. More details might be available in the browser console.')
+      .buttons(buttons)
+      .open();
   }
 }
