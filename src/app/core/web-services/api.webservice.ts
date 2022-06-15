@@ -14,30 +14,32 @@ export class APIWebService {
   constructor(protected miService: MIService, private messageService: SohoMessageService) {
   }
 
-  // inputFieldInput: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
-  //   CONO: '100',
-  //   CUNO: 'nknk'
-  // };
-
-  // outputFieldInput: any = ['OPPHNO', 'OPYREF', 'OPEALO', 'OPTFNO', 'OPMEAL', 'OPMODL', 'OPTEDL', 'OPVRNO'];
-
-  // programInput: string = 'CMS100MI';
-
-  // transactionInput: string = 'LstAddrByCust';
 
 
-  // inputFields: any = {
-  //   // CONO: '100',
-  //   // CUNO: this.cunoHeader
+  callAPI(test: IMIRequest): Observable<IMIResponse> {
+
+    console.log('Requête API envoyé Test 1 = ', test);
+
+    return this.miService.execute(test).pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
+
+      console.log("Retour de requête API = ", answer)
+
+      if (answer.errorCode) {
+        throw Error(JSON.stringify(answer));
+      }
+      return answer.items;
+    }),
+      catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
+        console.error('Erreur API listAddresses :', error);
+
+        this.handleError('Échec de l\'exécution de l\'API listAddresses', error);
+        return of(null);
+      })
+    );;
+  }
 
 
-  //   // OPCUNO: this.cunoHeader,
-  //   // OPADRT: this.adrtTemplate,
-  //   // OPADID: this.adidTemplate
-
-  // }
-
-  callAPI(programInput: string, transactionInput: string, inputFieldInput?: any[], outputFieldInput?: any[], maxReturnedRecordsInput?: number): Observable<IMIResponse> {
+  callAPI2(programInput: string, transactionInput: string, inputFieldInput?: any[], outputFieldInput?: any[], maxReturnedRecordsInput?: number): Observable<IMIResponse> {
 
     const request: IMIRequest = {
 
@@ -51,9 +53,6 @@ export class APIWebService {
 
       maxReturnedRecords: maxReturnedRecordsInput
     };
-
-    console.log('Requête API envoyé = ', request);
-
 
     return this.miService.execute(request).pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
       console.log("Retour de requête API = ", answer)

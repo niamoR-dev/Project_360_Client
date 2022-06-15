@@ -1,5 +1,5 @@
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
-import { CoreBase } from '@infor-up/m3-odin';
+import { CoreBase, IMIRequest } from '@infor-up/m3-odin';
 import { Subscription } from 'rxjs';
 import { APIWebService } from 'src/app/core/web-services/api.webservice';
 import { CunoHeaderService } from '../../core/services/cuno-header-service/cuno-header.service';
@@ -47,39 +47,6 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
 
 
-  ///////////////////// variables d'appel API Adresse globale ///////////////////////////////////////////////   faut il en faire un objet ? ou en faire une méthode ?
-
-  programInput: string = 'CRS610MI';            // Nom de programme
-
-  transactionInput: string = 'LstAddresses';    // Verbe d'API
-
-  inputFieldInput: any = {                      // champs d'entrées obligatoires et optionnelles
-    CONO: '100',
-    CUNO: null
-  };
-
-  outputFieldInput: any = ['ADRT', 'ADID', 'CUNM', 'CUA1', 'CUA2', 'CUA3', 'CUA4'];       // champs de sorties, c'est optionel
-
-  maxReturnedRecordsInput: number;   // pour limiter le nombre de données en sortie, c'est optionel
-
-
-  ///////////////////// variables d'appel API Détails par adresse ///////////////////////////////////////////////   faut il en faire un objet ? ou en faire une méthode ?
-
-  programInput2: string = 'CMS100MI';            // Nom de programme
-
-  transactionInput2: string = 'LstAddrByCust';    // Verbe d'API
-
-  inputFieldInput2: any = {                      // champs d'entrées obligatoires et optionnelles
-    OPCUNO: null,
-    OPADRT: null,
-    OPADID: null
-  };
-
-  outputFieldInput2: any = ['OPPHNO', 'OPYREF', 'OPEALO', 'OPTFNO', 'OPMEAL', 'OPMODL', 'OPTEDL', 'OPVRNO'];       // champs de sorties, c'est optionel
-
-  maxReturnedRecordsInput2: number;   // pour limiter le nombre de données en sortie, c'est optionel
-
-
   //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
 
   constructor(private cunoHeaderService: CunoHeaderService, private apiWebService: APIWebService) {    // ici on fait le lien vers les autres components
@@ -104,18 +71,51 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
     this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
       (data: any) => {
         this.cunoHeader$ = data;
-
-        this.inputFieldInput.CUNO = this.cunoHeader$;
-
-        this.getAllAdresses();
+        this.getAllAdressesIMIRequest();
+        // this.getAllAdresses();
       }
     );
+
+
+
+
   }
 
 
-  private getAllAdresses() {
+  private getAllAdressesIMIRequest() { // mettre la IMIRequest
 
-    this.apiWebService.callAPI(this.programInput, this.transactionInput, this.inputFieldInput, this.outputFieldInput).subscribe(data => {
+    const requestTest4: IMIRequest = {
+
+      program: 'CRS610MI',
+      transaction: 'LstAddresses',
+      record: {
+        CONO: '100',
+        CUNO: this.cunoHeader$
+      },
+      outputFields: ['ADRT', 'ADID', 'CUNM', 'CUA1', 'CUA2', 'CUA3', 'CUA4'],
+      // maxReturnedRecords: 50
+    };
+
+    this.apiWebService.callAPI(requestTest4).subscribe(data => {
+
+      this.listAddressesClient = data;
+      this.initGridAdresses();      // lance l'initialisation de la Grid
+    });
+  }
+
+
+  private getAllAdresses() { // mettre la IMIRequest
+
+    let inputFieldInput: any = {                      // champs d'entrées obligatoires et optionnelles
+      CONO: '100',
+      CUNO: this.cunoHeader$
+    };
+
+    this.apiWebService.callAPI2('CRS610MI', 'LstAddresses',
+      inputFieldInput,
+      ['OPPHNO', 'OPYREF', 'OPEALO', 'OPTFNO', 'OPMEAL', 'OPMODL', 'OPTEDL', 'OPVRNO']
+
+    ).subscribe(data => {
 
       this.listAddressesClient = data;
 
@@ -187,30 +187,37 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
     this.adid = selected.ADID;
     this.adrt = selected.ADRT;
 
-
-    this.inputFieldInput2.OPCUNO = this.cunoHeader$;
-    this.inputFieldInput2.OPADRT = this.adrt;
-    this.inputFieldInput2.OPADID = this.adid;
-
     this.getDetailsAdress();
   }
 
 
-
   private getDetailsAdress() { // API CMS100 GetBasicData
 
-    this.apiWebService.callAPI(this.programInput2, this.transactionInput2, this.inputFieldInput2, this.outputFieldInput2).subscribe(data => {
+    const requestDetailAdress: IMIRequest = {
 
-      this.detailsAddressesLstAddrByCust = data;
+      program: 'CMS100MI',
+      transaction: 'LstAddrByCust',
+      record: {
+        OPCUNO: this.cunoHeader$,
+        OPADRT: this.adrt,
+        OPADID: this.adid,
+      },
+      outputFields: ['OPPHNO', 'OPYREF', 'OPEALO', 'OPTFNO', 'OPMEAL', 'OPMODL', 'OPTEDL', 'OPVRNO'],
+      // maxReturnedRecords: 50
+    };
 
-      this.phno = this.detailsAddressesLstAddrByCust[0].OPPHNO;
-      this.tfno = this.detailsAddressesLstAddrByCust[0].OPTFNO;
-      this.yref = this.detailsAddressesLstAddrByCust[0].OPYREF;
-      this.ealo = this.detailsAddressesLstAddrByCust[0].OPEALO;
-      this.meal = this.detailsAddressesLstAddrByCust[0].OPMEAL;
-      this.modl = this.detailsAddressesLstAddrByCust[0].OPMODL;
-      this.tedl = this.detailsAddressesLstAddrByCust[0].OPTEDL;
-      this.vrno = this.detailsAddressesLstAddrByCust[0].OPVRNO;
+    this.apiWebService.callAPI(requestDetailAdress).subscribe(data => {
+
+      //this.detailsAddressesLstAddrByCust = data;
+
+      this.phno = data[0].OPPHNO;
+      this.tfno = data[0].OPTFNO;
+      this.yref = data[0].OPYREF;
+      this.ealo = data[0].OPEALO;
+      this.meal = data[0].OPMEAL;
+      this.modl = data[0].OPMODL;
+      this.tedl = data[0].OPTEDL;
+      this.vrno = data[0].OPVRNO;
 
     });
 
@@ -219,7 +226,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
 
   private ngOnDestroy() {
-    console.log("UNSUBSCRIBE")
+    console.log("UNSUBSCRIBE Adresse")
     this.cunoSubscription.unsubscribe();
   }
 
