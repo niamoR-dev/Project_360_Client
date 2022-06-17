@@ -75,10 +75,6 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
         // this.getAllAdresses();
       }
     );
-
-
-
-
   }
 
 
@@ -225,8 +221,8 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
 
 
-  private ngOnDestroy() {
-    console.log("UNSUBSCRIBE Adresse")
+  private ngOnDestroy() {               // obligatoire dans chaque onglet dès qu'on a une variable : Subscription, va fermer l'observable à la fermeture de l'onglet
+    console.log("UNSUBSCRIBE Adresse")  // permets d'optimiser la gestion débit de données
     this.cunoSubscription.unsubscribe();
   }
 

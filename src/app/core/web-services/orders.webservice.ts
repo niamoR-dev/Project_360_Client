@@ -79,7 +79,7 @@ export class OrdersWebService {
 
     const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
       program: 'CMS100MI',
-      transaction: 'LstCdvByCUNO',
+      transaction: 'Lst360CusOrders',
       record: inputFields,
       outputFields: ['OARLDT', 'OAORNO', 'OAORDT', 'OAORSL', 'OAORST', 'OACUCD', 'OATEPY', 'OAMODL', 'OATEDL', 'OAOBLC', 'OASMCD', 'OACUOR'],
     };
