@@ -27,16 +27,16 @@ export class AdressesWebService {
 
 
 
-  recoveryCunoFromHeader(cuno: any) { // méthode qui récupère leCUNO du Header venant du component.ts Adresse
-    return of(this.cunoHeader = cuno);
+   recoveryCunoFromHeader(cuno: any) { // méthode qui récupère le CUNO du Header venant du component.ts Adresse
+      return of(this.cunoHeader = cuno);
 
   }
 
-  recoveryClientForDetail(cuno: any, adrt: any, adid: any) { // méthode qui récupère leCUNO du Header venant du component.ts Adresse
-    this.cunoTemplate = cuno;
-    this.adrtTemplate = adrt;
-    this.adidTemplate = adid;
-    return of(this.cunoTemplate, this.adrtTemplate, this.adidTemplate);
+   recoveryClientForDetail(cuno: any, adrt: any, adid: any) { // méthode qui récupère le CUNO du Header venant du component.ts Adresse
+      this.cunoTemplate = cuno;
+      this.adrtTemplate = adrt;
+      this.adidTemplate = adid;
+      return of(this.cunoTemplate, this.adrtTemplate, this.adidTemplate);
 
   }
 
