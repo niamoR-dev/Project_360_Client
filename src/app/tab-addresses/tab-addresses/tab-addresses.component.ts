@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { CoreBase } from '@infor-up/m3-odin';
+import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { CoreBase, IMIRequest } from '@infor-up/m3-odin';
 import { Subscription } from 'rxjs';
+import { APIWebService } from 'src/app/core/web-services/api.webservice';
 import { CunoHeaderService } from '../../core/services/cuno-header-service/cuno-header.service';
 import { AdressesWebService } from '../../core/web-services/adresses.webservice';
 
@@ -15,7 +16,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
   datagridOptions: SohoDataGridOptions = {}; // je sais pas
 
-  // ici on déclare les champs qui sont utilisées dans le template
+  /////////////// ici on déclare les champs qui sont utilisées dans la grid template //////////////
   cuno: any;
   cono: any;
   adrt: any;
@@ -34,19 +35,21 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
   tedl: any;
   vrno: any;
 
-  show: boolean; // permets l'affichage de détails au clique
+  show: boolean; // permets l'affichage de détails au clique, doit faire une fonction ou un bouton SI pour enlever l'affichage
 
 
-  listAddressesClient: any[]; // tableau pour enregistrer le retour d'API des adresses d'un client
+  listAddressesClient: any; // tableau pour enregistrer le retour d'API des adresses d'un client
 
-  detailsAddressesLstAddrByCust: any[]; // tableau pour enregistrer le retour d'API des détails des adresses d'un client
+  detailsAddressesLstAddrByCust: any; // tableau pour enregistrer le retour d'API des détails des adresses d'un client
 
   cunoHeader$: any;
   cunoSubscription: Subscription;
 
+
+
   //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
 
-  constructor(private adressesWebService: AdressesWebService, private cunoHeaderService: CunoHeaderService) {    // ici on fait le lien vers les autres components
+  constructor(private cunoHeaderService: CunoHeaderService, private apiWebService: APIWebService) {    // ici on fait le lien vers les autres components
     super('TabAddressesComponent');
   }
 
@@ -64,37 +67,56 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
 
 
-  cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
+  private cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
     this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
       (data: any) => {
         this.cunoHeader$ = data;
-
-        this.sendCunoToAddressesWebService(); // lancement de la méthode de récupération du CUNO
-
-        this.recoveryDataFromAPI(); // lancement de la méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
-
+        this.getAllAdressesIMIRequest();
+        // this.getAllAdresses();
       }
-
     );
   }
 
 
+  private getAllAdressesIMIRequest() { // mettre la IMIRequest
 
-  sendCunoToAddressesWebService() {       // méthode obesevable pour envoyer la CUNO de le webService de Adresse
-    this.adressesWebService.recoveryCunoFromHeader(this.cunoHeader$).subscribe();
+    const requestTest4: IMIRequest = {
+
+      program: 'CRS610MI',
+      transaction: 'LstAddresses',
+      record: {
+        CONO: '100',
+        CUNO: this.cunoHeader$
+      },
+      outputFields: ['ADRT', 'ADID', 'CUNM', 'CUA1', 'CUA2', 'CUA3', 'CUA4'],
+      // maxReturnedRecords: 50
+    };
+
+    this.apiWebService.callAPI(requestTest4).subscribe(data => {
+
+      this.listAddressesClient = data;
+      this.initGridAdresses();      // lance l'initialisation de la Grid
+    });
   }
 
 
+  private getAllAdresses() { // mettre la IMIRequest
 
-  recoveryDataFromAPI() {             // méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
+    let inputFieldInput: any = {                      // champs d'entrées obligatoires et optionnelles
+      CONO: '100',
+      CUNO: this.cunoHeader$
+    };
 
-    this.adressesWebService.listeAdresses().subscribe(data => {
+    this.apiWebService.callAPI2('CRS610MI', 'LstAddresses',
+      inputFieldInput,
+      ['OPPHNO', 'OPYREF', 'OPEALO', 'OPTFNO', 'OPMEAL', 'OPMODL', 'OPTEDL', 'OPVRNO']
+
+    ).subscribe(data => {
+
       this.listAddressesClient = data;
 
       this.initGridAdresses();      // lance l'initialisation de la Grid
     });
-
-
   }
 
 
@@ -153,7 +175,6 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
     this.show = true;
 
-    this.cuno = selected.CUNO;
     this.cunm = selected.CUNM;
     this.cua1 = selected.CUA1;
     this.cua2 = selected.CUA2;
@@ -162,35 +183,46 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
     this.adid = selected.ADID;
     this.adrt = selected.ADRT;
 
-    this.sendKeyForDetailToService(this.cunoHeader$, this.adrt, this.adid);
-    this.InitDetailAdressLstAddrByCust();
-  }
-
-  sendKeyForDetailToService(cuno: any, adrt: any, adid: any) { // méthode qui permets d'envoyer les champs d'entrées pour le detail dfans le addressesService
-    this.adressesWebService.recoveryClientForDetail(cuno, adrt, adid).subscribe();
+    this.getDetailsAdress();
   }
 
 
-  private InitDetailAdressLstAddrByCust() { // API CMS100 GetBasicData
+  private getDetailsAdress() { // API CMS100 GetBasicData
 
-    this.adressesWebService.detailsAddressesLstAddrByCust().subscribe(data => {
-      this.detailsAddressesLstAddrByCust = data;
-      this.phno = this.detailsAddressesLstAddrByCust[0].OPPHNO;
-      this.tfno = this.detailsAddressesLstAddrByCust[0].OPTFNO;
-      this.yref = this.detailsAddressesLstAddrByCust[0].OPYREF;
-      this.ealo = this.detailsAddressesLstAddrByCust[0].OPEALO;
-      this.meal = this.detailsAddressesLstAddrByCust[0].OPMEAL;
-      this.modl = this.detailsAddressesLstAddrByCust[0].OPMODL;
-      this.tedl = this.detailsAddressesLstAddrByCust[0].OPTEDL;
-      this.vrno = this.detailsAddressesLstAddrByCust[0].OPVRNO;
+    const requestDetailAdress: IMIRequest = {
 
-      //  console.log(" GetBasicData  ", this.detailsAddressesGetBasicData)  // la virgule d ans le console log permets de lire à 'intérieur de l'objet
+      program: 'CMS100MI',
+      transaction: 'LstAddrByCust',
+      record: {
+        OPCUNO: this.cunoHeader$,
+        OPADRT: this.adrt,
+        OPADID: this.adid,
+      },
+      outputFields: ['OPPHNO', 'OPYREF', 'OPEALO', 'OPTFNO', 'OPMEAL', 'OPMODL', 'OPTEDL', 'OPVRNO'],
+      // maxReturnedRecords: 50
+    };
+
+    this.apiWebService.callAPI(requestDetailAdress).subscribe(data => {
+
+      //this.detailsAddressesLstAddrByCust = data;
+
+      this.phno = data[0].OPPHNO;
+      this.tfno = data[0].OPTFNO;
+      this.yref = data[0].OPYREF;
+      this.ealo = data[0].OPEALO;
+      this.meal = data[0].OPMEAL;
+      this.modl = data[0].OPMODL;
+      this.tedl = data[0].OPTEDL;
+      this.vrno = data[0].OPVRNO;
 
     });
+
   }
 
 
-  ngOnDestroy() {
+
+  private ngOnDestroy() {               // obligatoire dans chaque onglet dès qu'on a une variable : Subscription, va fermer l'observable à la fermeture de l'onglet
+    console.log("UNSUBSCRIBE Adresse")  // permets d'optimiser la gestion débit de données
     this.cunoSubscription.unsubscribe();
   }
 

@@ -15,9 +15,7 @@ export class HeaderComponent extends CoreBase implements OnInit {
 
   listClients: any[];
   ngSelect: any;
-  cunoHeader: any;
-  firstCUNOHeader: any;
-  client: any;
+
 
 
 
@@ -31,25 +29,24 @@ export class HeaderComponent extends CoreBase implements OnInit {
     this.headerWebService.listeClients().subscribe(data => {  // au lancement de l'application, permets l'enregistrement de la liste des clients et le lancement de la valeur par défaut
 
       this.listClients = data;
-      this.ngSelect = this.listClients[0].CUNO;
-      console.log(this.ngSelect)
-      this.firstCUNOHeader = data[0].CUNO;
 
-      this.defaultClient(this.firstCUNOHeader);
+      //this.listClients.map((client) => { client.CLIENTCOMPLET = client.CUNM + " / " + client.CUNO + " / " + client.WHLO });
+
+      this.ngSelect = this.listClients[0];
+
+      this.defaultClient();
+
     });
-
 
   }
 
-  defaultClient(defaultClient: any) { // envoie la première valeur de la liste des clients, valeur par défaut dans toute l'application
-    this.cunoHeader = defaultClient;
+  defaultClient() { // envoie la première valeur de la liste des clients, valeur par défaut dans toute l'application
 
     this.sendToService();
   }
 
 
-  onSelectedClient(numberClient: any) { // lorsqu'on change de clients dans la dropdown, la valeur se change automatiquement grâce au subjectBehavior
-    this.cunoHeader = numberClient.data;
+  onSelectedClient() { // lorsqu'on change de clients dans la dropdown, la valeur se change automatiquement grâce au subjectBehavior
 
     this.sendToService();
   }
@@ -57,7 +54,6 @@ export class HeaderComponent extends CoreBase implements OnInit {
 
   sendToService() { // porte la donnée pour envoyer dans le servidce porteur du subect behavior
 
-    this.cunoHeaderService.subject(this.cunoHeader);
-
-  }
+    this.cunoHeaderService.clientSubjectMethod(this.ngSelect); // le ngSelect ici est porteur des données du clients par défaut ou sélectionné dans la liste des clients.
+  }                                                          // contient CUNO, CUNM, WHLO
 }
