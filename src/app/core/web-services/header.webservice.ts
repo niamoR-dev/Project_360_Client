@@ -21,6 +21,7 @@ export class HeaderWebService {
 
   listeClients() {
     return this.listAllClients().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
+      console.log(answer)
       if (answer.errorCode) {
         throw Error(JSON.stringify(answer));
       }

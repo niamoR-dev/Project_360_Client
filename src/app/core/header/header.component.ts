@@ -14,6 +14,7 @@ export class HeaderComponent extends CoreBase implements OnInit {
   listAddresses = LIST_ADDRESSES;
 
   listClients: any[];
+
   ngSelect: any;
 
 

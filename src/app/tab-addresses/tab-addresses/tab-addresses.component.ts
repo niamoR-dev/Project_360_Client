@@ -92,32 +92,17 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
       // maxReturnedRecords: 50
     };
 
-    this.apiWebService.callAPI(requestTest4).subscribe(data => {
 
-      this.listAddressesClient = data;
-      this.initGridAdresses();      // lance l'initialisation de la Grid
-    });
+    this.apiWebService.callAPI(requestTest4).subscribe(
+      data => {
+
+        this.listAddressesClient = data;
+        this.initGridAdresses();      // lance l'initialisation de la Grid
+
+      });
   }
 
 
-  private getAllAdresses() { // mettre la IMIRequest
-
-    let inputFieldInput: any = {                      // champs d'entrées obligatoires et optionnelles
-      CONO: '100',
-      CUNO: this.cunoHeader$
-    };
-
-    this.apiWebService.callAPI2('CRS610MI', 'LstAddresses',
-      inputFieldInput,
-      ['OPPHNO', 'OPYREF', 'OPEALO', 'OPTFNO', 'OPMEAL', 'OPMODL', 'OPTEDL', 'OPVRNO']
-
-    ).subscribe(data => {
-
-      this.listAddressesClient = data;
-
-      this.initGridAdresses();      // lance l'initialisation de la Grid
-    });
-  }
 
 
   //////////////////////////////////////////////////////////////////// Méthodes qui gère l'affichage Grid ///////////////////////////////////////////////////////////////////////////////////
@@ -183,11 +168,11 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
     this.adid = selected.ADID;
     this.adrt = selected.ADRT;
 
-    this.getDetailsAdress();
+    this.getDetailsAdressIMIRequest();
   }
 
 
-  private getDetailsAdress() { // API CMS100 GetBasicData
+  private getDetailsAdressIMIRequest() { // API CMS100 GetBasicData
 
     const requestDetailAdress: IMIRequest = {
 

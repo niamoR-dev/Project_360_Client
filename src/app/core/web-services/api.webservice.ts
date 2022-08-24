@@ -16,46 +16,10 @@ export class APIWebService {
 
 
 
-  callAPI(test: IMIRequest): Observable<IMIResponse> {
-
-    console.log('Requête API envoyé Test 1 = ', test);
-
-    return this.miService.execute(test).pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
-
-      console.log("Retour de requête API = ", answer)
-
-      if (answer.errorCode) {
-        throw Error(JSON.stringify(answer));
-      }
-      return answer.items;
-    }),
-      catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
-        console.error('Erreur API listAddresses :', error);
-
-        this.handleError('Échec de l\'exécution de l\'API listAddresses', error);
-        return of(null);
-      })
-    );;
-  }
-
-
-  callAPI2(programInput: string, transactionInput: string, inputFieldInput?: any[], outputFieldInput?: any[], maxReturnedRecordsInput?: number): Observable<IMIResponse> {
-
-    const request: IMIRequest = {
-
-      program: programInput,
-
-      transaction: transactionInput,
-
-      record: inputFieldInput,
-
-      outputFields: outputFieldInput,
-
-      maxReturnedRecords: maxReturnedRecordsInput
-    };
+  callAPI(request: IMIRequest): Observable<IMIResponse> {
 
     return this.miService.execute(request).pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
-      console.log("Retour de requête API = ", answer)
+
       if (answer.errorCode) {
         throw Error(JSON.stringify(answer));
       }
@@ -69,6 +33,7 @@ export class APIWebService {
       })
     );;
   }
+
 
 
   private handleError(message: string, error?: any) {
