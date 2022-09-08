@@ -1,0 +1,10 @@
+<label for="clients">Clients : </label>
+
+<select soho-dropdown name="clients" [(ngModel)]='ngSelect' (change)="onSelectedClient()">
+
+  <option *ngFor="let client of listClients" [ngValue]="client">
+    {{client.CUNO}} :
+    {{client.CUNM}} -
+    {{client.WHLO}}
+  </option>
+</select>
