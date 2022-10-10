@@ -4,13 +4,15 @@ import { SharedModule } from '../shared/shared.module';
 import { CoreRoutingModule } from './core-routing.module';
 import { DropdownHeaderComponent } from './components/dropdown-header/dropdown-header.component';
 import { TabsHeaderComponent } from './components/tabs-header/tabs-header.component';
+import { SohoMastheadDemoComponent } from './masthead/masthead.demo';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
     DropdownHeaderComponent,
-    TabsHeaderComponent
+    TabsHeaderComponent,
+    SohoMastheadDemoComponent
   ],
 
   imports: [
@@ -22,7 +24,8 @@ import { TabsHeaderComponent } from './components/tabs-header/tabs-header.compon
   exports: [
     HeaderComponent,
     DropdownHeaderComponent,
-    TabsHeaderComponent
+    TabsHeaderComponent,
+    SohoMastheadDemoComponent
   ]
 })
 export class CoreModule {

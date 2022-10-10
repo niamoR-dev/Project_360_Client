@@ -2,6 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+
+  {
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full'
+  },
   {
     path: '',
     loadChildren: () => import('../tab-general/tab-general-info.module').then(m => m.TabGeneralInfoModule)
@@ -87,11 +93,7 @@ const routes: Routes = [
     path: 'customer-returns',
     loadChildren: () => import('../tab-customer-returns/tab-customer-returns.module').then(m => m.TabCustomerReturnsModule)
   },
-  {
-    path: '',
-    redirectTo: '',
-    pathMatch: 'full'
-  },
+
 
 
 
