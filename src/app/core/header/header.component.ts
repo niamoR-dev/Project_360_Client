@@ -13,6 +13,7 @@ export class HeaderComponent extends CoreBase implements OnInit {
 
 
 
+
   constructor() {
     super('HeaderComponent');
   }
