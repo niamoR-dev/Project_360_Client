@@ -1,0 +1,45 @@
+<soho-toolbar-flex noActionsButton="true" maxVisibleButtons="4">
+
+  <soho-toolbar-flex-section>
+    <button type="button" class="masthead-icon">
+      <img class="image-round" src="https://icon-library.com/images/infor-icon/infor-icon-11.jpg" />
+      <span class="audible" routerLink="">Go To Home</span>
+    </button>
+  </soho-toolbar-flex-section>
+
+  <soho-toolbar-flex-section [isTitle]="true">
+    <h1 class="masthead-appname">H5 App 360 Client</h1>
+  </soho-toolbar-flex-section>
+
+
+
+  <soho-toolbar-flex-section [isButtonSet]="true">
+
+    <button soho-menu-button menu="action-popupmenu" id="user-signout">
+      <div class="image-initials">RL</div>
+      <span class="audible">Profils</span>
+    </button>
+
+    <ul soho-popupmenu id="action-popupmenu">
+
+      <li>
+        <a soho-popupmenu-label>
+          <div class="image-user-status">
+            <img class="image-round" src="https://randomuser.me/api/portraits/med/men/7.jpg" alt="Photo of Evyn"
+              tabindex="0" />
+          </div>
+          <span>Profil 1</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="#">
+          <div class="image-initials">RL</div>
+          <span>Profil 2</span>
+        </a>
+      </li>
+    </ul>
+
+  </soho-toolbar-flex-section>
+
+</soho-toolbar-flex>

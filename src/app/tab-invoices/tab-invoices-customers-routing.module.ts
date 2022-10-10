@@ -4,10 +4,14 @@ import { TabInvoicesComponent } from './tab-invoices-customers/tab-invoices-cust
 
 const routes: Routes = [
 
-   { path: '', component: TabInvoicesComponent }];
+  {
+    path: '',
+    component: TabInvoicesComponent,
+    pathMatch: 'full'
+  }];
 
 @NgModule({
-   imports: [RouterModule.forChild(routes)],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabInvoicesRoutingModule { }

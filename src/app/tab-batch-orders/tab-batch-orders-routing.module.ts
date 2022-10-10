@@ -6,16 +6,17 @@ import { TabBatchOrdersComponent } from './tab-batch-orders/tab-batch-orders.com
 const routes: Routes = [
 
 
-   {
-      path: '',
-      component: TabBatchOrdersComponent
-   }
+  {
+    path: '',
+    component: TabBatchOrdersComponent,
+    pathMatch: 'full'
+  }
 
 
 ];
 
 @NgModule({
-   imports: [RouterModule.forChild(routes)],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabBatchOrdersRoutingModule { }

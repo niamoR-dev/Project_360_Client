@@ -6,16 +6,17 @@ import { TabContractsComponent } from './tab-contracts/tab-contracts.component';
 const routes: Routes = [
 
 
-   {
-      path: '',
-      component: TabContractsComponent
-   }
+  {
+    path: '',
+    component: TabContractsComponent,
+    pathMatch: 'full'
+  }
 
 
 ];
 
 @NgModule({
-   imports: [RouterModule.forChild(routes)],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabContractsRoutingModule { }

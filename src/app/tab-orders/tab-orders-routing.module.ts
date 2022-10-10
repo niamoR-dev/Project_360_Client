@@ -7,16 +7,17 @@ import { TabOrdersComponent } from './tab-orders/tab-orders.component';
 const routes: Routes = [
 
 
-   {
-      path: '',
-      component: TabOrdersComponent
-   }
+  {
+    path: '',
+    component: TabOrdersComponent,
+    pathMatch: 'full'
+  }
 
 
 ];
 
 @NgModule({
-   imports: [RouterModule.forChild(routes)],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabOrdersRoutingModule { }

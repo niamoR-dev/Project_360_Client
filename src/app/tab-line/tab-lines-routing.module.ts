@@ -7,16 +7,17 @@ import { TabLinesComponent } from './tab-line/tab-lines.component';
 const routes: Routes = [
 
 
-   {
-      path: '',
-      component: TabLinesComponent
-   }
+  {
+    path: '',
+    component: TabLinesComponent,
+    pathMatch: 'full'
+  }
 
 
 ];
 
 @NgModule({
-   imports: [RouterModule.forChild(routes)],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabLinesRoutingModule { }

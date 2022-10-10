@@ -7,16 +7,17 @@ import { TabItemsCustomersComponent } from './tab-items-customers/tab-items-cust
 const routes: Routes = [
 
 
-   {
-      path: '',
-      component: TabItemsCustomersComponent
-   }
+  {
+    path: '',
+    component: TabItemsCustomersComponent,
+    pathMatch: 'full'
+  }
 
 
 ];
 
 @NgModule({
-   imports: [RouterModule.forChild(routes)],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabItemsCustomersRoutingModule { }

@@ -5,16 +5,17 @@ import { TabCustomerReturnsComponent } from './tab-customer-returns/tab-customer
 const routes: Routes = [
 
 
-   {
-      path: '',
-      component: TabCustomerReturnsComponent
-   }
+  {
+    path: '',
+    component: TabCustomerReturnsComponent,
+    pathMatch: 'full'
+  }
 
 
 ];
 
 @NgModule({
-   imports: [RouterModule.forChild(routes)],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabCustomerReturnsRoutingModule { }

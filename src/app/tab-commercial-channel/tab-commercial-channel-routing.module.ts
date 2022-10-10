@@ -5,16 +5,17 @@ import { TabCommercialChannelComponent } from './tab-commercial-channel/tab-comm
 const routes: Routes = [
 
 
-   {
-      path: '',
-      component: TabCommercialChannelComponent
-   }
+  {
+    path: '',
+    component: TabCommercialChannelComponent,
+    pathMatch: 'full'
+  }
 
 
 ];
 
 @NgModule({
-   imports: [RouterModule.forChild(routes)],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabCommercialChannelRoutingModule { }

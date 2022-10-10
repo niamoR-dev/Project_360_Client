@@ -4,15 +4,16 @@ import { TabGeneralInfoComponent } from './tab-general/tab-general-info.componen
 
 const routes: Routes = [
 
-   {
-      path: '',
-      component: TabGeneralInfoComponent
-   }
+  {
+    path: '',
+    component: TabGeneralInfoComponent,
+    pathMatch: 'full'
+  }
 
 ];
 
 @NgModule({
-   imports: [RouterModule.forChild(routes)],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabGeneralInfoRoutingModule { }

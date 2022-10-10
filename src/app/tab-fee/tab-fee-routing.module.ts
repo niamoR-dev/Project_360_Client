@@ -5,16 +5,17 @@ import { TabFeeComponent } from './tab-fee/tab-fee.component';
 const routes: Routes = [
 
 
-   {
-      path: '',
-      component: TabFeeComponent
-   }
+  {
+    path: '',
+    component: TabFeeComponent,
+    pathMatch: 'full'
+  }
 
 
 ];
 
 @NgModule({
-   imports: [RouterModule.forChild(routes)],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabFeeRoutingModule { }
