@@ -24,25 +24,8 @@ export class HeaderComponent extends CoreBase implements OnInit {
 
    }
 
-
-
-   onSelectedClient(numberClient: any) {
-      this.cunoHeader = numberClient.data;
-      console.log(numberClient.data);
-      this.sendToService();
-   }
-
-
-
-   sendToService() {
-      this.cunoHeaderService.cunoToSend(this.cunoHeader).subscribe();
-
-   }
-
-
    ngOnDestroy() {
 
    }
 
-   //aller se renseigner sur les Subject + sauvegarde value : adresseService : cono$ = Subject<String>;
 }
