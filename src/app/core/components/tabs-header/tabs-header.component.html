@@ -1,0 +1,24 @@
+<div soho-tabs #onglet [disableAutoUpdatedCall]="true" registerForEvents="activated">
+  <div soho-tab-list-container>
+    <ul soho-tab-list>
+      <li soho-tab *ngFor="let tab of tabsList">
+        <a soho-tab-title [tabId]="tab.id" routerLink="{{tab.rooting}}">{{tab.nameTab}}</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+
+<!-- <div class="full-width">
+  <div soho-tabs #onglet [disableAutoUpdatedCall]="true" registerForEvents="activated">
+
+
+    <div soho-tab-list-container>
+
+      <div soho-tab-list *ngFor="let tab of tabsList">
+        <a routerLink="{{tab.rooting}}">{{tab.nameTab}</a>
+      </div>
+    </div>
+  </div>
+</div> -->

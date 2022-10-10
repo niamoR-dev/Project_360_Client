@@ -1,46 +1,51 @@
-<h1>Adresses</h1>
+<div class="full-width full-height scrollable-flex">
+
+  <div class="row top-padding">
+    <div class="twelve columns demo">
+      <div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
+        [blockUI]="true" (selected)="onSelectedLine($event.rows)">
+      </div>
+    </div>
+  </div>
 
 
 
-<div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
-  [blockUI]="true" [displayDelay]="0" (selected)="onSelectedLine($event.rows)">
+
+
+  <form *ngIf='show' #f="ngForm" class="form-responsive row">
+
+    <label for="row-1-1">Nom client</label>
+    <input type="text" id="row-1-1" name="CUNM" readonly [ngModel]="cunm" />
+
+    <label for="row-1-2">Adresse</label>
+    <input type="text" id="row-1-2" name="CUA1" [ngModel]="cua1" />
+    <input type="text" id="row-1-3" name="CUA2" [ngModel]="cua2" />
+    <input type="text" id="row-1-4" name="CUA3" [ngModel]="cua3" />
+    <input type="text" id="row-1-4" name="CUA4" [ngModel]="cua4" />
+
+    <label for="row-1-3">Numéro de téléphone</label>
+    <input type="text" id="row-1-5" name="PHNO" [ngModel]="phno" />
+
+    <label for="row-1-5">Numéro de fax</label>
+    <input type="text" id="row-1-6" name="TFNO" [ngModel]="tfno" />
+
+    <label for="row-1-5">Support utilisé</label>
+    <input type="text" id="row-1-7" name="MEAL" [ngModel]="meal" />
+
+    <label for="row-1-4">V/rèf 1</label>
+    <input type="text" id="row-1-8" name="YREF" [ngModel]="yref" />
+
+    <label for="row-1-5">N° Imm TVA UE</label>
+    <input type="text" id="row-1-9" name="VRNO" [ngModel]="vrno" />
+
+    <label for="row-1-5">N° empl EAN</label>
+    <input type="text" id="row-1-10" name="EALO" [ngModel]="ealo" />
+
+    <label for="row-1-5">Mode de livraison</label>
+    <input type="text" id="row-1-11" name="MODL" [ngModel]="modl" />
+
+    <label for="row-1-5">Cond. livraison</label>
+    <input type="text" id="row-1-12" name="TEDL" [ngModel]="tedl" />
+
+  </form>
 </div>
-
-
-
-<form *ngIf='show' #f="ngForm" class="form-responsive row">
-
-  <label for="row-1-1">Nom client</label>
-  <input type="text" id="row-1-1" name="CUNM" readonly [ngModel]="cunm" />
-
-  <label for="row-1-2">Adresse</label>
-  <input type="text" id="row-1-2" name="CUA1" [ngModel]="cua1" />
-  <input type="text" id="row-1-3" name="CUA2" [ngModel]="cua2" />
-  <input type="text" id="row-1-4" name="CUA3" [ngModel]="cua3" />
-  <input type="text" id="row-1-4" name="CUA4" [ngModel]="cua4" />
-
-  <label for="row-1-3">Numéro de téléphone</label>
-  <input type="text" id="row-1-5" name="PHNO" [ngModel]="phno" />
-
-  <label for="row-1-5">Numéro de fax</label>
-  <input type="text" id="row-1-6" name="TFNO" [ngModel]="tfno" />
-
-  <label for="row-1-5">Support utilisé</label>
-  <input type="text" id="row-1-7" name="MEAL" [ngModel]="meal" />
-
-  <label for="row-1-4">V/rèf 1</label>
-  <input type="text" id="row-1-8" name="YREF" [ngModel]="yref" />
-
-  <label for="row-1-5">N° Imm TVA UE</label>
-  <input type="text" id="row-1-9" name="VRNO" [ngModel]="vrno" />
-
-  <label for="row-1-5">N° empl EAN</label>
-  <input type="text" id="row-1-10" name="EALO" [ngModel]="ealo" />
-
-  <label for="row-1-5">Mode de livraison</label>
-  <input type="text" id="row-1-11" name="MODL" [ngModel]="modl" />
-
-  <label for="row-1-5">Cond. livraison</label>
-  <input type="text" id="row-1-12" name="TEDL" [ngModel]="tedl" />
-
-</form>

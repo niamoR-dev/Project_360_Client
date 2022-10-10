@@ -1,24 +1,17 @@
-<label for="clients">Clients : </label>
+<soho-header>
 
-<select soho-dropdown name="clients" [(ngModel)]='ngSelect' (change)="onSelectedClient()">
+  <soho-toolbar-flex>
 
-  <option *ngFor="let client of listClients" [ngValue]="client">
-    {{client.CUNO}} :
-    {{client.CUNM}} -
-    {{client.WHLO}}
-  </option>
-</select>
+    <soho-toolbar-flex-section [isTitle]="true">
+      <h1>
+        <span soho-toolbar-flex-page-title>CLIENTS 360</span>
+      </h1>
+    </soho-toolbar-flex-section>
 
+  </soho-toolbar-flex>
 
+</soho-header>
 
+<app-dropdown-header></app-dropdown-header>
 
-<div soho-tabs #onglet [disableAutoUpdatedCall]="true" registerForEvents="activated">
-  <div soho-tab-list-container>
-    <ul soho-tab-list>
-
-      <li soho-tab *ngFor="let item of listAddresses" routerLinkActive="active-link">
-        <a soho-tab-title routerLink="{{item.rooting}}">{{item.nameTab}}</a>
-      </li>
-    </ul>
-  </div>
-</div>
+<app-tabs-header></app-tabs-header>
