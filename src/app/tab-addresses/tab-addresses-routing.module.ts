@@ -5,16 +5,17 @@ import { TabAddressesComponent } from './tab-addresses/tab-addresses.component';
 const routes: Routes = [
 
 
-   {
-      path: '',
-      component: TabAddressesComponent
-   }
+  {
+    path: '',
+    component: TabAddressesComponent,
+    pathMatch: 'full'
+  }
 
 
 ];
 
 @NgModule({
-   imports: [RouterModule.forChild(routes)],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabAddressesRoutingModule { }

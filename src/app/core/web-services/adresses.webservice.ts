@@ -1,196 +1,133 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
-import { MIService, UserService } from "@infor-up/m3-odin-angular";
+import { MIService } from "@infor-up/m3-odin-angular";
 import { SohoMessageService } from "ids-enterprise-ng";
-import { Observable, of, Subscription } from "rxjs";
+import { Observable, of } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
-import { CunoHeaderService } from "../services/cuno-header.service";
 
 @Injectable({ providedIn: 'root' })
-export class AdressesWebService implements OnInit {
+export class AdressesWebService {
 
-   cunoHeader: any;
-   cunoSubscription: Subscription;
+  //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
 
-   constructor(protected miService: MIService, private userSevice: UserService, private messageService: SohoMessageService, private cunoHeaderService: CunoHeaderService) {
-   }
-
-
-   ngOnInit() {
-
-   }
+  cunoHeader: any;
+  cunoTemplate: any;
+  adrtTemplate: any;
+  adidTemplate: any;
 
 
-   cunoHeaderMethod() {
-      this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
-         (data: any[]) => {
-            this.cunoHeader = data;
-         }
-      );
-      this.cunoHeaderService.subjectMethod();
-   }
+  //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components/services ///////////////////////////////////////////////////////////////////////////////////
 
 
-   listeAdresses() {
-
-      this.cunoHeaderMethod();
-
-
-      return this.listAllAddresses().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
-         if (answer.errorCode) {
-            throw Error(JSON.stringify(answer));
-         }
-         return answer.items;
-      }),
-         catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
-            console.error('Erreur API listAddresses :', error);
-
-            this.handleError('Échec de l\'exécution de l\'API listAddresses', error);
-            return of(null);
-         })
-      );
-   }
+  constructor(protected miService: MIService, private messageService: SohoMessageService) {
+  }
 
 
-   detailsAddressesGetBasicData() {
-      return this.listDetailsAddressGetBasicData().pipe(map((answer) => {
-         if (answer.errorCode) {
-            throw Error(JSON.stringify(answer));
-         }
-         return answer.items;
-      }),
-         catchError((error) => {
-            console.error('Erreur API GetBasicData :', error);
-
-            this.handleError('Échec de l\'exécution de l\'API GetBasicData', error);
-            return of(null);
-         })
-      );
-   }
+  //////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
 
 
-   detailsAddressesGetOrderInfo() {
-      return this.listDetailsAddressGetOrderInfo().pipe(map((answer) => {
-         if (answer.errorCode) {
-            throw Error(JSON.stringify(answer));
-         }
-         return answer.items;
-      }),
-         catchError((error) => {
-            console.error('Erreur API GetOrderInfo :', error);
 
-            this.handleError('Échec de l\'exécution de l\'API GetOrderInfo', error);
-            return of(null);
-         })
-      );
-   }
+   recoveryCunoFromHeader(cuno: any) { // méthode qui récupère le CUNO du Header venant du component.ts Adresse
+      return of(this.cunoHeader = cuno);
 
-   detailsAddressesGetFinancial() {
-      return this.listDetailsAddressGetFinancial().pipe(map((answer) => {
-         if (answer.errorCode) {
-            throw Error(JSON.stringify(answer));
-         }
-         return answer.items;
-      }),
-         catchError((error) => {
-            console.error('Erreur API GetFinancial :', error);
+  }
 
-            this.handleError('Échec de l\'exécution de l\'API GetFinancial', error);
-            return of(null);
-         })
-      );
-   }
+   recoveryClientForDetail(cuno: any, adrt: any, adid: any) { // méthode qui récupère le CUNO du Header venant du component.ts Adresse
+      this.cunoTemplate = cuno;
+      this.adrtTemplate = adrt;
+      this.adidTemplate = adid;
+      return of(this.cunoTemplate, this.adrtTemplate, this.adidTemplate);
 
-   //////////////////////////////////////////////////////////////////// Méthodes qui gère les erreurs ///////////////////////////////////////////////////////////////////////////////////
-
-   private handleError(message: string, error?: any) {
-      const buttons = [{ text: 'Ok', click: (e, modal) => { modal.close(); } }];
-      this.messageService.error()
-         .title('An error occured')
-         .message(message + '. More details might be available in the browser console.')
-         .buttons(buttons)
-         .open();
-   }
+  }
 
 
-   //////////////////////////////////////////////////////////////////// Méthodes qui appellent les API   ///////////////////////////////////////////////////////////////////////////////////
-
-
-   private listAllAddresses(): Observable<IMIResponse> {
-
-      let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
-         CONO: '100',
-         CUNO: this.cunoHeader
+  listeAdresses() {
+    this.listDetailsAddressLstAddrByCust();
+    return this.listAllAddresses().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
+      if (answer.errorCode) {
+        throw Error(JSON.stringify(answer));
       }
+      return answer.items;
+    }),
+      catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
+        console.error('Erreur API listAddresses :', error);
 
-      const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
-         program: 'CRS610MI',
-         transaction: 'LstAddresses',
-         record: inputFields,
-         outputFields: ['ADRT', 'ADID', 'CUNM', 'CUA1', 'CUA2', 'CUA3', 'CUA4'],
-      };
-      return this.miService.execute(request);
-   }
+        this.handleError('Échec de l\'exécution de l\'API listAddresses', error);
+        return of(null);
+      })
+    );
+  }
 
-
-
-   private listDetailsAddressGetBasicData(): Observable<IMIResponse> {
-      console.log("  CUNO =", this.cunoHeader);
+  //////////////////////////////////////////////////////////////////// Méthode Details Grid ///////////////////////////////////////////////////////////////////////////////////
 
 
-      let inputFields: any = {
-         CONO: '100',
-         CUNO: this.cunoHeader
+
+  detailsAddressesLstAddrByCust() {
+    return this.listDetailsAddressLstAddrByCust().pipe(map((answer) => {
+      if (answer.errorCode) {
+        throw Error(JSON.stringify(answer));
       }
+      return answer.items;
+    }),
+      catchError((error) => {
+        console.error('Erreur API LstAddrByCust :', error);
 
-      const request: IMIRequest = {
-         program: 'CRS610MI',
-         transaction: 'GetBasicData',
-         record: inputFields,
-         outputFields: ['PHNO', 'YREF', 'EALO', 'TFNO', 'MEAL'],
-      };
-
-      return this.miService.execute(request);
-   }
+        this.handleError('Échec de l\'exécution de l\'API LstAddrByCust', error);
+        return of(null);
+      })
+    );
+  }
 
 
+  //////////////////////////////////////////////////////////////////// Méthodes qui gère les erreurs ///////////////////////////////////////////////////////////////////////////////////
 
-   private listDetailsAddressGetOrderInfo(): Observable<IMIResponse> {
-      let inputFields: any = {
-         CONO: '100',
-         CUNO: this.cunoHeader
-      }
+  private handleError(message: string, error?: any) {
+    const buttons = [{ text: 'Ok', click: (e, modal) => { modal.close(); } }];
+    this.messageService.error()
+      .title('An error occured')
+      .message(message + '. More details might be available in the browser console.')
+      .buttons(buttons)
+      .open();
+  }
 
-      const request: IMIRequest = {
-         program: 'CRS610MI',
-         transaction: 'GetOrderInfo',
-         record: inputFields,
-         outputFields: ['MODL', 'TEDL'],
-      };
 
-      return this.miService.execute(request);
-   }
+  //////////////////////////////////////////////////////////////////// Méthodes qui appellent les API   ///////////////////////////////////////////////////////////////////////////////////
 
-   private listDetailsAddressGetFinancial(): Observable<IMIResponse> {
 
-      let inputFields: any = {
-         CONO: '100',
-         CUNO: this.cunoHeader
-      }
+  private listAllAddresses(): Observable<IMIResponse> {
 
-      const request: IMIRequest = {
-         program: 'CRS610MI',
-         transaction: 'GetFinancial',
-         record: inputFields,
-         outputFields: ['VRNO'],
-      };
+    let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
+      CONO: '100',
+      CUNO: this.cunoHeader
+    }
 
-      return this.miService.execute(request);
-   }
+    const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
+      program: 'CRS610MI',
+      transaction: 'LstAddresses',
+      record: inputFields,
+      outputFields: ['ADRT', 'ADID', 'CUNM', 'CUA1', 'CUA2', 'CUA3', 'CUA4'],
+    };
+    return this.miService.execute(request);
+  }
 
 
 
+  private listDetailsAddressLstAddrByCust(): Observable<IMIResponse> {
+    let inputFields: any = {
+      OPCUNO: this.cunoHeader,
+      OPADRT: this.adrtTemplate,
+      OPADID: this.adidTemplate
 
+    }
 
+    const request: IMIRequest = {
+      program: 'CMS100MI',
+      transaction: 'Lst360CusAdress',
+      record: inputFields,
+      outputFields: ['OPPHNO', 'OPYREF', 'OPEALO', 'OPTFNO', 'OPMEAL', 'OPMODL', 'OPTEDL', 'OPVRNO'],
+    };
+
+    return this.miService.execute(request);
+  }
 
 }

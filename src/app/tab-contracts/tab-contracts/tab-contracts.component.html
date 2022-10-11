@@ -1,1 +1,58 @@
 <h1>Contrats</h1>
+
+<div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
+   [blockUI]="true" [displayDelay]="0" (selected)="onSelectedLine($event.rows)">
+</div>
+
+
+<form *ngIf='show' #f="ngForm" class="form-responsive row">
+
+   <label for="row-1-1">Client</label>
+   <input type="text" id="row-1-1" name="CUNO" readonly [ngModel]="cuno" />
+
+   <label for="row-1-3">N° cde Ouverture</label>
+   <input type="text" id="row-1-5" name="AGNO" [ngModel]="agno" />
+
+   <label for="row-1-5">Début Validité</label>
+   <input type="text" id="row-1-6" name="STDT" [ngModel]="stdt" />
+
+   <label for="row-1-5">Der dt facture</label>
+   <input type="text" id="row-1-6" name="AGDT" [ngModel]="agdt" />
+
+   <label for="row-1-5">Priorité</label>
+   <input type="text" id="row-1-6" name="PREX" [ngModel]="prex" />
+
+   <label for="row-1-5">Priorités util</label>
+   <input type="text" id="row-1-6" name="AGDT" [ngModel]="stdt" />
+
+   <!--
+   <label for="row-1-5">Typ</label>
+   <input type="text" id="row-1-7" name="AGTP" [ngModel]="agtp" />
+
+   <label for="row-1-4">Designation</label>
+   <input type="text" id="row-1-8" name="TX40" [ngModel]="tx40" />
+-->
+</form>
+
+
+<!-- <form #f="ngForm" class="form-responsive row">
+
+   <label for="row-1-1">Client</label>
+   <input type="text" id="row-1-1" name="CUNO" readonly [ngModel]="cuno" />
+
+   <label for="row-1-2">Cde Ouv</label>
+   <input type="text" id="row-1-2" name="AGNO" [ngModel]="agno" />
+
+   <label for="row-1-3">Dt Déb</label>
+   <input type="text" id="row-1-5" name="STDT" [ngModel]="stdt" />
+
+   <label for="row-1-5">Typ</label>
+   <input type="text" id="row-1-6" name="AGTP" [ngModel]="agtp" />
+
+   <label for="row-1-5">Désignation</label>
+   <input type="text" id="row-1-7" name="TX40" [ngModel]="tx40" />
+
+   <label for="row-1-4">Stt</label>
+   <input type="text" id="row-1-8" name="AGST" [ngModel]="agst" />
+
+</form> -->

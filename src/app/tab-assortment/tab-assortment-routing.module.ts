@@ -5,16 +5,17 @@ import { TabAssortmentComponent } from './tab-assortment/tab-assortment.componen
 const routes: Routes = [
 
 
-   {
-      path: '',
-      component: TabAssortmentComponent
-   }
+  {
+    path: '',
+    component: TabAssortmentComponent,
+    pathMatch: 'full'
+  }
 
 
 ];
 
 @NgModule({
-   imports: [RouterModule.forChild(routes)],
-   exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabAssortmentRoutingModule { }
