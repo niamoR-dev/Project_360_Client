@@ -15,3 +15,13 @@
 <app-dropdown-header></app-dropdown-header>
 
 <app-tabs-header></app-tabs-header>
+<div soho-tabs #onglet [disableAutoUpdatedCall]="true" registerForEvents="activated">
+  <div soho-tab-list-container>
+    <ul soho-tab-list>
+
+      <li soho-tab *ngFor="let item of listAddresses" routerLinkActive="active-link">
+        <a soho-tab-title routerLink="{{item.rooting}}">{{item.nameTab}}</a>
+      </li>
+    </ul>
+  </div>
+</div>

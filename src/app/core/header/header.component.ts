@@ -9,10 +9,14 @@ import { CoreBase } from '@infor-up/m3-odin';
 export class HeaderComponent extends CoreBase implements OnInit {
 
 
+  whloHeader: any;
 
 
 
 
+  constructor(private headerWebService: HeaderWebService, private cunoHeaderService: CunoHeaderService) {
+    super('HeaderComponent');
+  }
 
   constructor() {
     super('HeaderComponent');
@@ -26,7 +30,7 @@ export class HeaderComponent extends CoreBase implements OnInit {
    }
 
    ngOnDestroy() {
+    this.whloHeader = this.ngSelect.WHLO;
 
-   }
 
 }

@@ -8,6 +8,8 @@ import { map, catchError } from 'rxjs/internal/operators';
 @Injectable({ providedIn: 'root' })
 export class HeaderWebService {
 
+   whlo: any;
+   cuno: any;
 
 
   constructor(protected miService: MIService, private userSevice: UserService, private messageService: SohoMessageService) {

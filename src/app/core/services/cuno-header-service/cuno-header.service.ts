@@ -6,7 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CunoHeaderService {
 
-  cunoSubject: BehaviorSubject<any> = new BehaviorSubject(null);
+   cunoSubject: BehaviorSubject<any> = new BehaviorSubject(null);
+   whloSubject: BehaviorSubject<any> = new BehaviorSubject(null);
 
 
   clientSubjectMethod(client: any) {
@@ -17,5 +18,20 @@ export class CunoHeaderService {
 
   subjectMethod() {
 
-  }
+   cunoSubjectMethod(data: any) {
+      this.cunoSubject.next(data.CUNO);  
+      console.log('data =>',data);
+      this.whloSubject.next(data.WHLO);
+    }
+
+   // whloSubjectMethod(data: any){
+   //    this.whloSubject.next(data);
+   //    console.log(this.whloSubject);
+   // }
+
+
+   subjectMethod() {
+   }
+
+
 }

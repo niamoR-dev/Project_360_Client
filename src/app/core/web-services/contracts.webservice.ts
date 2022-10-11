@@ -1,5 +1,4 @@
-
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
 import { MIService } from '@infor-up/m3-odin-angular';
 import { SohoMessageService } from 'ids-enterprise-ng';
@@ -255,7 +254,3 @@ export class ContractsWebService {
    }
    
 }
-
-
-
-
