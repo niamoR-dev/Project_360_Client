@@ -78,7 +78,7 @@ export class CustomersReturnsWebService {
   private listCustomersReturn(): Observable<IMIResponse> {
 
     let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
-      CONO: '100',
+
       CUNO: this.cunoHeader,
       WHLO: this.whloHeader
     }
