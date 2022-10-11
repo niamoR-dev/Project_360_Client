@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreBase } from '@infor-up/m3-odin';
 import { Subscription } from 'rxjs';
-import { CunoHeaderService } from 'src/app/core/services/cuno-header-service/cuno-header.service';
+import { DataForTabHeaderService } from 'src/app/core/services/data-for-tab-header-service/data-for-tab-header.service';
 import { OrdersWebService } from 'src/app/core/web-services/orders.webservice';
 
 @Component({
@@ -35,7 +35,7 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
   cunoSubscription: Subscription;
 
 
-  constructor(private orderWebService: OrdersWebService, private cunoHeaderService: CunoHeaderService) {
+  constructor(private orderWebService: OrdersWebService, private dataForTabHeaderService: DataForTabHeaderService) {
     super('TabOrdersComponent');
   }
 
@@ -58,12 +58,12 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
 
 
   cunoHeaderMethod() {    // méthode obesevable pour récupérer la CUNO de la dropdown du header
-    this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
+    this.cunoSubscription = this.dataForTabHeaderService.cunoSubject.subscribe(
       (data: any) => {
         this.cunoHeader = data;
       }
     );
-    this.cunoHeaderService.subjectMethod();
+    this.dataForTabHeaderService.subjectMethod();
   }
 
 

@@ -14,23 +14,21 @@ export class HeaderComponent extends CoreBase implements OnInit {
 
 
 
-  constructor(private headerWebService: HeaderWebService, private cunoHeaderService: CunoHeaderService) {
-    super('HeaderComponent');
-  }
-
   constructor() {
     super('HeaderComponent');
   }
 
 
 
+
   ngOnInit() {
 
 
-   }
+  }
 
-   ngOnDestroy() {
-    this.whloHeader = this.ngSelect.WHLO;
+  ngOnDestroy() {
+    // this.whloHeader = this.ngSelect.WHLO;
 
 
+  }
 }

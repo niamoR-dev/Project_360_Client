@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreBase } from '@infor-up/m3-odin';
-import { LIST_ADDRESSES } from 'src/app/shared/mocks/list-address.mock';
-import { CunoHeaderService } from '../../services/cuno-header-service/cuno-header.service';
-import { HeaderWebService } from '../../web-services/header.webservice';
-
+import { LIST_TABS_ROOTING } from 'src/app/shared/mocks/list-tab-rooting.mock';
 @Component({
   selector: 'app-tabs-header',
   templateUrl: './tabs-header.component.html',
@@ -11,7 +8,7 @@ import { HeaderWebService } from '../../web-services/header.webservice';
 })
 export class TabsHeaderComponent extends CoreBase implements OnInit {
 
-  tabsList = LIST_ADDRESSES;
+  tabsList = LIST_TABS_ROOTING;
 
   constructor() {
     super('TabsHeaderComponent');

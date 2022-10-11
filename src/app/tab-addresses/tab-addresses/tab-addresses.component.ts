@@ -1,9 +1,8 @@
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { CoreBase, IMIRequest } from '@infor-up/m3-odin';
 import { Subscription } from 'rxjs';
+import { DataForTabHeaderService } from 'src/app/core/services/data-for-tab-header-service/data-for-tab-header.service';
 import { APIWebService } from 'src/app/core/web-services/api.webservice';
-import { CunoHeaderService } from '../../core/services/cuno-header-service/cuno-header.service';
-import { AdressesWebService } from '../../core/web-services/adresses.webservice';
 
 @Component({
   selector: 'app-tab-addresses',
@@ -49,7 +48,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
   //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
 
-  constructor(private cunoHeaderService: CunoHeaderService, private apiWebService: APIWebService) {    // ici on fait le lien vers les autres components
+  constructor(private dataForTabHeaderService: DataForTabHeaderService, private apiWebService: APIWebService) {    // ici on fait le lien vers les autres components
     super('TabAddressesComponent');
   }
 
@@ -68,7 +67,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
 
   private cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
-    this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
+    this.cunoSubscription = this.dataForTabHeaderService.cunoSubject.subscribe(
       (data: any) => {
         this.cunoHeader$ = data;
         this.getAllAdressesIMIRequest();

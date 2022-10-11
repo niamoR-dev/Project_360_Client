@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreBase } from '@infor-up/m3-odin';
-import { CunoHeaderService } from '../../services/cuno-header-service/cuno-header.service';
+import { DataForTabHeaderService } from '../../services/data-for-tab-header-service/data-for-tab-header.service';
 import { HeaderWebService } from '../../web-services/header.webservice';
 
 @Component({
@@ -17,7 +17,7 @@ export class DropdownHeaderComponent extends CoreBase implements OnInit {
 
 
 
-  constructor(private headerWebService: HeaderWebService, private cunoHeaderService: CunoHeaderService) {
+  constructor(private headerWebService: HeaderWebService, private dataForTabHeaderService: DataForTabHeaderService) {
     super('DropdownHeaderComponent');
   }
 
@@ -38,10 +38,13 @@ export class DropdownHeaderComponent extends CoreBase implements OnInit {
 
   }
 
+
+
   defaultClient() { // envoie la première valeur de la liste des clients, valeur par défaut dans toute l'application
 
     this.sendToService();
   }
+
 
 
   onSelectedClient() { // lorsqu'on change de clients dans la dropdown, la valeur se change automatiquement grâce au subjectBehavior
@@ -50,8 +53,10 @@ export class DropdownHeaderComponent extends CoreBase implements OnInit {
   }
 
 
+
+
   sendToService() { // porte la donnée pour envoyer dans le servidce porteur du subect behavior
 
-    this.cunoHeaderService.clientSubjectMethod(this.ngSelect); // le ngSelect ici est porteur des données du clients par défaut ou sélectionné dans la liste des clients.
+    this.dataForTabHeaderService.clientSubjectMethod(this.ngSelect); // le ngSelect ici est porteur des données du clients par défaut ou sélectionné dans la liste des clients.
   }                                                          // contient CUNO, CUNM, WHLO
 }
