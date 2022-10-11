@@ -1,13 +1,4 @@
-<<<<<<< Updated upstream
-import { Injectable } from "@angular/core";
-import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
-import { MIService } from "@infor-up/m3-odin-angular";
-import { SohoMessageService } from "ids-enterprise-ng";
-import { Observable, of } from "rxjs";
-import { map, catchError } from 'rxjs/internal/operators';
 
-@Injectable({ providedIn: 'root' })
-=======
 import { Injectable } from '@angular/core';
 import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
 import { MIService } from '@infor-up/m3-odin-angular';
@@ -20,7 +11,6 @@ import { map, catchError } from 'rxjs/internal/operators';
 @Injectable({
    providedIn: 'root'
 })
->>>>>>> Stashed changes
 export class ContractsWebService {
 
   //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
@@ -128,43 +118,7 @@ export class ContractsWebService {
 
 
    //////////////////////////////////////////////////////////////////// Méthodes qui appellent les API   ///////////////////////////////////////////////////////////////////////////////////
-<<<<<<< Updated upstream
 
-
-  private listAllContracts(): Observable<IMIResponse> {
-
-    let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
-
-      UYCUNO: 'NDUCLI03'
-
-    }
-
-    const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
-      program: 'CMS100MI',
-      transaction: 'Lst360CusContra',
-      record: inputFields,
-      outputFields: ['UYCUNO', 'UYAGNO', 'UYSTDT', 'UYAGTP', 'UYTX40', 'UYAGST'],
-    };
-    return this.miService.execute(request);
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-//    recoveryCunoFromHeader(cuno: any) { // méthode qui récupère leCUNO du Header venant du component.ts Adresse
-//       return of(this.cunoHeader = cuno);
-
-//    }
-=======
    private listAllContracts(): Observable<IMIResponse> {
 
       let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
@@ -305,5 +259,3 @@ export class ContractsWebService {
 
 
 
-
->>>>>>> Stashed changes

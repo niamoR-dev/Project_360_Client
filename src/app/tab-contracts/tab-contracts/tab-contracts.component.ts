@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreBase, IUserContext } from '@infor-up/m3-odin';
 import { MIService, UserService } from '@infor-up/m3-odin-angular';
+import { Subscription } from 'rxjs';
 import { CunoHeaderService } from 'src/app/core/services/cuno-header-service/cuno-header.service';
 import { ContractsWebService } from 'src/app/core/web-services/contracts.webservice';
 
@@ -25,27 +26,24 @@ export class TabContractsComponent extends CoreBase implements OnInit {
    stdt: any;
    agtp: any;
    tx40: any;
-   datagridOptions: SohoDataGridOptions = {};
+   //datagridOptions: SohoDataGridOptions = {};
 
    agno2: any;
 
    detailsContractsGetBasicData: any[];
    detailsContractsGetOrderInfo: any[];
-   
+
 
    show: boolean; // permets l'affichage de détails au clique
 
    listContracts: any[]; // tableau pour enregistrer le retour d'API des articles du client
 
-   cuno: any;
-   agno: any;
-   stdt: any;
-   agtp: any;
-   tx40: any;
-   agst: any;
-
-
-
+   // cuno: any;
+   // agno: any;
+   // stdt: any;
+   // agtp: any;
+   // tx40: any;
+   // agst: any;
 
    listDetailContracts: any;
 
@@ -63,17 +61,16 @@ export class TabContractsComponent extends CoreBase implements OnInit {
    ngOnInit() {                                                   // à l'ouverture de l'onglet, ce que l'on codde ici se lance
 
       this.cunoHeaderMethod(); // lancement de la méthode de récupération du CUNO
-   ngOnInit() {
+
 
       this.sendCunoToAddressesWebService(); // lancement de la méthode de récupération du CUNO
-      this.recoveryDataFromApi();
 
-      this.recoveryDataFromAPI(); // lancement de la méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
+      this.recoveryDataFromApi(); // lancement de la méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
    }
 
    //////////////////////////////////////////////////////////////////// Méthodes qui gère l'affichage Grid ///////////////////////////////////////////////////////////////////////////////////
 
-   private recoveryDataFromApi() {
+    recoveryDataFromApi() {
       this.contractsWebService.listContracts().subscribe(data => {
          console.log('ngoninit', data)
          this.listContracts = data;
@@ -83,125 +80,78 @@ export class TabContractsComponent extends CoreBase implements OnInit {
    }
 
 
+
+
    cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
       this.cunoSubscription = this.cunoHeaderService.cunoSubject.subscribe(
          (data: any) => {
             this.cunoHeader$ = data;
-
-   private initGridContracts() {                             // méthode qui permet d'afficher les données dans la GRID
-      const options: SohoDataGridOptions = {
-         selectable: 'single' as SohoDataGridSelectable,
-         disableRowDeactivation: true,
-         clickToSelect: true,
-         alternateRowShading: true,
-         cellNavigation: false,
-         idProperty: 'List',
-         paging: true,
-         pagesize: 10,
-         indeterminate: false,
-         columns: [
-            {
-               width: 50, id: 'selectionCheckbox', field: '', name: '', sortable: false,
-               resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
-            },
-            {
-               width: 'auto', id: 'col-cuno', field: 'UYCUNO', name: 'Client',
-               resizable: true, filterType: 'text', sortable: true
-            },
-            {
-               width: 'auto', id: 'col-agno', field: 'UYAGNO', name: 'Cde Ouv',
-               resizable: true, filterType: 'text', sortable: true
-            },
-            {
-               width: 'auto', id: 'col-stdt', field: 'UYSTDT', name: 'Dt Déb',
-               resizable: true, filterType: 'text', sortable: true
-            },
-            {
-               width: 'auto', id: 'col-agtp', field: 'UYAGTP', name: 'Typ',
-               resizable: true, filterType: 'text', sortable: true
-            },
-            {
-               width: 'auto', id: 'col-tx40', field: 'UYTX40', name: 'Désignation',
-               resizable: true, filterType: 'text', sortable: true
-            },
-            {
-               width: 'auto', id: 'col-agst', field: 'UYAGST', name: 'Stt',
-               resizable: true, filterType: 'text', sortable: true
-            },
-
-         ],
-         dataset: this.listContracts,
-         emptyMessage: {
-            title: 'Aucun article client à afficher',
-            icon: 'icon-empty-no-data'
-         }
-      };
-      this.datagridOptions = options;
-   }
-
+         });
+      }
 
 
    sendCunoToAddressesWebService() {       // méthode obesevable pour envoyer la CUNO de le webService de Adresse
       this.contractsWebService.recoveryCunoFromHeader(this.cunoHeader$).subscribe();
    }
 
+   private initGridContracts() { // méthode qui permet d'afficher les données dans la GRID
+   const options: SohoDataGridOptions = {
+   selectable: 'single' as SohoDataGridSelectable,
+   disableRowDeactivation: true,
+   clickToSelect: true,
+   alternateRowShading: true,
+   cellNavigation: false,
+   idProperty: 'List',
+   paging: true,
+   pagesize: 10,
+   indeterminate: false,
 
 
-   recoveryDataFromAPI() {             // méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
+   columns: [
+   {
+   width: 50, id: 'selectionCheckbox', field: '', name: '', sortable: false,
+   resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
+   },
+   {
+   width: 'auto', id: 'col-cuno', field: 'UYCUNO', name: 'Client',
 
-      this.contractsWebService.listeContracts().subscribe(data => {
-         this.listContractsClient = data;
 
-         this.initGridAdresses();      // lance l'initialisation de la Grid
-      });
+   resizable: true, filterType: 'text', sortable: true
+   },
+   {
+   width: 'auto', id: 'col-agno', field: 'UYAGNO', name: 'Cde Ouv',
+   resizable: true, filterType: 'text', sortable: true
+   },
+   {
+   width: 'auto', id: 'col-stdt', field: 'UYSTDT', name: 'Dt Déb',
+   resizable: true, filterType: 'text', sortable: true
+   },
+   {
+   width: 'auto', id: 'col-agtp', field: 'UYAGTP', name: 'Typ',
+   resizable: true, filterType: 'text', sortable: true
+   },
+   {
+   width: 'auto', id: 'col-tx40', field: 'UYTX40', name: 'Désignation',
+   resizable: true, filterType: 'text', sortable: true
+   },
+   {
+   width: 'auto', id: 'col-agst', field: 'UYAGST', name: 'Stt',
+
+
+   resizable: true, filterType: 'text', sortable: true
+   },
+
+   ],
+   dataset: this.listContracts,
+   emptyMessage: {
+   title: 'Aucun article client à afficher',
+   icon: 'icon-empty-no-data'
+   }
+   };
+   this.datagridOptions = options;
    }
 
-   private initGridAdresses() {                             // méthode qui permet d'afficher les données dans la GRID
-      const options: SohoDataGridOptions = {
-         selectable: 'single' as SohoDataGridSelectable,
-         disableRowDeactivation: true,
-         clickToSelect: true,
-         alternateRowShading: true,
-         cellNavigation: false,
-         idProperty: 'ListAddresses',
-         paging: true,
-         pagesize: 10,
-         indeterminate: false,
-         columns: [
-            {
-               width: 50, id: 'selectionCheckbox', field: '', name: '', sortable: false,
-               resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
-            },
-            {
-               width: 'auto', id: 'col-adrt', field: 'CUNO', name: 'Client',
-               resizable: true, filterType: 'text', sortable: true
-            },
-            {
-               width: 'auto', id: 'col-adid', field: 'AGNO', name: 'Code ouverture',
-               resizable: true, filterType: 'text', sortable: true
-            },
-            {
-               width: 'auto', id: 'col-cunm', field: 'STDT', name: 'Date Debut',
-               resizable: true, filterType: 'text', sortable: true
-            },
-            {
-               width: 'auto', id: 'col-cua1', field: 'AGTP', name: 'type',
-               resizable: true, filterType: 'text', sortable: true
-            },
-            {
-               width: 'auto', id: 'col-cua1', field: 'TX40', name: 'Designation',
-               resizable: true, filterType: 'text', sortable: true
-            },
-            
-         ],
-         dataset: this.listContractsClient,
-         emptyMessage: {
-            title: 'Aucune adresse à afficher',
-            icon: 'icon-empty-no-data'
-         }
-      };
-      this.datagridOptions = options;
-   }
+
 
    onSelectedLine(args: any[]) {                                        // méthode pour gérer quand on cique sur une ligne
 
@@ -219,7 +169,7 @@ export class TabContractsComponent extends CoreBase implements OnInit {
       this.stdt = selected.STDT;
       this.agtp = selected.AGTP;
       this.tx40 = selected.TX40;
-      
+
       this.agno2 = selected.AGNO;
 
       this.EnvoiAGNO(this.agno2 = selected.AGNO);
