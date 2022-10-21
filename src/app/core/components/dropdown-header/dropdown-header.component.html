@@ -1,10 +1,22 @@
-<label for="clients">Clients : </label>
+<div class="field">
 
-<select soho-dropdown name="clients" [(ngModel)]='ngSelect' (change)="onSelectedClient()">
+  <label for="clients" class="label">Clients : </label>
 
-  <option *ngFor="let client of listClients" [ngValue]="client">
-    {{client.CUNO}} :
-    {{client.CUNM}} -
-    {{client.WHLO}}
-  </option>
-</select>
+  <select soho-dropdown name="clients" (change)="onSelectedClient()" [(ngModel)]='ngSelect' maxWidth="Default"
+    reload="open" showSearchUnderSelected="true">
+    <option *ngFor="let client of listClients" [ngValue]="client">
+      {{client.CUNO}} :
+      {{client.CUNM}} -
+      {{client.WHLO}}
+    </option>
+  </select>
+</div>
+
+<!--
+maxWidth = la largeur de la liste s'adapte à la longueur des données
+reload = la liste se met à jour quand on ouvre
+showSearchUnderSelected = permets d'afficher un champs vide pour faire une recherche en dehors de la dropdown
+
+Manque :
+augmenter la largeur de la dropdown quand la liste n'est pas ouverte
+ -->
