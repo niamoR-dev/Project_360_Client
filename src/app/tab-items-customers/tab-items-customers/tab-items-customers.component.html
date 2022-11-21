@@ -29,3 +29,50 @@
    <input type="text" id="row-1-9" name="ADCU" [ngModel]="adcu" />
 
 </form>
+
+<!-- soho-busyindicator -->
+<br>
+<div class="row top-padding">
+  <div class="twelve columns demo" role="main">
+    <section class="scrollable contained-scrolling-right-bottom" style="height: 100%">
+      <div soho-datagrid
+
+        activated="true"
+        menuId="{{contextMenuId}}"
+        (selected)="onSelectedLine($event.rows)"
+        (rowDoubleClicked)="onRowDoubleClicked($event)"
+        (rowClicked)="onRowClicked($event)"
+        (contextMenu)="onContextMenu($event)"
+        (filteroperatorchanged)="onFilterOperatorChanged($event)"
+        [columns]="columns | async"
+        [data]="data | async"
+        displayDelay="0"
+        selectable="multiple"
+        filterable="true"
+        paging="true"
+        pagesize="10"
+      ></div>
+    </section>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <p class="section-title">Cards: Single Selection</p>
+  </div>
+</div>
+
+<!--
+
+A VOIR LA VERSION EST DIFF2RENTE ET LES CARD N  4 EXISTE PAS
+
+<div class="one-third column">
+  <soho-card>
+    <soho-card-header>
+      <h2 class="widget-title">Card Title</h2>
+      <button soho-button="icon" icon="more" soho-context-menu menu="action-popupmenu" trigger="click"
+        class="btn-actions"></button>
+    </soho-card-header>
+  </soho-card>
+</div>
+-->
