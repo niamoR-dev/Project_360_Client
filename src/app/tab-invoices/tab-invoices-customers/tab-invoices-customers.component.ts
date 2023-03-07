@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreBase } from '@infor-up/m3-odin';
+import { CoreBase, IMIRequest } from '@infor-up/m3-odin';
 import { Subscription } from 'rxjs';
 import { DataForTabHeaderService } from 'src/app/core/services/data-for-tab-header-service/data-for-tab-header.service';
-import { InvoicesWebService } from 'src/app/core/web-services/invoices-customers.webservice';
+import { APIWebService } from 'src/app/core/web-services/api.webservice';
 
 @Component({
   selector: 'app-tab-invoices',
@@ -11,6 +11,7 @@ import { InvoicesWebService } from 'src/app/core/web-services/invoices-customers
 })
 export class TabInvoicesComponent extends CoreBase implements OnInit {
 
+  //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
   datagridOptions: SohoDataGridOptions = {};
 
   listInvoices: any[]; // tableau pour enregistrer le retour d'API des factures d'une commande
@@ -28,48 +29,57 @@ export class TabInvoicesComponent extends CoreBase implements OnInit {
   ivtp: any;
 
 
-  listDetailInvoices: any[];
+  listDetailInvoices: any;
 
-  cunoHeader: any;
+  cunoHeader$: any;
   cunoSubscription: Subscription;
 
-  constructor(private invoicesWebService: InvoicesWebService, private dataForTabHeaderService: DataForTabHeaderService) {
+  constructor(private dataForTabHeaderService: DataForTabHeaderService, private apiWebService: APIWebService) {
     super('TabInvoicesComponent');
   }
 
-  ngOnInit(): void {
-    this.cunoHeaderMethod();
 
-    this.sendCunoToInvoicesWebService();
 
-    this.recoveryDataFromAPI();
+  ngOnInit() {
+
+    this.cunoHeaderMethod(); // lancement de la méthode de récupération du CUNO
 
   }
 
-  sendCunoToInvoicesWebService() {       // méthode obesevable pour envoyer la CUNO de le webService de Facture
-    this.invoicesWebService.recoveryCunoFromHeader(this.cunoHeader).subscribe();
-  }
-
-  cunoHeaderMethod() {    // méthode obesevable pour récupérer la CUNO de la dropdown du header
+  private cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
     this.cunoSubscription = this.dataForTabHeaderService.cunoSubject.subscribe(
       (data: any) => {
-        this.cunoHeader = data;
+        this.cunoHeader$ = data;
+        this.getInvoicesIMIRequest();
       }
     );
-    this.dataForTabHeaderService.subjectMethod();
   }
 
 
-  recoveryDataFromAPI() {             // méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
+  private getInvoicesIMIRequest() { // mettre la IMIRequest
 
-    this.invoicesWebService.listeInvoices().subscribe(data => {
-      console.log("bfdbgfgdfgff", data)
-      this.listInvoices = data;
-      this.initGridInvoices();
+    const requestTest4: IMIRequest = {
 
-    });
+      program: 'MDBREADMI',
+      transaction: 'SelOCUSCH00',
+      record: {
+        CUNO: this.cunoHeader$
+      },
+      outputFields: ['CRID', 'CRTY', 'CRD0', 'CUCD', 'CRME', 'CRFA', 'VTCD', 'CRAM'],
+      // maxReturnedRecords: 50
+    };
 
+
+    this.apiWebService.callAPI(requestTest4).subscribe(
+      data => {
+
+        this.listDetailInvoices = data;
+        this.initGridInvoices();      // lance l'initialisation de la Grid
+
+      });
   }
+
+
   private initGridInvoices() {                             // méthode qui permet d'afficher les données dans la GRID
     const options: SohoDataGridOptions = {
       selectable: 'single' as SohoDataGridSelectable,

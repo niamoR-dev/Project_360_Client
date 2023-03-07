@@ -26,9 +26,9 @@ export class APIWebService {
       return answer.items;
     }),
       catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
-        console.error('Erreur API listAddresses :', error);
+        console.error('Erreur API :', error);
 
-        this.handleError('Échec de l\'exécution de l\'API listAddresses', error);
+        this.handleError('Échec de l\'exécution de l\'API ', error);
         return of(null);
       })
     );;

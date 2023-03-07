@@ -1,9 +1,14 @@
 <h1>Retours client</h1>
 
 <h2>Cuno = {{cunoHeader$}}</h2>
-<h2>Whlo = {{whloHeader$}}</h2>
 
-<div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
-   [blockUI]="true" [displayDelay]="0" (selected)="onSelectedLine($event.rows)">
-</div>
 
+<div class="full-width full-height scrollable-flex">
+
+  <div class="row top-padding">
+    <div class="twelve columns demo">
+      <div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
+        [blockUI]="true">
+      </div>
+    </div>
+  </div>

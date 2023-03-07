@@ -24,7 +24,6 @@ export class FeeWebService {
 
    recoveryCunoFromHeader(cuno: any) { // méthode qui récupère leCUNO du Header venant du component.ts Adresse
       return of(this.cunoHeader = cuno);
-
    }
 
    //////////////////////////////////////////////////////////////////// Méthodes qui gère les erreurs ///////////////////////////////////////////////////////////////////////////////////

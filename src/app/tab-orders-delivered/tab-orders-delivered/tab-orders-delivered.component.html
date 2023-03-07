@@ -1,3 +1,12 @@
-<p>tab-orders-delivered works!</p>
-
+<h1>Commande Livrées</h1>
 <h2>Cuno = {{cunoHeader$}}</h2>
+
+<div class="full-width full-height scrollable-flex">
+
+  <div class="row top-padding">
+    <div class="twelve columns demo">
+      <div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
+        [blockUI]="true">
+      </div>
+    </div>
+  </div>

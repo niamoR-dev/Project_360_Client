@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CoreBase, IMIRequest } from '@infor-up/m3-odin';
 import { Subscription } from 'rxjs';
 import { DataForTabHeaderService } from 'src/app/core/services/data-for-tab-header-service/data-for-tab-header.service';
@@ -36,7 +36,6 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
   show: boolean; // permets l'affichage de détails au clique, doit faire une fonction ou un bouton SI pour enlever l'affichage
 
-
   listAddressesClient: any; // tableau pour enregistrer le retour d'API des adresses d'un client
 
   detailsAddressesLstAddrByCust: any; // tableau pour enregistrer le retour d'API des détails des adresses d'un client
@@ -60,9 +59,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
   }
 
-
   //////////////////////////////////////////////////////////////////// Méthodes ngOnInit  ///////////////////////////////////////////////////////////////////////////////////
-
 
 
 

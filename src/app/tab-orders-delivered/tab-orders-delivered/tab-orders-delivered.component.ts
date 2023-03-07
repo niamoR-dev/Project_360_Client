@@ -12,6 +12,7 @@ import { FeeWebService } from 'src/app/core/web-services/fee.webservice';
 export class TabOrdersDeliveredComponent extends CoreBase implements OnInit {
 
   //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
+  datagridOptions: SohoDataGridOptions = {};
 
   cunoHeader$: any;
   cunoSubscription: Subscription;
@@ -24,7 +25,8 @@ export class TabOrdersDeliveredComponent extends CoreBase implements OnInit {
     super('TabOrdersDeliveredComponent');
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.cunoHeaderMethod(); // lancement de la méthode de récupération du CUNO
   }
 
   //////////////////////////////////////////////////////////////////// Méthodes qui gère l'affichage Grid ///////////////////////////////////////////////////////////////////////////////////
