@@ -11,11 +11,11 @@ import { APIWebService } from 'src/app/core/web-services/api.webservice';
 })
 export class TabAddressesComponent extends CoreBase implements OnInit {
 
-  //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
 
   datagridOptions: SohoDataGridOptions = {}; // je sais pas
 
-  /////////////// ici on déclare les champs qui sont utilisées dans la grid template //////////////
+/////////////// ici on déclare les champs qui sont utilisées dans la grid template //////////////
   cuno: any;
   cono: any;
   adrt: any;
@@ -34,6 +34,9 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
   tedl: any;
   vrno: any;
 
+  varadrt: any;
+  varadid: any;
+
   show: boolean; // permets l'affichage de détails au clique, doit faire une fonction ou un bouton SI pour enlever l'affichage
 
   listAddressesClient: any; // tableau pour enregistrer le retour d'API des adresses d'un client
@@ -45,13 +48,13 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
 
 
-  //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
 
   constructor(private dataForTabHeaderService: DataForTabHeaderService, private apiWebService: APIWebService) {    // ici on fait le lien vers les autres components
     super('TabAddressesComponent');
   }
 
-  //////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
 
   ngOnInit() {                                                   // à l'ouverture de l'onglet, ce que l'on codde ici se lance
 
@@ -59,7 +62,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
   }
 
-  //////////////////////////////////////////////////////////////////// Méthodes ngOnInit  ///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////// Méthodes ngOnInit  ///////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -100,9 +103,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
 
 
-
-  //////////////////////////////////////////////////////////////////// Méthodes qui gère l'affichage Grid ///////////////////////////////////////////////////////////////////////////////////
-
+//////////////////////////////////////////////////////////////////// Méthodes qui gère l'affichage Grid ///////////////////////////////////////////////////////////////////////////////////
 
   private initGridAdresses() {                             // méthode qui permet d'afficher les données dans la GRID
     const options: SohoDataGridOptions = {
@@ -154,6 +155,9 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
     const newCount = args.length;
     const selected = args && newCount === 1 ? args[0].data : null;
 
+    this.varadid = selected.ADID;
+    this.varadrt = selected.ADRT;
+
     this.show = true;
 
     this.cunm = selected.CUNM;
@@ -172,14 +176,15 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
     const requestDetailAdress: IMIRequest = {
 
-      program: 'CMS100MI',
-      transaction: 'LstAddrByCust',
+      program: 'CRS610MI',
+      transaction: 'GetAddress',
       record: {
-        OPCUNO: this.cunoHeader$,
-        OPADRT: this.adrt,
-        OPADID: this.adid,
+        CONO: '100',
+        CUNO: this.cunoHeader$,
+        ADRT: this.varadrt,
+        ADID: this.varadid,
       },
-      outputFields: ['OPPHNO', 'OPYREF', 'OPEALO', 'OPTFNO', 'OPMEAL', 'OPMODL', 'OPTEDL', 'OPVRNO'],
+      outputFields: ['PHNO', 'YREF', 'EALO', 'TFNO', 'MEAL', 'MODL', 'TEDL', 'VRNO'],
       // maxReturnedRecords: 50
     };
 
@@ -187,14 +192,14 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
       //this.detailsAddressesLstAddrByCust = data;
 
-      this.phno = data[0].OPPHNO;
-      this.tfno = data[0].OPTFNO;
-      this.yref = data[0].OPYREF;
-      this.ealo = data[0].OPEALO;
-      this.meal = data[0].OPMEAL;
-      this.modl = data[0].OPMODL;
-      this.tedl = data[0].OPTEDL;
-      this.vrno = data[0].OPVRNO;
+      this.phno = data[0].PHNO;
+      this.tfno = data[0].TFNO;
+      this.yref = data[0].YREF;
+      this.ealo = data[0].EALO;
+      this.meal = data[0].MEAL;
+      this.modl = data[0].MODL;
+      this.tedl = data[0].TEDL;
+      this.vrno = data[0].VRNO;
 
     });
 

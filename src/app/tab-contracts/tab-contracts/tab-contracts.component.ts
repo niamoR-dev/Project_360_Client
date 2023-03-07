@@ -98,6 +98,7 @@ export class TabContractsComponent extends CoreBase implements OnInit {
       paging: true,
       pagesize: 10,
       indeterminate: false,
+
       columns: [
         {
           width: 50, id: 'selectionCheckbox', field: '', name: '', sortable: false,

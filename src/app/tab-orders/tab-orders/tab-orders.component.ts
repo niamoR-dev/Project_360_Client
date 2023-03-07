@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreBase } from '@infor-up/m3-odin';
+import { CoreBase, IMIRequest } from '@infor-up/m3-odin';
 import { Subscription } from 'rxjs';
 import { DataForTabHeaderService } from 'src/app/core/services/data-for-tab-header-service/data-for-tab-header.service';
-import { OrdersWebService } from 'src/app/core/web-services/orders.webservice';
+import { APIWebService } from 'src/app/core/web-services/api.webservice';
+
 
 @Component({
   selector: 'app-tab-orders',
@@ -11,10 +12,11 @@ import { OrdersWebService } from 'src/app/core/web-services/orders.webservice';
 })
 export class TabOrdersComponent extends CoreBase implements OnInit {
 
+//////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
+
   datagridOptions: SohoDataGridOptions = {};
 
-  listOrders: any[]; // tableau pour enregistrer le retour d'API des articles du client
-
+// ici on déclare les champs qui sont utilisées dans la grid template
   rldt: any;
   orno: any;
   ordt: any;
@@ -29,68 +31,81 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
   smcd: any;
   cuor: any;
 
-  listDetailOrders: any[];
+  show: boolean; // permets l'affichage de détails au clique, doit faire une fonction ou un bouton SI pour enlever l'affichage
 
-  cunoHeader: any;
+  listHeadOrders: any; // tableau pour enregistrer le retour d'API des Head d'une commande
+
+  listOrdersDetails: any; // tableau pour enregistrer le retour d'API des Lignes du Commande Head
+
+  cunoHeader$: any;
   cunoSubscription: Subscription;
 
 
-  constructor(private orderWebService: OrdersWebService, private dataForTabHeaderService: DataForTabHeaderService) {
+
+//////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
+
+  constructor(private dataForTabHeaderService: DataForTabHeaderService, private apiWebService: APIWebService) {
     super('TabOrdersComponent');
   }
 
-  ngOnInit() {
+  ngOnInit() { // à l'ouverture de l'onglet, ce que l'on codde ici se lance
 
-    this.cunoHeaderMethod();
-
-    this.sendCunoToOrderWebService();
-
-    this.recoveryDataFromAPI();
+    this.cunoHeaderMethod(); // lancement de la méthode de récupération du CUNO
 
   }
 
-  //////////////////////////////////////////////////////////////////// Méthodes ngOnInit  ///////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////// Méthodes ngOnInit  ///////////////////////////////////////////////////////////////////////////////////
 
 
-  sendCunoToOrderWebService() {       // méthode obesevable pour envoyer la CUNO de le webService de Adresse
-    this.orderWebService.recoveryCunoFromHeader(this.cunoHeader).subscribe();
-  }
+
+private cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
+  this.cunoSubscription = this.dataForTabHeaderService.cunoSubject.subscribe(
+    (data: any) => {
+      this.cunoHeader$ = data;
+      this.getOrdersHeadIMIRequest();
+    }
+  );
+}
 
 
-  cunoHeaderMethod() {    // méthode obesevable pour récupérer la CUNO de la dropdown du header
-    this.cunoSubscription = this.dataForTabHeaderService.cunoSubject.subscribe(
-      (data: any) => {
-        this.cunoHeader = data;
-      }
-    );
-    this.dataForTabHeaderService.subjectMethod();
-  }
+private getOrdersHeadIMIRequest() { // mettre la IMIRequest
+
+  const requestTest4: IMIRequest = {
+
+    program: 'OIS100MI',
+    transaction: 'LstHead',
+    record: {
+      CONO: '100',
+      CUNO: this.cunoHeader$,
+      ORSL: '10'
+      //ORST: '44'
+    },
+    outputFields: ['FACI', 'ORNO', 'ORTP', 'CUOR', 'ORDT', 'ORSL', 'ORST',],
+    // maxReturnedRecords: 50
+  };
 
 
-  recoveryDataFromAPI() {             // méthode de récupération des donnés qui lance aussi l'initialisation de la Grid
+  this.apiWebService.callAPI(requestTest4).subscribe(
+    data => {
 
-    this.orderWebService.listeOrders().subscribe(data => {
-
-
-      this.listOrders = data;
-      this.initGridOrders();
+      this.listHeadOrders = data;
+      this.initGridHeadOrder();      // lance l'initialisation de la Grid
 
     });
-
-  }
-
-  //////////////////////////////////////////////////////////////////// Méthodes qui gère l'affichage Grid ///////////////////////////////////////////////////////////////////////////////////
+}
 
 
 
-  private initGridOrders() {                             // méthode qui permet d'afficher les données dans la GRID
+//////////////////////////////////////////////////////////////////// Méthodes qui gère l'affichage Grid ///////////////////////////////////////////////////////////////////////////////////
+
+  private initGridHeadOrder() {                             // méthode qui permet d'afficher les données dans la GRID
     const options: SohoDataGridOptions = {
       selectable: 'single' as SohoDataGridSelectable,
       disableRowDeactivation: true,
       clickToSelect: true,
       alternateRowShading: true,
       cellNavigation: false,
-      idProperty: 'List',
+      idProperty: 'LstHead',
       paging: true,
       pagesize: 10,
       indeterminate: false,
@@ -100,68 +115,59 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
           resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
         },
         {
-          width: 'auto', id: 'col-rldt', field: 'OARLDT', name: 'Dt Liv.',
+          width: 'auto', id: 'col-rldt', field: 'FACI', name: 'Société/Etablissement',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-orno', field: 'OAORNO', name: 'No Cde',
+          width: 'auto', id: 'col-orno', field: 'ORNO', name: 'N° CDV',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-ordt', field: 'OAORDT', name: 'Dt Cde',
+          width: 'auto', id: 'col-ordt', field: 'ORTP', name: 'Type',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-itds', field: '', name: 'Ligne', // à revoir lien vers un autre onglets ?
+          width: 'auto', id: 'col-itds', field: '', name: 'Client',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-orsl', field: 'OAORSL', name: 'Stt B',
+          width: 'auto', id: 'col-orsl', field: '', name: 'Nom', // à CHERCHER //CUNM
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-orst', field: 'OAORST', name: 'Stt H',
+          width: 'auto', id: 'col-orst', field: 'CUOR', name: 'N°CDV client',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-itds', field: '', name: 'Montant', // à revoir
+          width: 'auto', id: 'col-itds', field: 'ORDT', name: 'Dt.Cde',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-cucd', field: 'OACUCD', name: 'Devise',
+          width: 'auto', id: 'col-cucd', field: 'ORSL', name: 'Statut bas',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-tepy', field: 'OATEPY', name: 'Cd.Paiement',
+          width: 'auto', id: 'col-tepy', field: 'ORST', name: 'Statut haut',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-modl', field: 'OAMODL', name: 'Méth. Liv.',
+          width: 'auto', id: 'col-modl', field: '', name: 'Responsable',  //RESP
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-tedl', field: 'OATEDL', name: 'Cdt Liv.',
+          width: 'auto', id: 'col-tedl', field: '', name: 'Brut total',   //BRLA
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-oaoblc', field: 'OAOBLC', name: 'Bloc.',
+          width: 'auto', id: 'col-oaoblc', field: '', name: 'Net total.', //BRLA
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-ortp', field: 'ORTP', name: 'Type CDV',
+          width: 'auto', id: 'col-ortp', field: '', name: 'Bloc',         //OBLC
           resizable: true, filterType: 'text', sortable: true
         },
-        {
-          width: 'auto', id: 'col-smcd', field: 'OASMCD', name: 'Représent',
-          resizable: true, filterType: 'text', sortable: true
-        },
-        {
-          width: 'auto', id: 'col-cuor', field: 'OACUOR', name: 'No Cde Client ',
-          resizable: true, filterType: 'text', sortable: true
-        },
-
       ],
-      dataset: this.listOrders,
+      dataset: this.listHeadOrders,
       emptyMessage: {
         title: 'Aucune commande à afficher',
         icon: 'icon-empty-no-data'

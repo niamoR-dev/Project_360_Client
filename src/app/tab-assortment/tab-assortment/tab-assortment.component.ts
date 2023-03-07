@@ -11,34 +11,16 @@ import { APIWebService } from 'src/app/core/web-services/api.webservice';
 })
 export class TabAssortmentComponent extends CoreBase implements OnInit {
 
-
-
   //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
 
   datagridOptions: SohoDataGridOptions = {};
 
-  cuno: any;
-  cono: any;
-  adrt: any;
-  adid: any;
-  cunm: any;
-  cua1: any;
-  cua2: any;
-  cua3: any;
-  cua4: any;
-  phno: any;
-  tfno: any;
-  meal: any;
-  yref: any;
-  ealo: any;
-  modl: any;
-  tedl: any;
-  vrno: any;
 
   listAssortmentClient: any; // tableau pour enregistrer le retour d'API des adresses d'un client
 
   cunoHeader$: any;
   cunoSubscription: Subscription;
+
 
 
   //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
@@ -77,12 +59,13 @@ export class TabAssortmentComponent extends CoreBase implements OnInit {
 
     const requestTest4: IMIRequest = {
 
-      program: '',
-      transaction: '',
+      program: 'CRS105MI',
+      transaction: 'LstAssmItem',
       record: {
-        CUNO: this.cunoHeader$
+        CONO: '100',
+        ASCD: 'DIPLOM'
       },
-      outputFields: [],
+      outputFields: ['ASCD','ITNO','FDAT','SEQN'],
       // maxReturnedRecords: 50
     };
 
@@ -91,19 +74,19 @@ export class TabAssortmentComponent extends CoreBase implements OnInit {
       data => {
 
         this.listAssortmentClient = data;
-        this.initGridFee();      // lance l'initialisation de la Grid
+        this.initGridAssortment();      // lance l'initialisation de la Grid
 
       });
   }
 
-  private initGridFee() {                             // méthode qui permet d'afficher les données dans la GRID
+  private initGridAssortment() {                             // méthode qui permet d'afficher les données dans la GRID
     const options: SohoDataGridOptions = {
       selectable: 'single' as SohoDataGridSelectable,
       disableRowDeactivation: true,
       clickToSelect: true,
       alternateRowShading: true,
       cellNavigation: false,
-      idProperty: '',
+      idProperty: 'LstAssmItem',
       paging: true,
       pagesize: 10,
       indeterminate: false,
@@ -114,15 +97,15 @@ export class TabAssortmentComponent extends CoreBase implements OnInit {
           resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
         },
         {
-          width: 'auto', id: 'col-adrt', field: '', name: 'Assort',
+          width: 'auto', id: 'col-ascd', field: 'ASCD', name: 'Assort',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-adid', field: '', name: 'Code article',
+          width: 'auto', id: 'col-itno', field: 'ITNO', name: 'Code article',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-cunm', field: '', name: 'Dt déb',
+          width: 'auto', id: 'col-fdat', field: 'FDAT', name: 'Dt déb',
           resizable: true, filterType: 'text', sortable: true
         },
         {
@@ -130,7 +113,7 @@ export class TabAssortmentComponent extends CoreBase implements OnInit {
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-adid', field: '', name: 'N°séq',
+          width: 'auto', id: 'col-seqn', field: 'SEQN', name: 'N°séq',
           resizable: true, filterType: 'text', sortable: true
         },
         {
@@ -145,11 +128,6 @@ export class TabAssortmentComponent extends CoreBase implements OnInit {
       }
     };
     this.datagridOptions = options;
-  }
-
-  private ngOnDestroy() {               // obligatoire dans chaque onglet dès qu'on a une variable : Subscription, va fermer l'observable à la fermeture de l'onglet
-    console.log("UNSUBSCRIBE Assortment")  // permets d'optimiser la gestion débit de données
-    this.cunoSubscription.unsubscribe();
   }
 
 }

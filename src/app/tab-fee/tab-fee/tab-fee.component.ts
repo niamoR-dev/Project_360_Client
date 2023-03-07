@@ -12,25 +12,9 @@ import { APIWebService } from 'src/app/core/web-services/api.webservice';
 export class TabFeeComponent extends CoreBase implements OnInit {
 
   //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
+
   datagridOptions: SohoDataGridOptions = {};
 
-  cuno: any;
-  cono: any;
-  adrt: any;
-  adid: any;
-  cunm: any;
-  cua1: any;
-  cua2: any;
-  cua3: any;
-  cua4: any;
-  phno: any;
-  tfno: any;
-  meal: any;
-  yref: any;
-  ealo: any;
-  modl: any;
-  tedl: any;
-  vrno: any;
 
   listFeeClient: any; // tableau pour enregistrer le retour d'API des adresses d'un client
 
@@ -146,18 +130,11 @@ export class TabFeeComponent extends CoreBase implements OnInit {
       ],
       dataset: this.listFeeClient,
       emptyMessage: {
-        title: 'Aucune Frais à afficher',
+        title: 'Aucun Frais à afficher',
         icon: 'icon-empty-no-data'
       }
     };
     this.datagridOptions = options;
   }
-
-  private ngOnDestroy() {               // obligatoire dans chaque onglet dès qu'on a une variable : Subscription, va fermer l'observable à la fermeture de l'onglet
-    console.log("UNSUBSCRIBE Free")  // permets d'optimiser la gestion débit de données
-    this.cunoSubscription.unsubscribe();
-  }
-
-
 
 }
