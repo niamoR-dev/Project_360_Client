@@ -65,12 +65,12 @@ export class TabContractsComponent extends CoreBase implements OnInit {
 
     const requestTest4: IMIRequest = {
 
-      program: 'OIS060MI',
-      transaction: 'LstCustBlkAgr',
+      program: 'CMS100MI',
+      transaction: 'Lst360CusContra',
       record: {
-        CUNO: this.cunoHeader$
+        UYCUNO: this.cunoHeader$
       },
-      outputFields: ['CUNO', 'AGNO', 'STDT', 'AGTP', 'TX40', 'AGST'],
+      outputFields: ['UYCUNO', 'UYAGNO', 'UYSTDT', 'UYAGTP', 'UYTX40', 'UYAGST'],
       // maxReturnedRecords: 50
     };
 
@@ -105,27 +105,27 @@ export class TabContractsComponent extends CoreBase implements OnInit {
           resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
         },
         {
-          width: 'auto', id: 'col-cuno', field: 'CUNO', name: 'Client',
+          width: 'auto', id: 'col-cuno', field: 'UYCUNO', name: 'Client',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-agno', field: 'AGNO', name: 'Cde Ouv',
+          width: 'auto', id: 'col-agno', field: 'UYAGNO', name: 'Cde Ouv',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-stdt', field: 'STDT', name: 'Dt Déb',
+          width: 'auto', id: 'col-stdt', field: 'UYSTDT', name: 'Dt Déb',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-agtp', field: 'AGTP', name: 'Typ',
+          width: 'auto', id: 'col-agtp', field: 'UYAGTP', name: 'Typ',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-tx40', field: 'TX40', name: 'Désignation',
+          width: 'auto', id: 'col-tx40', field: 'UYTX40', name: 'Désignation',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-agst', field: 'AGST', name: 'Stt',
+          width: 'auto', id: 'col-agst', field: 'UYAGST', name: 'Stt',
           resizable: true, filterType: 'text', sortable: true
         },
 
@@ -149,12 +149,12 @@ export class TabContractsComponent extends CoreBase implements OnInit {
 
     this.show = true;
 
-    this.cuno = selected.CUNO;
-    this.agno = selected.AGNO;
-    this.stdt = selected.STDT;
-    this.agtp = selected.AGTP;
-    this.tx40 = selected.TX40;
-    this.agtp = selected.AGST;
+    this.cuno = selected.UYCUNO;
+    this.agno = selected.UYAGNO;
+    this.stdt = selected.UYSTDT;
+    this.agtp = selected.UYAGTP;
+    this.tx40 = selected.UYTX40;
+    this.agtp = selected.UYAGST;
 
 
     this.getDetailsContractsIMIRequest();

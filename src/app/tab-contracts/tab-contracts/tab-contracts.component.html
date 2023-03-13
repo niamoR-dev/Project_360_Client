@@ -6,7 +6,7 @@
 
 
 <form *ngIf='show' #f="ngForm" class="form-responsive row">
-
+<!--
    <label for="row-1-1">Client</label>
    <input type="text" id="row-1-1" name="CUNO" readonly [ngModel]="cuno" />
 
@@ -23,13 +23,10 @@
    <input type="text" id="row-1-6" name="TX40" [ngModel]="tx40" />
 
    <label for="row-1-5">Priorités util</label>
-   <input type="text" id="row-1-6" name="AGST" [ngModel]="stst" />
+   <input type="text" id="row-1-6" name="AGST" [ngModel]="stst" /> -->
 
-   <!--
-   <label for="row-1-5">Typ</label>
-   <input type="text" id="row-1-7" name="AGTP" [ngModel]="agtp" />
+  <div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
+   [blockUI]="true" [displayDelay]="0" (selected)="onSelectedLine($event.rows)">
+  </div>
 
-   <label for="row-1-4">Designation</label>
-   <input type="text" id="row-1-8" name="TX40" [ngModel]="tx40" />
--->
 </form>
