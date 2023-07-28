@@ -28,7 +28,7 @@ export class BatchOrdersWebService {
       return of(this.cunoHeader = cuno);
 
    }
-   
+
    listeBatchOrder() {
 
       return this.listAllBatchOrder().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS

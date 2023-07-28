@@ -14,6 +14,8 @@ export class TabContractsComponent extends CoreBase implements OnInit {
   //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
   datagridOptions: SohoDataGridOptions = {};
 
+  varagno: any;
+
   cuno: any;
   agno: any;
   prex: any;
@@ -23,6 +25,9 @@ export class TabContractsComponent extends CoreBase implements OnInit {
   tx40: any;
   agst: any;
   agno2: any;
+  lidt: any;
+  lvdt: any;
+  obv1: any;
 
   show: boolean; // permets l'affichage de détails au clique
 
@@ -94,7 +99,7 @@ export class TabContractsComponent extends CoreBase implements OnInit {
       clickToSelect: true,
       alternateRowShading: true,
       cellNavigation: false,
-      idProperty: 'LstCustBlkAgr',
+      idProperty: 'Lst360CusContra',
       paging: true,
       pagesize: 10,
       indeterminate: false,
@@ -149,28 +154,32 @@ export class TabContractsComponent extends CoreBase implements OnInit {
 
     this.show = true;
 
-    this.cuno = selected.UYCUNO;
-    this.agno = selected.UYAGNO;
-    this.stdt = selected.UYSTDT;
-    this.agtp = selected.UYAGTP;
-    this.tx40 = selected.UYTX40;
-    this.agtp = selected.UYAGST;
+    this.varagno = selected.UYAGNO
 
+    this.cuno = selected.CUNO;
+    this.agno = selected.AGNO;
+    this.stdt = selected.STDT;
+    this.lidt = selected.LIDT;
+    this.prex = selected.PREX;
 
     this.getDetailsContractsIMIRequest();
   }
 
   private getDetailsContractsIMIRequest() {
 
+    console.log('test1');
+    console.log(this.varagno);
+    console.log('test2');
+
     const requestDetailContracts: IMIRequest = {
 
       program: 'OIS060MI',
-      transaction: 'LstCustBlkAgr',
+      transaction: 'LstCustBlkAgrLn',
       record: {
         CUNO: this.cunoHeader$,
+        AGNO: this.varagno
       },
-      outputFields: ['CUNO', 'AGNO', 'STDT', 'AGTP', 'TX40', 'AGST'],
-      // maxReturnedRecords: 50
+      outputFields: ['CUNO', 'AGNO', 'STDT', 'LIDT', 'PREX'],
     };
 
     this.apiWebService.callAPI(requestDetailContracts).subscribe(data => {
@@ -178,16 +187,13 @@ export class TabContractsComponent extends CoreBase implements OnInit {
       this.cuno = data[0].CUNO;
       this.agno = data[0].AGNO;
       this.stdt = data[0].STDT;
-      this.agtp = data[0].AGTP;
-      this.tx40 = data[0].TX40;
-      this.agst = data[0].AGST;
-
+      this.lidt = data[0].LIDT;
+      this.prex = data[0].PREX;
     });
 
   }
 
   private ngOnDestroy() {               // obligatoire dans chaque onglet dès qu'on a une variable : Subscription, va fermer l'observable à la fermeture de l'onglet
-    console.log("UNSUBSCRIBE Adresse")  // permets d'optimiser la gestion débit de données
     this.cunoSubscription.unsubscribe();
   }
 }

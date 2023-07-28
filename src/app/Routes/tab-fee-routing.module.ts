@@ -1,16 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TabOrdersComponent } from './tab-orders/tab-orders.component';
-
-
-
+import { TabFeeComponent } from '../tab-fee/tab-fee/tab-fee.component';
 const routes: Routes = [
 
 
   {
     path: '',
-    component: TabOrdersComponent,
-    pathMatch: 'full'
+    component: TabFeeComponent,
   }
 
 
@@ -20,4 +16,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabOrdersRoutingModule { }
+export class TabFeeRoutingModule { }

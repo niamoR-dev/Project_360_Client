@@ -14,15 +14,6 @@ export class TabBatchOrdersComponent extends CoreBase implements OnInit {
   //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
   datagridOptions: SohoDataGridOptions = {};
 
-  cuno: any;
-  agno: any;
-  prex: any;
-  agdt: any;
-  stdt: any;
-  agtp: any;
-  tx40: any;
-  agst: any;
-  agno2: any;
 
   listBatchOrdersClient: any; // tableau pour enregistrer le retour d'API des adresses d'un client
 
@@ -63,7 +54,7 @@ export class TabBatchOrdersComponent extends CoreBase implements OnInit {
   }
 
   private getBatchOrdersIMIRequest() { // mettre la IMIRequest
-
+    console.log("début init grid api");
     const requestTest4: IMIRequest = {
 
       program: 'MDBREADMI',
@@ -93,7 +84,7 @@ export class TabBatchOrdersComponent extends CoreBase implements OnInit {
       clickToSelect: true,
       alternateRowShading: true,
       cellNavigation: false,
-      idProperty: 'ListAddresses',
+      idProperty: 'listBatchOrdersClient',
       paging: true,
       pagesize: 10,
       indeterminate: false,
@@ -103,47 +94,47 @@ export class TabBatchOrdersComponent extends CoreBase implements OnInit {
           resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
         },
         {
-          width: 'auto', id: 'col-adrt', field: 'CUNO', name: 'Client',
+          width: 'auto', id: 'col-cuno', field: 'CUNO', name: 'Client',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-adid', field: 'LMDT', name: 'DtChg',
+          width: 'auto', id: 'col-lmdt', field: 'LMDT', name: 'DtChg',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-cunm', field: 'FACI', name: 'Eta',
+          width: 'auto', id: 'col-faci', field: 'FACI', name: 'Eta',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-cua1', field: 'ORNO', name: 'N° CDV tmp',
+          width: 'auto', id: 'col-orno', field: 'ORNO', name: 'N° CDV tmp',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-adid', field: 'PONR', name: 'Ligne',
+          width: 'auto', id: 'col-ponr', field: 'PONR', name: 'Ligne',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-cunm', field: 'POSX', name: 'sf',
+          width: 'auto', id: 'col-posx', field: 'POSX', name: 'sf',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-cua1', field: 'OPT1', name: 'Opt',
+          width: 'auto', id: 'col-opt1', field: 'OPT1', name: 'Opt',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-cunm', field: 'STAT', name: 'Stt',
+          width: 'auto', id: 'col-stat', field: 'STAT', name: 'Stt',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-cunm', field: 'ORNR', name: 'N° CDV',
+          width: 'auto', id: 'col-ornr', field: 'ORNR', name: 'N° CDV',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-cunm', field: 'RGDT', name: 'DtSais',
+          width: 'auto', id: 'col-rgdt', field: 'RGDT', name: 'DtSais',
           resizable: true, filterType: 'text', sortable: true
         },
         {
-          width: 'auto', id: 'col-cunm', field: 'BQLY', name: 'Src',
+          width: 'auto', id: 'col-bqly', field: 'BQLY', name: 'Src',
           resizable: true, filterType: 'text', sortable: true
         },
       ],
@@ -154,10 +145,8 @@ export class TabBatchOrdersComponent extends CoreBase implements OnInit {
       }
     };
     this.datagridOptions = options;
+    console.log("fin init grid api");
+    console.log('RGDT');
   }
 
-  private ngOnDestroy() {               // obligatoire dans chaque onglet dès qu'on a une variable : Subscription, va fermer l'observable à la fermeture de l'onglet
-    console.log("UNSUBSCRIBE Adresse")  // permets d'optimiser la gestion débit de données
-    this.cunoSubscription.unsubscribe();
-  }
 }

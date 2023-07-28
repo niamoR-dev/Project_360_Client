@@ -1,3 +1,22 @@
 <h1>Commandes bloquées</h1>
 
 <h2>Cuno = {{cunoHeader$}}</h2>
+
+<div class="full-width full-height scrollable-flex">
+
+  <div class="row top-padding">
+    <div class="twelve columns demo">
+      <div #blockedOrder id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
+        [blockUI]="true" [displayDelay]="0" (selected)="onSelectedLine($event.rows)">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row top-padding">
+    <div class="twelve columns demo">
+      <div #blockedOrder2 id="gridToDisplay2" soho-datagrid [gridOptions]="datagridOptions2" soho-busyindicator
+        [blockUI]="true">
+      </div>
+    </div>
+  </div>

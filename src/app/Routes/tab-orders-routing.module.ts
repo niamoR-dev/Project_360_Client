@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TabOffersComponent } from './tab-offers/tab-offers.component';
+import { TabOrdersComponent } from '../tab-orders/tab-orders/tab-orders.component';
 
 
 
@@ -9,7 +9,7 @@ const routes: Routes = [
 
   {
     path: '',
-    component: TabOffersComponent,
+    component: TabOrdersComponent,
     pathMatch: 'full'
   }
 

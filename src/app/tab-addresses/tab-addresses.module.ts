@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TabAddressesRoutingModule } from './tab-addresses-routing.module';
+import { TabAddressesRoutingModule } from '../Routes/tab-addresses-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { TabAddressesComponent } from './tab-addresses/tab-addresses.component';
 

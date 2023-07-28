@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CoreBase, IMIRequest } from '@infor-up/m3-odin';
+import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
 import { Subscription } from 'rxjs';
 import { DataForTabHeaderService } from 'src/app/core/services/data-for-tab-header-service/data-for-tab-header.service';
 import { APIWebService } from 'src/app/core/web-services/api.webservice';
@@ -12,30 +13,17 @@ import { APIWebService } from 'src/app/core/web-services/api.webservice';
 })
 export class TabOrdersComponent extends CoreBase implements OnInit {
 
+  @ViewChild('orders',{ static: true }) orders?: SohoDataGridComponent;
+
 //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
 
   datagridOptions: SohoDataGridOptions = {};
+  datagridOptions2: SohoDataGridOptions = {};
 
-// ici on déclare les champs qui sont utilisées dans la grid template
-  rldt: any;
-  orno: any;
-  ordt: any;
-  orsl: any;
-  orst: any;
-  cucd: any;
-  tepy: any;
-  modl: any;
-  tedl: any;
-  oblc: any;
-  ortp: any;
-  smcd: any;
-  cuor: any;
+  orno:any;
 
-  show: boolean; // permets l'affichage de détails au clique, doit faire une fonction ou un bouton SI pour enlever l'affichage
-
-  listHeadOrders: any; // tableau pour enregistrer le retour d'API des Head d'une commande
-
-  listOrdersDetails: any; // tableau pour enregistrer le retour d'API des Lignes du Commande Head
+  listOrders: any;
+  listLineOrders: any;
 
   cunoHeader$: any;
   cunoSubscription: Subscription;
@@ -44,19 +32,27 @@ export class TabOrdersComponent extends CoreBase implements OnInit {
 
 //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
 
-  constructor(private dataForTabHeaderService: DataForTabHeaderService, private apiWebService: APIWebService) {
+  constructor(private dataForTabHeaderService: DataForTabHeaderService, private apiWebService: APIWebService, private messageService: SohoMessageService) {
     super('TabOrdersComponent');
   }
 
   ngOnInit() { // à l'ouverture de l'onglet, ce que l'on codde ici se lance
 
+    this.initGridHeadOrder();
     this.cunoHeaderMethod(); // lancement de la méthode de récupération du CUNO
 
   }
 
 //////////////////////////////////////////////////////////////////// Méthodes ngOnInit  ///////////////////////////////////////////////////////////////////////////////////
 
-
+private handleError(message: string, error?: any) {
+  const buttons = [{ text: 'Ok', click: (e, modal) => { modal.close(); } }];
+  this.messageService.error()
+    .title('An error occured')
+    .message(message + '. More details might be available in the browser console.')
+    .buttons(buttons)
+    .open();
+}
 
 private cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
   this.cunoSubscription = this.dataForTabHeaderService.cunoSubject.subscribe(
@@ -75,7 +71,6 @@ private getOrdersHeadIMIRequest() { // mettre la IMIRequest
     program: 'OIS100MI',
     transaction: 'LstHead',
     record: {
-      CONO: '100',
       CUNO: this.cunoHeader$,
       ORSL: '10'
       //ORST: '44'
@@ -88,8 +83,8 @@ private getOrdersHeadIMIRequest() { // mettre la IMIRequest
   this.apiWebService.callAPI(requestTest4).subscribe(
     data => {
 
-      this.listHeadOrders = data;
-      this.initGridHeadOrder();      // lance l'initialisation de la Grid
+      this.listOrders = data.items;
+      this.orders.dataset = this.listOrders;
 
     });
 }
@@ -167,7 +162,7 @@ private getOrdersHeadIMIRequest() { // mettre la IMIRequest
           resizable: true, filterType: 'text', sortable: true
         },
       ],
-      dataset: this.listHeadOrders,
+      dataset: this.listOrders,
       emptyMessage: {
         title: 'Aucune commande à afficher',
         icon: 'icon-empty-no-data'
@@ -176,8 +171,102 @@ private getOrdersHeadIMIRequest() { // mettre la IMIRequest
     this.datagridOptions = options;
   }
 
+  //////////////////////////////////////////////////////////////////// Méthodes qui gère la deuxième grid ///////////////////////////////////////////////////////////////////////////////////
+
+  onSelectedLine(args: any[]) {                                        // méthode pour gérer quand on cique sur une ligne
+
+    const newCount = args.length;
+    const selected = args && newCount === 1 ? args[0].data : null;
+
+    this.orno = selected.ORNO;
+
+    this.getLineOrders();
+  }
+
+  private getLineOrders() { // mettre la IMIRequest
+
+    const requestTest4: IMIRequest = {
+
+      program: 'OIS100MI',
+      transaction: 'LstLine',
+      record: {
+        CUNO: this.cunoHeader$,
+        ORNO: this.orno
+      },
+      outputFields: ['PONR', 'POSX', 'ITNO', 'ITDS','ORQA', 'ALUN', 'CODT', 'ORST'], //il manque CUNO et ORST
+      // maxReturnedRecords: 50
+    };
 
 
+    this.apiWebService.callAPI(requestTest4).subscribe(
+      data => {
 
+        this.listLineOrders = data.items;
+        this.initGridLine();      // lance l'initialisation de la Grid
+
+      },(error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
+        console.error('Erreur API :', error);
+        this.handleError('Échec de l\'exécution de l\'API ', error);
+      });
+}
+
+private initGridLine(){
+  const options: SohoDataGridOptions = {
+    selectable: 'single' as SohoDataGridSelectable,
+    disableRowDeactivation: true,
+    clickToSelect: true,
+    alternateRowShading: true,
+    cellNavigation: false,
+    idProperty: 'listLineOrders',
+    paging: false,
+    pagesize: 15,
+    indeterminate: false,
+
+    columns: [
+      {
+        width: 50, id: 'selectionCheckbox', field: '', name: '', sortable: false,
+        resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
+      },
+      {
+        width: 'auto', id: 'col-adrt', field: 'PONR', name: 'Ligne',
+        resizable: true, filterType: 'text', sortable: true
+      },
+      {
+        width: 'auto', id: 'col-adid', field: 'POSX', name: 'Sf',
+        resizable: true, filterType: 'text', sortable: true
+      },
+      {
+        width: 'auto', id: 'col-cunm', field: 'ITNO', name: 'Code article',
+        resizable: true, filterType: 'text', sortable: true
+      },
+      {
+        width: 'auto', id: 'col-cunm', field: 'ITDS', name: 'Nom',
+        resizable: true, filterType: 'text', sortable: true
+      },
+      {
+        width: 'auto', id: 'col-cua1', field: 'ORQA', name: 'Qté Cdé UR',
+        resizable: true, filterType: 'text', sortable: true
+      },
+      {
+        width: 'auto', id: 'col-adid', field: 'ALUN', name: 'UnR',
+        resizable: true, filterType: 'text', sortable: true
+      },
+      {
+        width: 'auto', id: 'col-cunm', field: 'CODT', name: 'DtLvCf',
+        resizable: true, filterType: 'text', sortable: true
+      },
+      {
+        width: 'auto', id: 'col-cua1', field: 'ORST', name: 'st',
+        resizable: true, filterType: 'text', sortable: true
+      },
+    ],
+    dataset: this.listLineOrders,
+    emptyMessage: {
+      title: 'Aucune ligne de commande à afficher',
+      icon: 'icon-empty-no-data'
+    }
+  };
+  this.datagridOptions2 = options;
+}
 
 }

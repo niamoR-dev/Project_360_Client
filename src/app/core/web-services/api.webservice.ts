@@ -17,22 +17,26 @@ export class APIWebService {
 
 
   callAPI(request: IMIRequest): Observable<IMIResponse> {
-
+    return this.miService.execute(request)
+/**
     return this.miService.execute(request).pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
 
       if (answer.errorCode) {
         throw Error(JSON.stringify(answer));
       }
       return answer.items;
-    }),
-      catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
-        console.error('Erreur API :', error);
-
-        this.handleError('Échec de l\'exécution de l\'API ', error);
-        return of(null);
-      })
-    );;
+    }));
   }
+*/
+    // }),
+    //   catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
+    //     console.error('Erreur API :', error);
+
+    //     this.handleError('Échec de l\'exécution de l\'API ', error);
+    //     return of(null);
+    //   })
+    // );;
+}
 
 
 

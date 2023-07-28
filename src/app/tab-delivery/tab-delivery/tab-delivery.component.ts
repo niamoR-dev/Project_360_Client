@@ -32,6 +32,13 @@ export class TabDeliveryComponent extends CoreBase implements OnInit {
   modl: any;
   tedl: any;
   vrno: any;
+  agno: any;
+  stdt: any;
+  agtp: any;
+  tx40: any;
+  agst: any;
+
+  show: boolean; // permets l'affichage de détails au clique
 
   listDelivery: any; // tableau pour enregistrer le retour d'API des adresses d'un client
 
@@ -85,20 +92,20 @@ export class TabDeliveryComponent extends CoreBase implements OnInit {
       data => {
 
         this.listDelivery = data;
-        this.initGridFee();      // lance l'initialisation de la Grid
+        this.initGridDelivery();      // lance l'initialisation de la Grid
 
       });
   }
 
 
-  private initGridFee() {                             // méthode qui permet d'afficher les données dans la GRID
+  private initGridDelivery() {                             // méthode qui permet d'afficher les données dans la GRID
     const options: SohoDataGridOptions = {
       selectable: 'single' as SohoDataGridSelectable,
       disableRowDeactivation: true,
       clickToSelect: true,
       alternateRowShading: true,
       cellNavigation: false,
-      idProperty: 'ListAddresses',
+      idProperty: 'ListDelivery',
       paging: true,
       pagesize: 10,
       indeterminate: false,
@@ -149,6 +156,54 @@ export class TabDeliveryComponent extends CoreBase implements OnInit {
     };
     this.datagridOptions = options;
   }
+
+  onSelectedLine(args: any[]) {                                        // méthode pour gérer quand on cique sur une ligne
+
+    const newCount = args.length;
+    const selected = args && newCount === 1 ? args[0].data : null;
+
+    this.show = true;
+
+    this.cuno = selected.UYCUNO;
+    this.agno = selected.UYAGNO;
+    this.stdt = selected.UYSTDT;
+    this.agtp = selected.UYAGTP;
+    this.tx40 = selected.UYTX40;
+    this.agtp = selected.UYAGST;
+
+
+    this.getDetailsContractsIMIRequest();
+  }
+
+  private getDetailsContractsIMIRequest() {
+
+    const requestDetailContracts: IMIRequest = {
+
+      program: 'OIS060MI',
+      transaction: 'LstCustBlkAgr',
+      record: {
+        CUNO: this.cunoHeader$,
+      },
+      outputFields: ['CUNO', 'AGNO', 'STDT', 'AGTP', 'TX40', 'AGST'],
+      // maxReturnedRecords: 50
+    };
+
+    this.apiWebService.callAPI(requestDetailContracts).subscribe(data => {
+
+      this.cuno = data[0].CUNO;
+      this.agno = data[0].AGNO;
+      this.stdt = data[0].STDT;
+      this.agtp = data[0].AGTP;
+      this.tx40 = data[0].TX40;
+      this.agst = data[0].AGST;
+
+    });
+
+  }
+
+
+
+
 
   private ngOnDestroy() {               // obligatoire dans chaque onglet dès qu'on a une variable : Subscription, va fermer l'observable à la fermeture de l'onglet
     console.log("UNSUBSCRIBE Adresse")  // permets d'optimiser la gestion débit de données

@@ -1,23 +1,25 @@
 import { Injectable } from "@angular/core";
 import { IMIRequest, IMIResponse } from "@infor-up/m3-odin";
-import { MIService } from "@infor-up/m3-odin-angular";
-import { SohoMessageService } from "ids-enterprise-ng";
-import { Observable, of, Subscription } from "rxjs";
+import { MIService } from '@infor-up/m3-odin-angular';
+import { SohoMessageService } from 'ids-enterprise-ng';
+import { Observable, of } from "rxjs";
 import { map, catchError } from 'rxjs/internal/operators';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class BlockedOrdersWebService {
 
   //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
 
   cunoHeader: any;
-  cunoSubscription: Subscription;
+  orno: any;
 
 
   //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components/services ///////////////////////////////////////////////////////////////////////////////////
 
-  constructor(protected miService: MIService, private messageService: SohoMessageService) {
-  }
+
+  constructor(protected miService: MIService, private messageService: SohoMessageService) { }
 
 
   //////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
@@ -25,34 +27,23 @@ export class BlockedOrdersWebService {
 
   recoveryCunoFromHeader(cuno: any) { // méthode qui récupère leCUNO du Header venant du component.ts Orders
     return of(this.cunoHeader = cuno);
-
   }
 
-
-  //////////////////////////////////////////////////////////////////// Méthodes qui gère les erreurs ///////////////////////////////////////////////////////////////////////////////////
-
-
-  listeOrders() {
-
-
-    return this.listAllOrders().pipe(map((answer) => {
-
+  listeBlockedOrders (){
+    return this.listBlokedOrdersA().pipe(map((answer) => {                       // méthode qui permets d'envoyer la donnée vers le TS
       if (answer.errorCode) {
-        throw Error(JSON.stringify(answer));
+         throw Error(JSON.stringify(answer));
       }
       return answer.items;
-    }),
+   }),
       catchError((error) => {                                                    // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
-        console.error('Erreur API listOrders :', error);
+         console.error('Erreur API listAddresses :', error);
 
-        this.handleError('Échec de l\'exécution de l\'API listOrders', error);
-        return of(null);
+         this.handleError('Échec de l\'exécution de l\'API listAddresses', error);
+         return of(null);
       })
-    );
+   );
   }
-
-
-
 
   //////////////////////////////////////////////////////////////////// Méthodes qui gère les erreurs ///////////////////////////////////////////////////////////////////////////////////
 
@@ -65,24 +56,22 @@ export class BlockedOrdersWebService {
       .open();
   }
 
+    //////////////////////////////////////////////////////////////////// Méthodes qui appellent les API ///////////////////////////////////////////////////////////////////////////////////
 
-  //////////////////////////////////////////////////////////////////// Méthodes qui appellent les API   ///////////////////////////////////////////////////////////////////////////////////
 
+    private listBlokedOrdersA(): Observable<IMIResponse> {
 
-  private listAllOrders(): Observable<IMIResponse> {
+      let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
+         CUNO: this.cunoHeader
+      }
 
-    let inputFields: any = {                                                // ici on rentre les champs d'entrées obligatoires et optionnelles
+      const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
+         program: 'OIS100MI',
+         transaction: 'LstHead',
+         record: inputFields,
+         outputFields: ['FACI','ORNO', 'ORTP'],
+      };
+      return this.miService.execute(request);
+   }
 
-      OACUNO: this.cunoHeader,
-      OAORNO: ''
-    }
-
-    const request: IMIRequest = {                                                // ici, on renseigne les champs de sorties que l'on veut afficher
-      program: 'CMS100MI',
-      transaction: 'Lst360CusBatOrd',
-      record: inputFields,
-      outputFields: ['OARLDT', 'OAORNO', 'OAORDT', 'OAORSL', 'OAORST', 'OACUCD', 'OATEPY', 'OAMODL', 'OATEDL', 'OAOBLC', 'OASMCD', 'OACUOR'],
-    };
-    return this.miService.execute(request);
-  }
 }

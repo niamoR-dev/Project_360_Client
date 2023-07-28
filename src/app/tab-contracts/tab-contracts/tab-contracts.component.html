@@ -1,12 +1,17 @@
 <h1>Contrats</h1>
+<div class="full-width full-height scrollable-flex">
 
-<div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
-   [blockUI]="true" [displayDelay]="0" (selected)="onSelectedLine($event.rows)">
-</div>
+  <div class="row top-padding">
+    <div class="twelve columns demo">
+      <div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
+        [blockUI]="true" (selected)="onSelectedLine($event.rows)">
+      </div>
+    </div>
+  </div>
 
 
-<form *ngIf='show' #f="ngForm" class="form-responsive row">
-<!--
+<form  #f="ngForm" class="form-responsive row">
+
    <label for="row-1-1">Client</label>
    <input type="text" id="row-1-1" name="CUNO" readonly [ngModel]="cuno" />
 
@@ -16,17 +21,10 @@
    <label for="row-1-5">Début Validité</label>
    <input type="text" id="row-1-6" name="STDT" [ngModel]="stdt" />
 
-   <label for="row-1-5">Der dt facture</label>
-   <input type="text" id="row-1-6" name="AGTP" [ngModel]="agtp" />
+   <label for="row-1-5">Der dt facture </label>
+   <input type="text" id="row-1-6" name="STDT" [ngModel]="lidt" />
 
    <label for="row-1-5">Priorité</label>
-   <input type="text" id="row-1-6" name="TX40" [ngModel]="tx40" />
-
-   <label for="row-1-5">Priorités util</label>
-   <input type="text" id="row-1-6" name="AGST" [ngModel]="stst" /> -->
-
-  <div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
-   [blockUI]="true" [displayDelay]="0" (selected)="onSelectedLine($event.rows)">
-  </div>
+   <input type="text" id="row-1-6" name="AGTP" [ngModel]="prex" />
 
 </form>

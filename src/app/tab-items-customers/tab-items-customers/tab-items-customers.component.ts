@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CoreBase, IMIRequest } from '@infor-up/m3-odin';
+import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
 import { Subscription } from 'rxjs';
 import { DataForTabHeaderService } from 'src/app/core/services/data-for-tab-header-service/data-for-tab-header.service';
 import { APIWebService } from 'src/app/core/web-services/api.webservice';
@@ -11,58 +12,71 @@ import { APIWebService } from 'src/app/core/web-services/api.webservice';
 })
 export class TabItemsCustomersComponent extends CoreBase implements OnInit {
 
+  @ViewChild('itemsCustomer',{ static: true }) itemsCustomer?: SohoDataGridComponent;
+
 //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
-   datagridOptions: SohoDataGridOptions = {};
-
-   popn: any;
-   itds: any;
-   alum: any;
-   d2qt: any;
-   d3qt: any;
-   resp: any;
-   adcu: any;
-
-   varitno: any;
 
 
-   show: boolean; // permets l'affichage de détails au clique
-
-   listItemCustomer: any; // tableau pour enregistrer le retour d'API des articles du client (item customers)
-
-   listDetailItemCustomer: any; // tableau pour enregistrer le details article client (item customers)
-
-   cunoHeader$: any;
-   cunoSubscription: Subscription;
+  datagridOptions: SohoDataGridOptions = {};
 
 
+  popn: any;
+  itds: any;
+  alum: any;
+  d2qt: any;
+  d3qt: any;
+  resp: any;
+  adcu: any;
+
+  varitno: any;
+
+  show: boolean; // permets l'affichage de détails au clique
+
+  listItemsCustomer: any; // tableau pour enregistrer le retour d'API des articles du client (item customers)
+  listDetailItemCustomer: any; // tableau pour enregistrer le details article client (item customers)
+
+  cunoHeader$: any;
+  cunoSubscription: Subscription;
 
 //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
 
-   constructor(private dataForTabHeaderService: DataForTabHeaderService,  private apiWebService: APIWebService) {
+
+   constructor(private dataForTabHeaderService: DataForTabHeaderService,  private apiWebService: APIWebService,private messageService: SohoMessageService) {
       super('TabItemsCustomersComponent');
    }
 
 //////////////////////////////////////////////////////////////////// Méthode Init ///////////////////////////////////////////////////////////////////////////////////
 
-   ngOnInit() {  // à l'ouverture de l'onglet, ce que l'on codde ici se lance
 
-       this.cunoHeaderMethod(); // lancement de la méthode de récupération du CUNO
-
-   }
+   ngOnInit() {                           // à l'ouverture de l'onglet, ce que l'on codde ici se lance
+    this.initGridItemsCustomer();
+    this.cunoHeaderMethod();              // lancement de la méthode de récupération du CUNO
+  }
 
 //////////////////////////////////////////////////////////////////// Méthodes ngOnInit  ///////////////////////////////////////////////////////////////////////////////////
+
+
+private handleError(message: string, error?: any) {
+  const buttons = [{ text: 'Ok', click: (e, modal) => { modal.close(); } }];
+  this.messageService.error()
+    .title('An error occured')
+    .message(message + '. More details might be available in the browser console.')
+    .buttons(buttons)
+    .open();
+}
+
 
 private cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
   this.cunoSubscription = this.dataForTabHeaderService.cunoSubject.subscribe(
     (data: any) => {
       this.cunoHeader$ = data;
-      this.getItemCustomerIMIRequest();
+      this.getItemsCustomerIMIRequest();
     }
   );
 }
 
 
-private getItemCustomerIMIRequest() { // mettre la IMIRequest
+private getItemsCustomerIMIRequest() { // mettre la IMIRequest
 
   const requestTest4: IMIRequest = {
 
@@ -79,16 +93,22 @@ private getItemCustomerIMIRequest() { // mettre la IMIRequest
   this.apiWebService.callAPI(requestTest4).subscribe(
     data => {
 
-      this.listItemCustomer = data;
-      this.initGridItemCustomer();      // lance l'initialisation de la Grid
+      this.listItemsCustomer = data.items;
+      this.itemsCustomer.dataset = this.listItemsCustomer;
 
-    });
+    },(error) => {
+      // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
+     console.error('Erreur API :', error);
+     this.handleError('Échec de l\'exécution de l\'API ', error);
+   });
 }
 
 //////////////////////////////////////////////////////////////////// Méthodes qui gère l'affichage Grid ///////////////////////////////////////////////////////////////////////////////////
+//.filter('CUNO' === this.cunoHeader$);
 
 
-   private initGridItemCustomer() { // méthode qui permet d'afficher les données dans la GRID
+
+   private initGridItemsCustomer() { // méthode qui permet d'afficher les données dans la GRID
       const options: SohoDataGridOptions = {
          selectable: 'single' as SohoDataGridSelectable,
          disableRowDeactivation: true,
@@ -99,6 +119,8 @@ private getItemCustomerIMIRequest() { // mettre la IMIRequest
          paging: true,
          pagesize: 10,
          indeterminate: false,
+         filterable: true,
+         filterWhenTyping: true,
          columns: [
             {
                width: 50, id: 'selectionCheckbox', field: '', name: '', sortable: false,
@@ -110,51 +132,28 @@ private getItemCustomerIMIRequest() { // mettre la IMIRequest
             },
             {
                width: 'auto', id: 'col-itno', field: 'ITNO', name: 'Code article',
-               resizable: true, filterType: 'text', sortable: true
+               resizable: true, sortable: true
             },
             {
                width: 'auto', id: 'col-itds', field: 'ITDS', name: 'Nom',
-               resizable: true, filterType: 'text', sortable: true
+               resizable: true, sortable: true
             },
-            // {
-            //   width: 'auto', id: 'col-itds', field: 'ITDS', name: 'Nom',
-            //   resizable: true, filterType: 'text', sortable: true
-            // },
-            // {
-            //  width: 'auto', id: 'col-itds', field: 'ITDS', name: 'Nom',
-            //  resizable: true, filterType: 'text', sortable: true
-            // },
-            // {
-            //  width: 'auto', id: 'col-itds', field: 'ITDS', name: 'Nom',
-            //  resizable: true, filterType: 'text', sortable: true
-            // },
-            // {
-            //  width: 'auto', id: 'col-itds', field: 'ITDS', name: 'Nom',
-            //  resizable: true, filterType: 'text', sortable: true
-            // },
-            // {
-            //  width: 'auto', id: 'col-itds', field: 'ITDS', name: 'Nom',
-            //  resizable: true, filterType: 'text', sortable: true
-            // },
-            // {
-            //  width: 'auto', id: 'col-itds', field: 'ITDS', name: 'Nom',
-            //  resizable: true, filterType: 'text', sortable: true
-            // },
-
          ],
-         dataset: this.listItemCustomer,
+         dataset: this.listItemsCustomer,
          emptyMessage: {
             title: 'Aucun article client à afficher',
             icon: 'icon-empty-no-data'
          }
       };
       this.datagridOptions = options;
-   }
 
+      console.log(this.listItemsCustomer);
+   }
 
 //////////////////////////////////////////////////////////////////// Méthodes qui gère le formulaire d'affichage Détail ///////////////////////////////////////////////////////////////////////////////////
 
-   onSelectedLine(args: any[]) {                                        // méthode pour gérer quand on cique sur une ligne
+
+   onSelectedLine(args: any[]) {                                   // méthode pour gérer quand on cique sur une ligne
 
       const newCount = args.length;
       const selected = args && newCount === 1 ? args[0].data : null;

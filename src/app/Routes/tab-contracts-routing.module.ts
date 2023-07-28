@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TabCommercialChannelComponent } from './tab-commercial-channel/tab-commercial-channel.component';
+import { TabContractsComponent } from '../tab-contracts/tab-contracts/tab-contracts.component';
+
 
 const routes: Routes = [
 
 
   {
     path: '',
-    component: TabCommercialChannelComponent,
-    pathMatch: 'full'
+    component: TabContractsComponent,
   }
 
 
@@ -18,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabCommercialChannelRoutingModule { }
+export class TabContractsRoutingModule { }

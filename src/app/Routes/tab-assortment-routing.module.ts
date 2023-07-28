@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TabAddressesComponent } from './tab-addresses/tab-addresses.component';
+import { TabAssortmentComponent } from '../tab-assortment/tab-assortment/tab-assortment.component';
 
 const routes: Routes = [
 
 
   {
     path: '',
-    component: TabAddressesComponent,
-    pathMatch: 'full'
+    component: TabAssortmentComponent,
   }
 
 
@@ -18,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabAddressesRoutingModule { }
+export class TabAssortmentRoutingModule { }

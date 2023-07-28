@@ -85,7 +85,7 @@ export class TabFeeComponent extends CoreBase implements OnInit {
       clickToSelect: true,
       alternateRowShading: true,
       cellNavigation: false,
-      idProperty: 'ListAddresses',
+      idProperty: 'ListFree',
       paging: true,
       pagesize: 10,
       indeterminate: false,
@@ -137,4 +137,8 @@ export class TabFeeComponent extends CoreBase implements OnInit {
     this.datagridOptions = options;
   }
 
+  private ngOnDestroy() {               // obligatoire dans chaque onglet dès qu'on a une variable : Subscription, va fermer l'observable à la fermeture de l'onglet
+    console.log("UNSUBSCRIBE Adresse")  // permets d'optimiser la gestion débit de données
+    this.cunoSubscription.unsubscribe();
+  }
 }

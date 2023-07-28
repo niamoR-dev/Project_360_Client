@@ -28,12 +28,8 @@ export const LIST_TABS_ROOTING = [
     rooting: './../assortment'
   },
   {
-    nameTab: 'Commandes',
+    nameTab: 'Commandes / Ligne',
     rooting: './../orders'
-  },
-  {
-    nameTab: 'Lignes',
-    rooting: './../lines'
   },
   {
     nameTab: 'Offres',
@@ -52,11 +48,7 @@ export const LIST_TABS_ROOTING = [
     rooting: './../invoices-customers'
   },
   {
-    nameTab: 'Commandes Livrées',
-    rooting: './../orders-delivered'
-  },
-  {
-    nameTab: 'Commandes bloquées',
+    nameTab: 'Commandes bloquées / Livrées',
     rooting: './../blocked-orders'
   },
   {

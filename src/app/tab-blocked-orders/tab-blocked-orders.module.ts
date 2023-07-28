@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
-import { TabBlockedOrdersRoutingModule } from './tab-blocked-orders-routing.module';
 import { TabBlockedOrdersComponent } from './tab-blocked-orders/tab-blocked-orders.component';
+import { TabBlockedOrdersRoutingModule } from '../Routes/tab-blocked-orders-routing.module';
 
 
 @NgModule({

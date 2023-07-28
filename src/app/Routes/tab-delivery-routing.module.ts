@@ -1,17 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TabInvoicesComponent } from './tab-invoices-customers/tab-invoices-customers.component';
+import { TabDeliveryComponent } from '../tab-delivery/tab-delivery/tab-delivery.component';
+
+
+
 
 const routes: Routes = [
 
+
   {
     path: '',
-    component: TabInvoicesComponent,
-    pathMatch: 'full'
-  }];
+    component: TabDeliveryComponent,
+  }
+
+
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabInvoicesRoutingModule { }
+export class TabDeliveryRoutingModule { }

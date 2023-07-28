@@ -21,7 +21,6 @@ export class TabInvoicesComponent extends CoreBase implements OnInit {
   vono: any;
   ivla: any;
   dudt: any;
-  //??? = fac cor existe
   rivn: any;
   yea4: any;
   inpx: any;
@@ -60,13 +59,12 @@ export class TabInvoicesComponent extends CoreBase implements OnInit {
 
     const requestTest4: IMIRequest = {
 
-      program: 'MDBREADMI',
-      transaction: 'SelOCUSCH00',
+      program: 'OIS350MI',
+      transaction: 'LstInvHeadByPay',
       record: {
-        CUNO: this.cunoHeader$
+        PYNO: this.cunoHeader$
       },
       outputFields: ['CRID', 'CRTY', 'CRD0', 'CUCD', 'CRME', 'CRFA', 'VTCD', 'CRAM'],
-      // maxReturnedRecords: 50
     };
 
 

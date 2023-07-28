@@ -12,19 +12,12 @@ import { APIWebService } from 'src/app/core/web-services/api.webservice';
 export class TabCustomerReturnsComponent extends CoreBase implements OnInit {
 
   //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
+
   datagridOptions: SohoDataGridOptions = {};
 
-  cuno: any;
-  repn: any;
-  rerc: any;
-  rern: any;
-  resl: any;
-  resh: any;
-  crsb: any;
-  crsh: any;
-  epdt: any;
-  pyno: any;
-  cunm: any;
+  whlo: '110';
+  repn:number= 100038;
+
 
   listCustomerreturns: any; // tableau pour enregistrer le retour d'API
 
@@ -47,7 +40,8 @@ export class TabCustomerReturnsComponent extends CoreBase implements OnInit {
   ngOnInit() {
 
     this.cunoHeaderMethod(); // lancement de la méthode de récupération du CUNO
-
+    this.initGridCustomerReturns();
+    console.log(this.cunoHeader$);
   }
 
 
@@ -73,18 +67,19 @@ export class TabCustomerReturnsComponent extends CoreBase implements OnInit {
      program: 'OIS390MI',
      transaction: 'LstOpenLine',
      record: {
+       WHLO: this.whlo,
+       REPN: this.repn,
        CUNO: this.cunoHeader$
      },
-     outputFields: ['REPN', 'RORC', 'EPDT'],
+     outputFields: ['RORC', 'ORNO', 'WHLO', 'REPN', 'EPDT'], // il manque les champs RESL RESH CRSB CRSH PYNO
      // maxReturnedRecords: 50
    };
 
 
    this.apiWebService.callAPI(requestTest4).subscribe(
      data => {
-
        this.listCustomerreturns = data;
-       this.initGridCustomerReturns();      // lance l'initialisation de la Grid
+           // lance l'initialisation de la Grid
 
      });
  }
@@ -104,24 +99,24 @@ export class TabCustomerReturnsComponent extends CoreBase implements OnInit {
      pagesize: 10,
      indeterminate: false,
      columns: [
+      {
+        width: 50, id: 'selectionCheckbox', field: '', name: '', sortable: false,
+        resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
+      },
        {
-         width: 50, id: 'selectionCheckbox', field: '', name: '', sortable: false,
-         resizable: false, align: 'center', formatter: Soho.Formatters.SelectionCheckbox, hidden: true
-       },
-       {
-         width: 'auto', id: 'col-chai', field: 'REPN', name: 'Num recep',
+         width: 'auto', id: 'col-chai', field: 'RORC', name: 'Cat',
          resizable: true, filterType: 'text', sortable: true
        },
        {
-         width: 'auto', id: 'col-chct', field: '', name: 'Client',//CUNO
+         width: 'auto', id: 'col-chct', field: 'ORNO', name: 'Ord.ref',//CUNO
          resizable: true, filterType: 'text', sortable: true
        },
        {
-         width: 'auto', id: 'col-chl1', field: 'RORC', name: 'Cat',
+         width: 'auto', id: 'col-chl1', field: 'WHLO', name: 'Dép',
          resizable: true, filterType: 'text', sortable: true
        },
        {
-         width: 'auto', id: 'col-chl1', field: '', name: 'Ord.ref',//RORN
+         width: 'auto', id: 'col-chl1', field: 'REPN', name: 'N°récept',//RORN
          resizable: true, filterType: 'text', sortable: true
        },
        {
@@ -148,10 +143,6 @@ export class TabCustomerReturnsComponent extends CoreBase implements OnInit {
          width: 'auto', id: 'col-cua1', field: '', name: 'Payeur',//PYNO
          resizable: true, filterType: 'text', sortable: true
        },
-       {
-         width: 'auto', id: 'col-cua1', field: '', name: 'Nom',//CUNM
-         resizable: true, filterType: 'text', sortable: true
-       },
      ],
      dataset: this.listCustomerreturns,
      emptyMessage: {
@@ -161,7 +152,6 @@ export class TabCustomerReturnsComponent extends CoreBase implements OnInit {
    };
    this.datagridOptions = options;
  }
-
 
  private ngOnDestroy() {               // obligatoire dans chaque onglet dès qu'on a une variable : Subscription, va fermer l'observable à la fermeture de l'onglet
   console.log("UNSUBSCRIBE Adresse")  // permets d'optimiser la gestion débit de données

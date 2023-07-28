@@ -15,7 +15,6 @@ export class ContractsWebService {
   //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
 
    cunoHeader: any;
-   agnoWebService: any;
 
 
   //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components/services ///////////////////////////////////////////////////////////////////////////////////
@@ -179,13 +178,13 @@ export class ContractsWebService {
       }),
          catchError((error) => {
             console.error('Erreur API GetOrderInfo :', error);
-   
+
             this.handleError('Échec de l\'exécution de l\'API GetOrderInfo', error);
             return of(null);
          })
       );
    }
-   
+
    detailsContractGetFinancial() {
       return this.listDetailsContratGetFinancial().pipe(map((answer) => {
          if (answer.errorCode) {
@@ -195,7 +194,7 @@ export class ContractsWebService {
       }),
          catchError((error) => {
             console.error('Erreur API GetFinancial :', error);
-   
+
             this.handleError('Échec de l\'exécution de l\'API GetFinancial', error);
             return of(null);
          })
@@ -236,21 +235,21 @@ export class ContractsWebService {
 
       return this.miService.execute(request);
    }
-   
+
    private listDetailsContratGetFinancial(): Observable<IMIResponse> {
-   
+
          let inputFields: any = {
             CUNO: this.cunoHeader
          }
-   
+
          const request: IMIRequest = {
             program: 'OIS060MI',
             transaction: 'GetFinancial',
             record: inputFields,
             outputFields: ['VRNO'],
          };
-   
+
          return this.miService.execute(request);
    }
-   
+
 }

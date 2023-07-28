@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CoreBase, IMIRequest } from '@infor-up/m3-odin';
+import { SohoDataGridComponent, SohoMessageService } from 'ids-enterprise-ng';
 import { Subscription } from 'rxjs';
 import { DataForTabHeaderService } from 'src/app/core/services/data-for-tab-header-service/data-for-tab-header.service';
 import { APIWebService } from 'src/app/core/web-services/api.webservice';
@@ -11,11 +12,12 @@ import { APIWebService } from 'src/app/core/web-services/api.webservice';
 })
 export class TabAddressesComponent extends CoreBase implements OnInit {
 
+  @ViewChild('addresses',{ static: true }) addresses?: SohoDataGridComponent;
+
 //////////////////////////////////////////////////////////////////// Déclaration des variables ///////////////////////////////////////////////////////////////////////////////////
 
-  datagridOptions: SohoDataGridOptions = {}; // je sais pas
+  datagridOptions: SohoDataGridOptions = {};
 
-/////////////// ici on déclare les champs qui sont utilisées dans la grid template //////////////
   cuno: any;
   cono: any;
   adrt: any;
@@ -39,7 +41,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
   show: boolean; // permets l'affichage de détails au clique, doit faire une fonction ou un bouton SI pour enlever l'affichage
 
-  listAddressesClient: any; // tableau pour enregistrer le retour d'API des adresses d'un client
+  listAddresses: any; // tableau pour enregistrer le retour d'API des adresses d'un client
 
   detailsAddressesLstAddrByCust: any; // tableau pour enregistrer le retour d'API des détails des adresses d'un client
 
@@ -50,7 +52,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
 //////////////////////////////////////////////////////////////////// Constructeur d'appel des autres components ///////////////////////////////////////////////////////////////////////////////////
 
-  constructor(private dataForTabHeaderService: DataForTabHeaderService, private apiWebService: APIWebService) {    // ici on fait le lien vers les autres components
+  constructor(private dataForTabHeaderService: DataForTabHeaderService, private apiWebService: APIWebService, private messageService: SohoMessageService) {    // ici on fait le lien vers les autres components
     super('TabAddressesComponent');
   }
 
@@ -58,12 +60,21 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
 
   ngOnInit() {                                                   // à l'ouverture de l'onglet, ce que l'on codde ici se lance
 
+    this.initGridAdresses();
     this.cunoHeaderMethod(); // lancement de la méthode de récupération du CUNO
 
   }
 
 //////////////////////////////////////////////////////////////////// Méthodes ngOnInit  ///////////////////////////////////////////////////////////////////////////////////
 
+private handleError(message: string, error?: any) {
+  const buttons = [{ text: 'Ok', click: (e, modal) => { modal.close(); } }];
+  this.messageService.error()
+    .title('An error occured')
+    .message(message + '. More details might be available in the browser console.')
+    .buttons(buttons)
+    .open();
+}
 
 
   private cunoHeaderMethod() {    // méthode observable pour récupérer la CUNO de la dropdown du header
@@ -71,7 +82,6 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
       (data: any) => {
         this.cunoHeader$ = data;
         this.getAllAdressesIMIRequest();
-        // this.getAllAdresses();
       }
     );
   }
@@ -95,10 +105,14 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
     this.apiWebService.callAPI(requestTest4).subscribe(
       data => {
 
-        this.listAddressesClient = data;
-        this.initGridAdresses();      // lance l'initialisation de la Grid
+        this.listAddresses = data.items;
+        this.addresses.dataset = this.listAddresses;
 
-      });
+      },(error) => {
+        // gestion d'erreur selon la méthode que l'on a déclaréer en dessous
+       console.error('Erreur API :', error);
+       this.handleError('Échec de l\'exécution de l\'API ', error);
+     });
   }
 
 
@@ -138,7 +152,7 @@ export class TabAddressesComponent extends CoreBase implements OnInit {
           resizable: true, filterType: 'text', sortable: true
         },
       ],
-      dataset: this.listAddressesClient,
+      dataset: this.listAddresses,
       emptyMessage: {
         title: 'Aucune adresse à afficher',
         icon: 'icon-empty-no-data'

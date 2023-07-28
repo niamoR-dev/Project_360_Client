@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { TabOffersComponent } from './tab-offers/tab-offers.component';
-import { TabOrdersRoutingModule } from './tab-offers-routing.module';
+import { TabOrdersRoutingModule } from '../Routes/tab-orders-routing.module';
+
 
 
 

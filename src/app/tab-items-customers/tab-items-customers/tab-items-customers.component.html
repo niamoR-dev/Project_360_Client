@@ -1,15 +1,22 @@
 <h1>Code Article chez le Client</h1>
-<br>
-<br>
 
-<div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
-   [blockUI]="true" [displayDelay]="0" (selected)="onSelectedLine($event.rows)"></div>
+<h2>Cuno = {{cunoHeader$}}</h2>
+
+
+<div class="full-width full-height scrollable-flex">
+
+  <div class="row top-padding">
+    <div class="twelve columns demo">
+      <div #itemsCustomer soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
+        [blockUI]="true" [displayDelay]="0" (selected)="onSelectedLine($event.rows)">
+      </div>
+    </div>
+  </div>
+
+
+
 
 <h1>Item - Customer Details</h1>
-<br>
-<br>
-<br>
-<br>
 
 <form #f="ngForm" class="form-responsive row">
 
@@ -35,18 +42,3 @@
    <input type="text" id="row-1-9" name="ADCU" [ngModel]="adcu" />
 
 </form>
-
-<!--
-
-A VOIR LA VERSION EST DIFF2RENTE ET LES CARD N  4 EXISTE PAS
-
-<div class="one-third column">
-  <soho-card>
-    <soho-card-header>
-      <h2 class="widget-title">Card Title</h2>
-      <button soho-button="icon" icon="more" soho-context-menu menu="action-popupmenu" trigger="click"
-        class="btn-actions"></button>
-    </soho-card-header>
-  </soho-card>
-</div>
--->

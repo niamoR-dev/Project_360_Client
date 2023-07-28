@@ -1,5 +1,20 @@
 <h1>Commandes</h1>
 
-<div #datagridToDisplay id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
-   [blockUI]="true" [displayDelay]="0"></div>
-<!-- (selected)="onSelectedLine($event.rows)" -->
+   <div class="full-width full-height scrollable-flex">
+
+    <div class="row top-padding">
+      <div class="twelve columns demo">
+        <div #orders id="gridToDisplay" soho-datagrid [gridOptions]="datagridOptions" soho-busyindicator
+          [blockUI]="true" [displayDelay]="0" (selected)="onSelectedLine($event.rows)">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row top-padding">
+      <div class="twelve columns demo">
+        <div #ordersLine id="gridToDisplay2" soho-datagrid [gridOptions]="datagridOptions2" soho-busyindicator
+          [blockUI]="true">
+        </div>
+      </div>
+    </div>
